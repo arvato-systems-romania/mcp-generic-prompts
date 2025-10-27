@@ -1,0 +1,63 @@
+[
+  {
+    "id": "ci-pipeline-optimization",
+    "title": "CI/CD Pipeline Performance Optimization",
+    "description": "Analyzes CI/CD pipeline performance and provides optimization recommendations to reduce build times and improve reliability.",
+    "category": "devops",
+    "tags": [
+      "ci-cd",
+      "devops",
+      "pipeline",
+      "automation"
+    ],
+    "template": "Optimize CI/CD pipeline for {{project_name}} on {{ci_system}}.\n\n1. Analyze current pipeline configuration and execution times\n2. Identify bottlenecks:\n   - Long-running jobs\n   - Sequential steps that could be parallel\n   - Redundant work across jobs\n   - Inefficient caching\n3. Review test execution strategy (parallelization, splitting)\n4. Assess artifact storage and transfer\n5. Optimize Docker builds (layer caching, multi-stage)\n6. Recommend caching strategies (dependencies, build outputs)\n7. Suggest matrix builds for multi-environment testing\n8. Identify opportunities for incremental builds\n9. Estimate time savings per optimization\n10. Define success metrics\n\nCurrent pipeline duration: {{current_duration}}\nCI System: {{ci_system}}\nPipeline config: {{pipeline_config}}\n\nOutput: Bottleneck Analysis | Optimization Plan | Expected Improvements | Implementation Guide",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "ci_system": {
+          "type": "string",
+          "description": "CI/CD system in use",
+          "enum": [
+            "github-actions",
+            "gitlab-ci",
+            "jenkins",
+            "circleci",
+            "azure-devops",
+            "teamcity"
+          ]
+        },
+        "current_duration": {
+          "type": "string",
+          "description": "Current pipeline duration (e.g., '12m 30s')"
+        },
+        "pipeline_config": {
+          "type": "string",
+          "description": "Pipeline configuration content"
+        }
+      },
+      "required": [
+        "project_name",
+        "ci_system",
+        "current_duration"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "web-platform",
+          "ci_system": "github-actions",
+          "current_duration": "18m 45s",
+          "pipeline_config": "jobs: test: runs-on: ubuntu-latest steps: checkout, setup-node, npm ci, npm test"
+        },
+        "output_outline": "Bottlenecks: npm ci takes 4m (no cache), tests run sequentially (8m), docker build 5m; optimizations: add npm cache (save 3.5m), parallel test matrix (save 5m), BuildKit + layer cache for Docker (save 3m), total savings: 11.5m → target 7m, implement caching first (quick win)"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

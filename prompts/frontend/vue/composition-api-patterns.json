@@ -1,0 +1,62 @@
+{
+  "id": "vue-composition-api-patterns",
+  "title": "Vue 3 Composition API Best Practices",
+  "description": "Analyzes Vue 3 Composition API usage for proper composable design, reactivity patterns, lifecycle management, and TypeScript integration.",
+  "category": "frontend-vue",
+  "tags": [
+    "vue3",
+    "composition-api",
+    "composables",
+    "reactivity",
+    "typescript",
+    "pinia"
+  ],
+  "template": "Review Vue 3 Composition API implementation and provide best practice recommendations.\n\n**Component Context:**\n- Component: {{component_name}}\n- Purpose: {{component_purpose}}\n- Current Issues: {{current_issues}}\n\n**Code to Review:**\n```typescript\n{{vue_code}}\n```\n\n**Analysis Areas:**\n\n1. **Composable Design:**\n   - Reusable logic extraction\n   - Naming conventions (use* prefix)\n   - Single responsibility principle\n   - Dependency injection patterns\n   - Composable composition\n   - Return object design\n   - TypeScript type safety\n\n2. **Reactivity Patterns:**\n   - ref vs reactive choice\n   - Unwrapping rules\n   - toRef and toRefs usage\n   - readonly for immutability\n   - shallowRef for performance\n   - Custom ref creation\n   - Reactivity gotchas\n\n3. **Computed Properties:**\n   - Proper computed usage\n   - Getter-only vs writable\n   - Performance optimization\n   - Dependency tracking\n   - Computed vs methods\n\n4. **Watchers:**\n   - watch vs watchEffect\n   - Immediate and deep options\n   - Multiple sources\n   - Cleanup functions\n   - Watch stopping\n   - Performance considerations\n\n5. **Lifecycle Hooks:**\n   - onMounted, onUpdated, onUnmounted\n   - Setup timing\n   - Cleanup in onUnmounted\n   - Side effect management\n   - Async setup issues\n\n6. **Template Refs:**\n   - Template ref access\n   - Component instance refs\n   - Null safety\n   - TypeScript typing\n\n7. **Props & Emits:**\n   - defineProps with TypeScript\n   - withDefaults usage\n   - defineEmits typing\n   - Props destructuring\n   - Props validation\n\n8. **State Management:**\n   - Pinia store composition\n   - Store actions vs composables\n   - State immutability\n   - Getters optimization\n   - Store TypeScript types\n\n9. **Async Operations:**\n   - Async composables\n   - Loading states\n   - Error handling\n   - Request cancellation\n   - Race condition prevention\n\n10. **Performance:**\n    - Unnecessary reactivity\n    - Memory leaks\n    - Event listener cleanup\n    - Large list optimization\n    - Computed caching\n\n11. **TypeScript Integration:**\n    - Generic composables\n    - Type inference\n    - Strict null checks\n    - Component props typing\n    - Emit event typing\n\n12. **Testing:**\n    - Composable unit tests\n    - Component testing with Composition API\n    - Mocking composables\n    - Async testing\n\n**Common Anti-patterns:**\n- Mutating reactive objects directly\n- Using reactive() for primitives\n- Forgetting to return from composables\n- Not cleaning up side effects\n- Overusing watchers\n- Breaking reactivity with destructuring\n- Mixing Options API with Composition API poorly\n\n**Output Format:**\n- **Composable Design Issues:** Reusability and structure problems\n- **Reactivity Problems:** ref/reactive misuse, lost reactivity\n- **Performance Bottlenecks:** Unnecessary watchers, computed issues\n- **TypeScript Improvements:** Better typing and type safety\n- **Refactored Code:** Improved version with explanations\n- **Testing Strategy:** How to test the refactored code\n- **Best Practices Summary:** Key takeaways and patterns to follow",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "component_name": {
+        "type": "string",
+        "description": "Name of the Vue component"
+      },
+      "component_purpose": {
+        "type": "string",
+        "description": "What the component does"
+      },
+      "vue_code": {
+        "type": "string",
+        "description": "Vue 3 Composition API code to review"
+      },
+      "current_issues": {
+        "type": "string",
+        "description": "Known issues or concerns",
+        "default": "None specified"
+      },
+      "typescript": {
+        "type": "boolean",
+        "description": "Whether TypeScript is used",
+        "default": true
+      }
+    },
+    "required": [
+      "component_name",
+      "component_purpose",
+      "vue_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "component_name": "UserProfile",
+        "component_purpose": "Display and edit user profile information",
+        "vue_code": "<script setup>\nimport { reactive, watch } from 'vue';\n\nconst user = reactive({\n  name: '',\n  email: ''\n});\n\nconst fetchUser = async (id) => {\n  const response = await fetch(`/api/users/${id}`);\n  const data = await response.json();\n  user.name = data.name;\n  user.email = data.email;\n};\n\nwatch(user, () => {\n  console.log('User changed:', user);\n}, { deep: true });\n\nfetchUser(123);\n</script>",
+        "current_issues": "Reactivity issues, no loading states, no error handling",
+        "typescript": true
+      },
+      "output_outline": "Issues: 1) Async operation in setup without lifecycle hook (race condition), 2) Deep watcher on entire object (performance), 3) No loading/error states, 4) No cleanup for async operations, 5) Logic should be in composable, 6) Missing TypeScript types. Solution: Create useUser composable with ref<User | null>, add loading and error refs, use onMounted for fetch, implement proper error handling with try/catch, return { user, loading, error, refetch }, add AbortController for cleanup. Show TypeScript interface for User, proper type annotations, watchEffect instead of deep watch if needed. Include Vitest test examples for the composable."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

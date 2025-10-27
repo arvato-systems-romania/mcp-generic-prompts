@@ -1,0 +1,75 @@
+{
+  "id": "sql-query-optimization",
+  "title": "SQL Query Optimization & Performance Tuning",
+  "description": "Analyzes SQL queries for performance issues, indexing opportunities, query plan optimization, and database-specific best practices.",
+  "category": "database",
+  "tags": [
+    "sql",
+    "database",
+    "performance",
+    "indexing",
+    "query-optimization",
+    "postgresql",
+    "mysql"
+  ],
+  "template": "Analyze SQL queries and database schema for performance optimization.\n\n**Database Context:**\n- Database: {{database_type}}\n- Version: {{database_version}}\n- Table Size: {{table_size}}\n- Performance Issue: {{performance_issue}}\n\n**Schema:**\n```sql\n{{schema_definition}}\n```\n\n**Queries to Optimize:**\n```sql\n{{sql_queries}}\n```\n\n**Analysis Areas:**\n\n1. **Query Performance:**\n   - EXPLAIN/EXPLAIN ANALYZE output\n   - Sequential scans vs index scans\n   - Join strategies (nested loop, hash, merge)\n   - Subquery optimization\n   - CTE vs subquery performance\n   - Window function efficiency\n   - Query execution time\n\n2. **Indexing Strategy:**\n   - Missing indexes on WHERE clauses\n   - Missing indexes on JOIN columns\n   - Missing indexes on ORDER BY/GROUP BY\n   - Composite index opportunities\n   - Index column order\n   - Partial/filtered indexes\n   - Covering indexes\n   - Over-indexing issues\n   - Index bloat\n\n3. **Schema Design:**\n   - Normalization vs denormalization\n   - Column data types optimization\n   - NULL handling\n   - Foreign key constraints\n   - Check constraints\n   - Default values\n   - Partitioning strategies\n\n4. **Query Patterns:**\n   - N+1 query problems\n   - SELECT * issues\n   - DISTINCT optimization\n   - OR vs UNION\n   - IN vs EXISTS vs JOIN\n   - NOT IN vs NOT EXISTS\n   - Correlated subqueries\n   - Unnecessary sorting\n\n5. **Join Optimization:**\n   - Join order\n   - Join type selection (INNER, LEFT, RIGHT)\n   - Cross joins to avoid\n   - Join condition optimization\n   - Implicit vs explicit joins\n\n6. **Aggregate Optimization:**\n   - GROUP BY efficiency\n   - HAVING vs WHERE\n   - Aggregate function selection\n   - Partial aggregates\n   - Materialized views\n\n7. **Database-Specific Features:**\n\n   **PostgreSQL:**\n   - GIN/GiST indexes\n   - JSONB indexing\n   - Full-text search\n   - VACUUM and ANALYZE\n   - pg_stat_statements\n   - Parallel query execution\n\n   **MySQL:**\n   - InnoDB optimization\n   - Query cache (older versions)\n   - Index hints\n   - FULLTEXT indexes\n   - MySQL optimizer hints\n\n8. **Transaction Optimization:**\n   - Transaction isolation levels\n   - Lock contention\n   - Deadlock prevention\n   - MVCC considerations\n   - Row-level vs table-level locks\n\n9. **Data Volume Handling:**\n   - Pagination strategies (OFFSET vs keyset)\n   - Batch processing\n   - Bulk inserts/updates\n   - DELETE optimization\n   - Archival strategies\n\n10. **Monitoring & Profiling:**\n    - Slow query log analysis\n    - Query statistics\n    - Index usage statistics\n    - Table bloat detection\n    - Connection pooling\n\n**Output Format:**\n- **Performance Analysis:** Current query execution stats\n- **Index Recommendations:** Specific indexes to create with rationale\n- **Query Rewrites:** Optimized versions with EXPLAIN plans\n- **Schema Improvements:** Column types, constraints, partitioning\n- **Before/After Metrics:** Execution time comparisons\n- **Maintenance Tasks:** VACUUM, ANALYZE, REINDEX needs\n- **Monitoring Queries:** SQL to track performance over time",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "database_type": {
+        "type": "string",
+        "enum": [
+          "postgresql",
+          "mysql",
+          "mariadb",
+          "sqlserver",
+          "oracle"
+        ],
+        "description": "Database management system"
+      },
+      "database_version": {
+        "type": "string",
+        "description": "Database version (e.g., 'PostgreSQL 15', 'MySQL 8.0')"
+      },
+      "schema_definition": {
+        "type": "string",
+        "description": "Table definitions (CREATE TABLE statements)"
+      },
+      "sql_queries": {
+        "type": "string",
+        "description": "SQL queries to optimize"
+      },
+      "table_size": {
+        "type": "string",
+        "description": "Approximate table size/row count",
+        "default": "Unknown"
+      },
+      "performance_issue": {
+        "type": "string",
+        "description": "Observed performance problem",
+        "default": "Slow query execution"
+      }
+    },
+    "required": [
+      "database_type",
+      "schema_definition",
+      "sql_queries"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "database_type": "postgresql",
+        "database_version": "PostgreSQL 15",
+        "schema_definition": "CREATE TABLE orders (\n  id SERIAL PRIMARY KEY,\n  user_id INT,\n  status VARCHAR(50),\n  created_at TIMESTAMP\n);\n\nCREATE TABLE order_items (\n  id SERIAL PRIMARY KEY,\n  order_id INT,\n  product_id INT,\n  quantity INT\n);",
+        "sql_queries": "SELECT o.*, u.name, \n  (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as item_count\nFROM orders o\nJOIN users u ON u.id = o.user_id\nWHERE o.status = 'pending'\nORDER BY o.created_at DESC;",
+        "table_size": "1M orders, 5M order_items",
+        "performance_issue": "Query takes 8+ seconds"
+      },
+      "output_outline": "Issues: 1) Correlated subquery creates N+1 pattern (1M+ executions), 2) No index on orders.status, 3) No index on orders.created_at, 4) No index on order_items.order_id. Solution: Replace correlated subquery with LEFT JOIN and COUNT(), add composite index on (status, created_at), add index on order_items.order_id. Optimized query with proper indexes: 8s → 150ms (98% faster). Show EXPLAIN ANALYZE before/after. Include CREATE INDEX statements: CREATE INDEX idx_orders_status_created ON orders(status, created_at); CREATE INDEX idx_order_items_order_id ON order_items(order_id). Alternative using window function for better performance. Add pg_stat_statements query for monitoring."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

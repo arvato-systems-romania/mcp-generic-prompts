@@ -1,0 +1,69 @@
+{
+  "id": "fastapi-best-practices",
+  "title": "FastAPI Architecture Best Practices",
+  "description": "Analyzes FastAPI applications for architectural patterns, dependency injection, middleware design, and production-ready practices.",
+  "category": "backend-python",
+  "tags": [
+    "python",
+    "fastapi",
+    "api",
+    "architecture",
+    "dependency-injection",
+    "middleware"
+  ],
+  "template": "Review FastAPI application architecture and recommend best practices for production-ready APIs.\n\n**Project Context:**\n- Project: {{project_name}}\n- API Purpose: {{api_purpose}}\n- Current Issues: {{current_issues}}\n\n**Code to Review:**\n```python\n{{fastapi_code}}\n```\n\n**Analysis Areas:**\n\n1. **Project Structure:**\n   - Layered architecture (routers, services, repositories)\n   - Separation of concerns\n   - Configuration management\n   - Directory organization\n\n2. **Dependency Injection:**\n   - Database session management\n   - Service dependencies\n   - Configuration injection\n   - Testing with dependency overrides\n   - Proper cleanup with yield\n\n3. **Request/Response Models:**\n   - Pydantic model design\n   - Response models with proper types\n   - Request validation\n   - Custom validators\n   - Config class optimization\n\n4. **Error Handling:**\n   - Custom exception handlers\n   - HTTP exception handling\n   - Validation error responses\n   - Consistent error format\n   - Logging integration\n\n5. **Middleware:**\n   - CORS configuration\n   - Authentication/authorization\n   - Request timing\n   - Logging middleware\n   - Rate limiting\n\n6. **Database Integration:**\n   - SQLAlchemy async setup\n   - Connection pooling\n   - Migration strategy (Alembic)\n   - Transaction management\n   - Query optimization\n\n7. **Background Tasks:**\n   - BackgroundTasks usage\n   - Celery integration\n   - Task queue patterns\n   - Error handling in background\n\n8. **API Documentation:**\n   - OpenAPI customization\n   - Route descriptions\n   - Example values\n   - Tags and organization\n\n9. **Security:**\n   - OAuth2 implementation\n   - JWT token handling\n   - API key management\n   - Rate limiting\n   - Input sanitization\n\n10. **Performance:**\n    - Response caching\n    - Database query optimization\n    - Async route handlers\n    - Connection pooling\n    - Compression middleware\n\n11. **Testing:**\n    - TestClient usage\n    - Dependency injection in tests\n    - Async test patterns\n    - Mocking strategies\n\n**Output Format:**\n- **Architecture Review:** Current structure vs recommended\n- **Dependency Injection Issues:** Missing or incorrect patterns\n- **Security Concerns:** Authentication, authorization gaps\n- **Performance Bottlenecks:** Database, blocking operations\n- **Refactoring Recommendations:** Prioritized list with code examples\n- **Production Checklist:** Pre-deployment items\n- **Testing Strategy:** Unit, integration, E2E approach",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the FastAPI project"
+      },
+      "api_purpose": {
+        "type": "string",
+        "description": "What the API does (e.g., 'E-commerce backend', 'IoT data collector')"
+      },
+      "fastapi_code": {
+        "type": "string",
+        "description": "FastAPI application code to review"
+      },
+      "current_issues": {
+        "type": "string",
+        "description": "Known issues or concerns",
+        "default": "None specified"
+      },
+      "database": {
+        "type": "string",
+        "enum": [
+          "postgresql",
+          "mysql",
+          "sqlite",
+          "mongodb",
+          "none"
+        ],
+        "default": "postgresql",
+        "description": "Database being used"
+      }
+    },
+    "required": [
+      "project_name",
+      "api_purpose",
+      "fastapi_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "UserService",
+        "api_purpose": "Microservice for user authentication and profile management",
+        "fastapi_code": "@app.get('/users/{user_id}')\nasync def get_user(user_id: int):\n    db = SessionLocal()\n    user = db.query(User).filter(User.id == user_id).first()\n    return user",
+        "current_issues": "Database connections not closing, no authentication",
+        "database": "postgresql"
+      },
+      "output_outline": "Issues: 1) Database session not closed (memory leak), 2) No dependency injection, 3) Missing authentication, 4) No response model, 5) No error handling. Recommended: Use Depends() for DB session with yield cleanup, add OAuth2 JWT authentication dependency, create UserResponse Pydantic model, handle 404 with HTTPException, add logging. Show complete refactored code with proper structure: routers/, services/, models/, dependencies.py. Include middleware setup, error handlers, and testing examples."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

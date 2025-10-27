@@ -1,0 +1,60 @@
+{
+  "id": "code_review",
+  "title": "Code Review Helper",
+  "description": "Performs comprehensive code review analyzing code quality, security, performance, and best practices with actionable feedback.",
+  "category": "code-quality",
+  "tags": [
+    "code-review",
+    "quality",
+    "security",
+    "best-practices",
+    "refactoring"
+  ],
+  "template": "Perform a comprehensive code review for the following code snippet.\n\n**Code to Review:**\n```{{language}}\n{{code}}\n```\n\n**Review Focus Areas:**\n1. **Code Quality:**\n   - Readability and maintainability\n   - Naming conventions\n   - Code organization and structure\n   - DRY principle violations\n   - SOLID principles adherence\n\n2. **Security:**\n   - Common vulnerabilities (injection, XSS, etc.)\n   - Input validation\n   - Authentication/authorization issues\n   - Sensitive data handling\n\n3. **Performance:**\n   - Algorithm efficiency\n   - Resource usage\n   - Potential bottlenecks\n   - Database query optimization\n\n4. **Best Practices:**\n   - Language-specific idioms\n   - Error handling\n   - Logging practices\n   - Testing considerations\n\n5. **Bugs & Issues:**\n   - Logic errors\n   - Edge cases not handled\n   - Race conditions\n   - Memory leaks\n\n**Output Format:**\n- **Summary:** Overall assessment (1-2 sentences)\n- **Critical Issues:** Must-fix problems with severity rating\n- **Improvements:** Suggestions for better code quality\n- **Security Concerns:** Any security vulnerabilities found\n- **Performance Tips:** Optimization opportunities\n- **Refactoring Suggestions:** How to restructure for better maintainability\n- **Code Examples:** Improved versions of problematic sections\n\nProvide specific, actionable feedback with code examples where applicable.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "description": "The code snippet to review"
+      },
+      "language": {
+        "type": "string",
+        "description": "Programming language of the code",
+        "default": "javascript",
+        "enum": [
+          "javascript",
+          "typescript",
+          "python",
+          "java",
+          "go",
+          "rust",
+          "c#",
+          "php",
+          "ruby"
+        ]
+      },
+      "context": {
+        "type": "string",
+        "description": "Optional context about the code's purpose",
+        "default": ""
+      }
+    },
+    "required": [
+      "code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "code": "function getUserData(id) {\n  var user = db.query('SELECT * FROM users WHERE id = ' + id);\n  return user;\n}",
+        "language": "javascript",
+        "context": "Fetches user data from database"
+      },
+      "output_outline": "Summary: CRITICAL security vulnerability with SQL injection. Code Quality: Issues with var usage, no error handling, synchronous DB call. Critical Issues: [CRITICAL] SQL injection vulnerability - use parameterized queries. Improvements: Use const/let, add async/await, implement error handling. Security: SQL injection risk, no input validation. Refactored example provided with prepared statements."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

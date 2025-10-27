@@ -1,0 +1,74 @@
+{
+  "id": "doc_writer",
+  "title": "Developer Documentation Writer",
+  "description": "Generates comprehensive, clear developer documentation for functions, modules, APIs, and codebases with examples and best practices.",
+  "category": "documentation",
+  "tags": [
+    "documentation",
+    "api-docs",
+    "jsdoc",
+    "readme",
+    "technical-writing"
+  ],
+  "template": "Generate comprehensive developer documentation for the following code or module.\n\n**Code/Module to Document:**\n```{{language}}\n{{code}}\n```\n\n**Context:** {{context}}\n\n**Documentation Requirements:**\n\n1. **Overview:**\n   - Clear description of purpose and functionality\n   - Use cases and when to use this code\n   - High-level architecture (if applicable)\n\n2. **API Documentation:**\n   - Function/method signatures\n   - Parameter descriptions with types\n   - Return value descriptions\n   - Exceptions/errors that may be thrown\n\n3. **Usage Examples:**\n   - Basic usage example\n   - Advanced usage scenarios\n   - Common patterns\n   - Edge cases\n\n4. **Code Comments:**\n   - Inline documentation (JSDoc, docstrings, etc.)\n   - Complex logic explanations\n   - Algorithm descriptions\n\n5. **Dependencies:**\n   - Required libraries/modules\n   - Version requirements\n   - Installation instructions (if applicable)\n\n6. **Best Practices:**\n   - Recommended usage patterns\n   - Performance considerations\n   - Security considerations\n   - Common pitfalls to avoid\n\n7. **Related Documentation:**\n   - Links to related functions/modules\n   - External resources\n   - References to design patterns used\n\n**Output Format:**\n- Use Markdown format\n- Include code examples with syntax highlighting\n- Add inline code documentation (JSDoc/docstring format)\n- Provide clear, concise explanations\n- Include type annotations where applicable\n\nGenerate documentation that is:\n- **Clear:** Easy to understand for developers of various skill levels\n- **Complete:** Covers all functionality and edge cases\n- **Accurate:** Technically correct and up-to-date\n- **Practical:** Includes real-world examples",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "description": "The code, function, class, or module to document"
+      },
+      "language": {
+        "type": "string",
+        "description": "Programming language",
+        "default": "javascript",
+        "enum": [
+          "javascript",
+          "typescript",
+          "python",
+          "java",
+          "go",
+          "rust",
+          "c#",
+          "php",
+          "ruby",
+          "kotlin"
+        ]
+      },
+      "context": {
+        "type": "string",
+        "description": "Additional context about the code (e.g., 'Part of user authentication system')",
+        "default": "General purpose utility"
+      },
+      "doc_style": {
+        "type": "string",
+        "description": "Documentation style preference",
+        "enum": [
+          "jsdoc",
+          "python-docstring",
+          "javadoc",
+          "markdown",
+          "restructuredtext"
+        ],
+        "default": "markdown"
+      }
+    },
+    "required": [
+      "code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "code": "function calculateDiscount(price, discountPercent) {\n  return price - (price * discountPercent / 100);\n}",
+        "language": "javascript",
+        "context": "E-commerce pricing utility",
+        "doc_style": "jsdoc"
+      },
+      "output_outline": "Comprehensive documentation including: JSDoc block with @param, @returns, @throws tags, description of purpose, usage examples (basic and with validation), edge case handling (negative values, >100% discount), performance notes, related functions (calculateTax, applyPromoCode), code example with TypeScript types, common pitfalls (floating point precision), integration example in checkout flow."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

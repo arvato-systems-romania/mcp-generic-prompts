@@ -1,0 +1,362 @@
+[
+  {
+    "id": "kubernetes-resource-optimization",
+    "title": "Kubernetes Resource Optimization & Cost Reduction",
+    "description": "Analyzes Kubernetes cluster resources, identifies over-provisioning and optimization opportunities to reduce costs.",
+    "category": "devops",
+    "tags": [
+      "kubernetes",
+      "cost-optimization",
+      "resources",
+      "cloud"
+    ],
+    "template": "Optimize Kubernetes resources for cluster {{cluster_name}}.\n\n1. Analyze current resource allocation:\n   - Pod resource requests and limits\n   - Actual vs requested resources\n   - Node utilization patterns\n   - Over-provisioned workloads\n2. Review resource efficiency:\n   - CPU and memory utilization\n   - Idle resources\n   - Pod density per node\n   - Namespace quotas\n3. Identify optimization opportunities:\n   - Rightsize pod resources\n   - Vertical Pod Autoscaler (VPA) recommendations\n   - Horizontal Pod Autoscaler (HPA) tuning\n   - Node affinity and taints optimization\n4. Cost analysis:\n   - Current monthly cost\n   - Wasted resources cost\n   - Optimization savings estimate\n5. Implement monitoring:\n   - Resource metrics\n   - Cost allocation tags\n   - Alerting thresholds\n6. Provide implementation roadmap\n\nCloud Provider: {{cloud_provider}}\nCluster size: {{cluster_size}}\nCurrent monthly cost: {{current_cost}}\n\nOutput: Resource Analysis | Optimization Recommendations | Cost Savings | Implementation Plan",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "cluster_name": {
+          "type": "string",
+          "description": "Name of the Kubernetes cluster"
+        },
+        "cloud_provider": {
+          "type": "string",
+          "enum": [
+            "aws",
+            "gcp",
+            "azure",
+            "on-prem"
+          ],
+          "description": "Cloud provider"
+        },
+        "cluster_size": {
+          "type": "string",
+          "description": "Cluster size (e.g., '25 nodes, 200 pods')"
+        },
+        "current_cost": {
+          "type": "string",
+          "description": "Current monthly cost",
+          "default": "unknown"
+        }
+      },
+      "required": [
+        "cluster_name",
+        "cloud_provider",
+        "cluster_size"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "cluster_name": "prod-us-east",
+          "cloud_provider": "aws",
+          "cluster_size": "30 nodes (m5.2xlarge), 180 pods",
+          "current_cost": "$15,000/month"
+        },
+        "output_outline": "Analysis: 60% pods over-provisioned, avg CPU utilization 25%, recommendations: rightsize 80 pods (save $4,500), implement VPA, use spot instances for non-critical workloads (save $2,000), enable cluster autoscaler, consolidate to 20 nodes, total savings: $6,500/month (43%)"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "ci-pipeline-security-hardening",
+    "title": "CI/CD Pipeline Security Hardening",
+    "description": "Comprehensive security review of CI/CD pipelines, identifying vulnerabilities and implementing security best practices.",
+    "category": "devops",
+    "tags": [
+      "ci-cd",
+      "security",
+      "pipeline",
+      "supply-chain"
+    ],
+    "template": "Harden CI/CD pipeline security for {{project_name}} on {{ci_system}}.\n\n1. Security audit:\n   - Secret management practices\n   - Access controls and permissions\n   - Third-party action/plugin risks\n   - Supply chain vulnerabilities\n2. Identify security gaps:\n   - Hardcoded credentials\n   - Excessive permissions\n   - Unverified dependencies\n   - Insufficient logging\n   - Missing artifact signing\n3. Implement security controls:\n   - Secret scanning (pre-commit, CI)\n   - Least privilege access\n   - Dependency verification (checksums, signatures)\n   - Container image scanning\n   - SBOM generation\n4. Pipeline isolation:\n   - Separate prod/non-prod pipelines\n   - Network segmentation\n   - Build environment hardening\n5. Audit and compliance:\n   - Pipeline activity logging\n   - Change approval workflows\n   - Compliance requirements (SOC2, PCI)\n6. Incident response plan\n\nCI System: {{ci_system}}\nCompliance requirements: {{compliance}}\n\nOutput: Security Assessment | Vulnerability Report | Hardening Plan | Compliance Checklist",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "ci_system": {
+          "type": "string",
+          "enum": [
+            "github-actions",
+            "gitlab-ci",
+            "jenkins",
+            "circleci",
+            "azure-devops"
+          ],
+          "description": "CI/CD system"
+        },
+        "compliance": {
+          "type": "string",
+          "description": "Compliance requirements (e.g., 'SOC2, PCI-DSS')",
+          "default": "none"
+        }
+      },
+      "required": [
+        "project_name",
+        "ci_system"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "payment-platform",
+          "ci_system": "github-actions",
+          "compliance": "PCI-DSS"
+        },
+        "output_outline": "Vulnerabilities: AWS keys in workflow files, third-party actions without pinning, no artifact signing, recommendations: migrate secrets to GitHub Secrets + Vault, pin actions to SHA, implement Sigstore for signing, add Trivy scanning, separate prod deployment pipeline with manual approval, enable audit logs, estimated 3-week implementation"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "terraform-code-review",
+    "title": "Terraform Infrastructure Code Review",
+    "description": "Reviews Terraform code for best practices, security issues, and maintainability concerns with refactoring recommendations.",
+    "category": "devops",
+    "tags": [
+      "terraform",
+      "iac",
+      "infrastructure",
+      "code-review"
+    ],
+    "template": "Review Terraform infrastructure code for {{project_name}}.\n\n1. Code structure analysis:\n   - Module organization\n   - State management strategy\n   - Variable and output definitions\n   - Remote backend configuration\n2. Best practices review:\n   - Resource naming conventions\n   - Use of modules vs resources\n   - Workspace usage\n   - Version constraints\n3. Security assessment:\n   - Hardcoded secrets\n   - Overly permissive IAM policies\n   - Unencrypted resources\n   - Public access exposures\n   - Network security gaps\n4. Maintainability:\n   - Code duplication\n   - Lack of documentation\n   - Complex resource dependencies\n   - Testing strategy\n5. Reliability concerns:\n   - Missing lifecycle rules\n   - No backup strategies\n   - Disaster recovery gaps\n6. Provide refactoring plan:\n   - Module extraction opportunities\n   - State file optimization\n   - Security improvements\n\nCloud provider: {{cloud_provider}}\nTerraform version: {{terraform_version}}\n\nOutput: Code Analysis | Security Issues | Refactoring Plan | Best Practices Guide",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the infrastructure project"
+        },
+        "cloud_provider": {
+          "type": "string",
+          "enum": [
+            "aws",
+            "gcp",
+            "azure",
+            "multi-cloud"
+          ],
+          "description": "Cloud provider"
+        },
+        "terraform_version": {
+          "type": "string",
+          "description": "Terraform version in use",
+          "default": "latest"
+        }
+      },
+      "required": [
+        "project_name",
+        "cloud_provider"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "prod-infrastructure",
+          "cloud_provider": "aws",
+          "terraform_version": "1.6"
+        },
+        "output_outline": "Issues: 3 hardcoded AWS keys, S3 buckets without encryption, overly permissive security groups (0.0.0.0/0), no state locking, monolithic main.tf (800 lines), recommendations: use AWS Secrets Manager data source, enable S3 encryption, restrict security groups, implement remote state with DynamoDB locking, split into modules (networking, compute, database), add tflint + checkov to CI"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "observability-stack-design",
+    "title": "Observability Stack Architecture Design",
+    "description": "Designs comprehensive observability solution with metrics, logging, and tracing for distributed systems.",
+    "category": "devops",
+    "tags": [
+      "observability",
+      "monitoring",
+      "logging",
+      "tracing"
+    ],
+    "template": "Design observability stack for {{system_name}}.\n\n1. Define observability requirements:\n   - System architecture ({{architecture_type}})\n   - Key metrics (golden signals, SLIs)\n   - Log aggregation needs\n   - Distributed tracing requirements\n   - Retention policies\n2. Recommend observability tools:\n   - Metrics: Prometheus, Datadog, CloudWatch\n   - Logging: ELK, Loki, Splunk\n   - Tracing: Jaeger, Tempo, Zipkin\n   - APM: New Relic, Dynatrace\n3. Design architecture:\n   - Collection agents\n   - Data pipelines\n   - Storage and retention\n   - Visualization (Grafana, Kibana)\n4. Instrumentation strategy:\n   - Application metrics (RED, USE)\n   - Custom business metrics\n   - Structured logging format\n   - Trace context propagation\n5. Alerting framework:\n   - Alert rules and thresholds\n   - Notification routing\n   - On-call procedures\n6. Cost optimization:\n   - Sampling strategies\n   - Data retention tiers\n   - Query optimization\n\nArchitecture: {{architecture_type}}\nScale: {{scale}}\nBudget: {{budget_constraint}}\n\nOutput: Observability Architecture | Tool Selection | Implementation Plan | Cost Estimate",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "system_name": {
+          "type": "string",
+          "description": "Name of the system"
+        },
+        "architecture_type": {
+          "type": "string",
+          "enum": [
+            "monolith",
+            "microservices",
+            "serverless",
+            "hybrid"
+          ],
+          "description": "System architecture type"
+        },
+        "scale": {
+          "type": "string",
+          "description": "System scale (e.g., '50 services, 1M req/day')"
+        },
+        "budget_constraint": {
+          "type": "string",
+          "description": "Monthly budget constraint",
+          "default": "flexible"
+        }
+      },
+      "required": [
+        "system_name",
+        "architecture_type",
+        "scale"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "system_name": "ecommerce-platform",
+          "architecture_type": "microservices",
+          "scale": "30 services, 5M req/day",
+          "budget_constraint": "$2000/month"
+        },
+        "output_outline": "Stack: Prometheus + Thanos (metrics), Loki (logs), Tempo (traces), Grafana (viz), OpenTelemetry instrumentation, architecture: agents on each service, central Grafana Cloud for long-term storage, sampling: 10% traces, 30-day metric retention, alerts: p99 latency, error rate >1%, estimated cost: $1,800/month"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "disaster-recovery-plan",
+    "title": "Disaster Recovery & Business Continuity Planning",
+    "description": "Creates comprehensive disaster recovery plan with RTO/RPO targets, backup strategies, and failover procedures.",
+    "category": "devops",
+    "tags": [
+      "disaster-recovery",
+      "backup",
+      "resilience",
+      "business-continuity"
+    ],
+    "template": "Create disaster recovery plan for {{system_name}}.\n\n1. Define requirements:\n   - Recovery Time Objective (RTO): {{rto_target}}\n   - Recovery Point Objective (RPO): {{rpo_target}}\n   - Criticality tiers (critical, important, standard)\n   - Compliance requirements\n2. Identify failure scenarios:\n   - Infrastructure failures (region, AZ, data center)\n   - Data corruption or loss\n   - Cyber attacks (ransomware, DDoS)\n   - Human errors\n   - Third-party service outages\n3. Design backup strategy:\n   - Backup frequency and types (full, incremental)\n   - Backup storage (local, remote, cloud)\n   - Retention policies\n   - Encryption and security\n   - Backup validation and testing\n4. Failover procedures:\n   - Multi-region architecture\n   - Database replication strategy\n   - DNS failover configuration\n   - Load balancer health checks\n5. Recovery procedures:\n   - Step-by-step runbooks\n   - Role assignments\n   - Communication protocols\n   - Validation checklists\n6. Testing plan:\n   - DR drill frequency\n   - Test scenarios\n   - Success criteria\n\nSystem criticality: {{criticality}}\nCurrent architecture: {{current_arch}}\n\nOutput: DR Plan Document | Recovery Procedures | Testing Schedule | Architecture Improvements",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "system_name": {
+          "type": "string",
+          "description": "Name of the system"
+        },
+        "rto_target": {
+          "type": "string",
+          "description": "Target RTO (e.g., '4 hours', '15 minutes')"
+        },
+        "rpo_target": {
+          "type": "string",
+          "description": "Target RPO (e.g., '1 hour', '5 minutes')"
+        },
+        "criticality": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ],
+          "description": "System criticality"
+        },
+        "current_arch": {
+          "type": "string",
+          "description": "Current architecture description"
+        }
+      },
+      "required": [
+        "system_name",
+        "rto_target",
+        "rpo_target",
+        "criticality"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "system_name": "banking-core",
+          "rto_target": "1 hour",
+          "rpo_target": "5 minutes",
+          "criticality": "critical",
+          "current_arch": "Single region AWS, RDS Multi-AZ, daily backups"
+        },
+        "output_outline": "Plan: implement multi-region active-active (primary: us-east-1, secondary: us-west-2), RDS cross-region read replica with 1-min lag, continuous replication using DMS, Route53 health-check based failover, hourly automated snapshots, quarterly DR drills, runbooks for: region failure, database corruption, ransomware, RTO: 30min achievable, RPO: 5min guaranteed"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "gitops-migration-strategy",
+    "title": "GitOps Implementation & Migration Strategy",
+    "description": "Designs GitOps workflow and migration strategy for declarative infrastructure and application deployment.",
+    "category": "devops",
+    "tags": [
+      "gitops",
+      "argocd",
+      "flux",
+      "kubernetes",
+      "deployment"
+    ],
+    "template": "Design GitOps implementation for {{organization_name}}.\n\n1. Assess current deployment process:\n   - Deployment tools and scripts\n   - Manual vs automated steps\n   - Environment promotion workflow\n   - Configuration management\n2. Define GitOps approach:\n   - Repository structure (mono-repo vs multi-repo)\n   - Branch strategy (environment per branch, overlay per env)\n   - Tool selection ({{gitops_tool}})\n   - Secret management integration\n3. Design implementation:\n   - Git repository layout\n   - Application definitions\n   - Kustomize/Helm structure\n   - Environment-specific configurations\n4. Migration strategy:\n   - Pilot applications\n   - Phased rollout plan\n   - Training requirements\n   - Rollback procedures\n5. Establish governance:\n   - Code review process\n   - Change approval workflows\n   - RBAC policies\n   - Audit logging\n6. Monitoring and observability:\n   - Sync status tracking\n   - Drift detection\n   - Deployment metrics\n\nCurrent platform: {{platform}}\nGitOps tool: {{gitops_tool}}\nTeam size: {{team_size}}\n\nOutput: GitOps Architecture | Repository Structure | Migration Plan | Best Practices Guide",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "organization_name": {
+          "type": "string",
+          "description": "Organization name"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "kubernetes",
+            "ecs",
+            "lambda",
+            "mixed"
+          ],
+          "description": "Deployment platform"
+        },
+        "gitops_tool": {
+          "type": "string",
+          "enum": [
+            "argocd",
+            "flux",
+            "jenkins-x",
+            "weave-gitops"
+          ],
+          "default": "argocd"
+        },
+        "team_size": {
+          "type": "string",
+          "description": "Team size (e.g., '3 teams, 20 developers')"
+        }
+      },
+      "required": [
+        "organization_name",
+        "platform",
+        "team_size"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "organization_name": "TechCorp",
+          "platform": "kubernetes",
+          "gitops_tool": "argocd",
+          "team_size": "5 teams, 30 developers"
+        },
+        "output_outline": "Design: mono-repo with apps/ and infrastructure/ directories, Kustomize overlays for dev/staging/prod, ArgoCD ApplicationSets for multi-cluster, Sealed Secrets for secret management, migration phases: 1) install ArgoCD, 2) migrate 3 pilot apps (2 weeks), 3) team training (1 week), 4) full migration (6 weeks), RBAC: team-specific AppProjects, drift detection with weekly reports"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

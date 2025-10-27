@@ -1,0 +1,56 @@
+{
+  "id": "python-async-optimization",
+  "title": "Python Async/Await Optimization",
+  "description": "Optimizes Python async code for better concurrency, proper await usage, and async best practices with asyncio.",
+  "category": "backend-python",
+  "tags": [
+    "python",
+    "async",
+    "asyncio",
+    "concurrency",
+    "performance"
+  ],
+  "template": "Analyze and optimize Python async/await code for better concurrency and performance.\n\n**Code to Analyze:**\n```python\n{{python_code}}\n```\n\n**Analysis Focus:**\n\n1. **Async/Await Correctness:**\n   - Missing await on coroutines\n   - Blocking calls in async functions\n   - Proper async context managers\n   - Async generators usage\n\n2. **Concurrency Patterns:**\n   - Sequential vs concurrent execution\n   - asyncio.gather() opportunities\n   - asyncio.create_task() usage\n   - Semaphore for rate limiting\n   - Queue for producer-consumer\n\n3. **Common Mistakes:**\n   - Mixing sync and async code incorrectly\n   - Using time.sleep() instead of asyncio.sleep()\n   - Not handling cancellation properly\n   - Missing exception handling in tasks\n   - Creating too many tasks simultaneously\n\n4. **Performance Issues:**\n   - Unnecessary awaits\n   - Sequential execution that could be concurrent\n   - Missing connection pooling\n   - Improper timeout handling\n\n5. **Best Practices:**\n   - Using async libraries (aiohttp, asyncpg, motor)\n   - Proper error handling with try/except/finally\n   - Task cancellation and cleanup\n   - Event loop management\n   - Type hints for coroutines\n\n6. **FastAPI Specific (if applicable):**\n   - Background tasks\n   - Dependency injection with async\n   - Database session management\n   - WebSocket handlers\n\n**Output Format:**\n- **Concurrency Analysis:** Current vs potential parallelism\n- **Blocking Calls:** Sync operations that should be async\n- **Optimized Code:** Refactored version with concurrent execution\n- **Performance Gains:** Expected speedup with benchmarks\n- **Error Handling:** Proper exception management\n- **Testing Tips:** How to test async code properly",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "python_code": {
+        "type": "string",
+        "description": "Python async code to optimize"
+      },
+      "framework": {
+        "type": "string",
+        "enum": [
+          "asyncio",
+          "fastapi",
+          "aiohttp",
+          "django-async",
+          "tornado"
+        ],
+        "default": "asyncio",
+        "description": "Framework being used"
+      },
+      "performance_goal": {
+        "type": "string",
+        "description": "What to optimize for (e.g., 'Handle 1000 concurrent requests')",
+        "default": "Maximum concurrency"
+      }
+    },
+    "required": [
+      "python_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "python_code": "async def fetch_user_data(user_ids: list):\n    results = []\n    for user_id in user_ids:\n        data = await fetch_from_api(user_id)\n        results.append(data)\n    return results",
+        "framework": "asyncio",
+        "performance_goal": "Fetch 100 users as fast as possible"
+      },
+      "output_outline": "Issue: Sequential execution of 100 API calls (10s+ total). Solution: Use asyncio.gather() for concurrent execution. Optimized: Create all tasks upfront, execute concurrently with error handling, add semaphore for rate limiting (max 10 concurrent). Performance: 10s → 1s (90% faster). Added timeout handling, proper exception catching, type hints. Example with aiohttp session pooling."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

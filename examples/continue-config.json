@@ -1,0 +1,18 @@
+{
+  "models": [
+    {
+      "title": "Claude 3.5 Sonnet",
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet-20241022",
+      "apiKey": "YOUR_API_KEY"
+    }
+  ],
+  "mcpServers": [
+    {
+      "name": "generic-prompts",
+      "command": "node",
+      "args": ["/absolute/path/to/mcp-generic-prompt/dist/mcp-entry.js"],
+      "env": {}
+    }
+  ]
+}

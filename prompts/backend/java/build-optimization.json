@@ -1,0 +1,50 @@
+[
+  {
+    "id": "gradle-build-optimization",
+    "title": "Gradle Build Performance Optimization",
+    "description": "Analyzes Gradle build configuration and provides actionable recommendations to reduce build times and improve caching efficiency.",
+    "category": "build-optimization",
+    "tags": [
+      "gradle",
+      "build",
+      "performance",
+      "optimization"
+    ],
+    "template": "Optimize the Gradle build for {{project_name}}. Analyze the build configuration and provide improvements:\n\n1. Review build.gradle and settings.gradle for performance anti-patterns\n2. Identify unnecessary task executions and dependencies\n3. Recommend caching strategies (local, remote)\n4. Suggest parallel execution opportunities\n5. Optimize dependency resolution (use BOM, version catalogs)\n6. Identify large dependencies that could be scoped better\n7. Recommend Gradle daemon and JVM heap settings\n8. Propose incremental compilation improvements\n9. Estimate time savings for each recommendation\n\nCurrent build time: {{current_build_time}}\nBuild configuration:\n{{build_config}}\n\nOutput as prioritized list with: Optimization | Current State | Proposed Change | Expected Savings | Effort",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "current_build_time": {
+          "type": "string",
+          "description": "Current clean build time (e.g., '5m 30s')"
+        },
+        "build_config": {
+          "type": "string",
+          "description": "Content of build.gradle(.kts) and settings.gradle(.kts)"
+        }
+      },
+      "required": [
+        "project_name",
+        "current_build_time",
+        "build_config"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "microservices-platform",
+          "current_build_time": "8m 45s",
+          "build_config": "plugins { id 'java' } dependencies { implementation 'org.springframework.boot:spring-boot-starter-web' }"
+        },
+        "output_outline": "Recommendations including enable build cache (save 2m), parallel execution (save 1.5m), configuration cache (save 30s), dependency substitution rules, composite builds for multi-module, total estimated savings: 4m"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

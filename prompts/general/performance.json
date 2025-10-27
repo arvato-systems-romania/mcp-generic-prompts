@@ -1,0 +1,125 @@
+[
+  {
+    "id": "performance-profiling-plan",
+    "title": "Application Performance Profiling Strategy",
+    "description": "Designs a comprehensive performance profiling plan with specific metrics, tools, and methodologies for identifying bottlenecks.",
+    "category": "performance",
+    "tags": [
+      "performance",
+      "profiling",
+      "optimization",
+      "metrics"
+    ],
+    "template": "Create a performance profiling plan for {{project_name}} ({{language}}/{{framework}}).\n\n1. Define key performance indicators (response time, throughput, resource usage)\n2. Identify profiling tools appropriate for {{language}} (JProfiler, py-spy, perf, etc.)\n3. Design load test scenarios with realistic user patterns\n4. Specify instrumentation points (database queries, API calls, CPU hotspots)\n5. Define baseline metrics and performance budgets\n6. Create monitoring dashboard requirements\n7. Outline sampling strategies (continuous, triggered, periodic)\n8. Define analysis methodology for each metric type\n9. Specify deliverables and success criteria\n\nApplication Type: {{app_type}}\nExpected Load: {{expected_load}}\nPerformance Goals: {{performance_goals}}\n\nOutput: Profiling Strategy | Tool Selection | Test Scenarios | Analysis Framework | Timeline",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "language": {
+          "type": "string",
+          "description": "Primary programming language"
+        },
+        "framework": {
+          "type": "string",
+          "description": "Main framework"
+        },
+        "app_type": {
+          "type": "string",
+          "description": "Type of application",
+          "enum": [
+            "web-api",
+            "web-app",
+            "batch-processing",
+            "real-time",
+            "microservices"
+          ]
+        },
+        "expected_load": {
+          "type": "string",
+          "description": "Expected load (e.g., '1000 req/s', '10K concurrent users')"
+        },
+        "performance_goals": {
+          "type": "string",
+          "description": "Performance targets (e.g., 'p95 < 200ms')"
+        }
+      },
+      "required": [
+        "project_name",
+        "language",
+        "app_type"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "analytics-api",
+          "language": "Java",
+          "framework": "Spring Boot",
+          "app_type": "web-api",
+          "expected_load": "5000 req/s",
+          "performance_goals": "p95 < 100ms, p99 < 500ms"
+        },
+        "output_outline": "Strategy using JFR, async-profiler, Gatling load tests, 3 scenarios (normal/peak/stress), CPU flame graphs, memory allocation tracking, database query profiling, 2-week profiling cycle, deliverables: hotspot report, optimization recommendations, 30% improvement target"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "memory-leak-triage",
+    "title": "Memory Leak Detection & Triage",
+    "description": "Systematically identifies and triages memory leaks using heap dumps, profiling data, and pattern analysis.",
+    "category": "performance",
+    "tags": [
+      "memory",
+      "leak",
+      "debugging",
+      "heap"
+    ],
+    "template": "Triage memory leak in {{project_name}} ({{language}}).\n\n1. Analyze heap dump or memory profile data\n2. Identify objects with unexpectedly high retention\n3. Trace reference chains preventing garbage collection\n4. Detect common leak patterns:\n   - Event listeners not removed\n   - Cache without eviction\n   - Thread-local leaks\n   - Unclosed resources\n5. Quantify leak rate (MB/hour)\n6. Assess business impact and urgency\n7. Provide root cause analysis\n8. Suggest fixes with code examples\n9. Recommend prevention strategies\n\nSymptoms: {{symptoms}}\nProfiling data: {{profiling_data}}\n\nOutput: Root Cause Analysis | Leak Rate | Fix Recommendations | Prevention Checklist",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "language": {
+          "type": "string",
+          "description": "Programming language"
+        },
+        "symptoms": {
+          "type": "string",
+          "description": "Observed symptoms (e.g., 'OOMError after 6 hours, heap grows 50MB/hour')"
+        },
+        "profiling_data": {
+          "type": "string",
+          "description": "Heap dump summary or profiling output"
+        }
+      },
+      "required": [
+        "project_name",
+        "language",
+        "symptoms"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "notification-service",
+          "language": "Java",
+          "symptoms": "OutOfMemoryError after 8 hours, heap usage increases 100MB/hour",
+          "profiling_data": "Top retained: HashMap (2.3GB), 450K WebSocket sessions"
+        },
+        "output_outline": "Root cause: WebSocket sessions not properly closed on disconnect, HashMap accumulating stale sessions, leak rate 100MB/hr, business impact: service restart required daily, fix: implement session timeout + cleanup job, add try-with-resources, prevention: add resource leak detector"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

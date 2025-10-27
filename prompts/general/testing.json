@@ -1,0 +1,112 @@
+[
+  {
+    "id": "flaky-test-diagnosis",
+    "title": "Flaky Test Root Cause Analysis",
+    "description": "Analyzes flaky tests to identify root causes such as timing issues, shared state, or environmental dependencies.",
+    "category": "testing",
+    "tags": [
+      "testing",
+      "flaky",
+      "ci",
+      "quality"
+    ],
+    "template": "Diagnose flaky test: {{test_name}} in {{project_name}}.\n\n1. Analyze test failure patterns (frequency, conditions)\n2. Review test code for common flakiness causes:\n   - Race conditions and timing dependencies\n   - Shared mutable state between tests\n   - External service dependencies\n   - Fixed sleeps instead of proper waits\n   - Non-deterministic data generation\n   - Resource cleanup issues\n3. Check test execution environment (CI vs local)\n4. Analyze failure logs and stack traces\n5. Identify contributing factors (load, network, concurrency)\n6. Provide root cause hypothesis\n7. Suggest fixes with code examples\n8. Recommend test isolation improvements\n\nTest failure rate: {{failure_rate}}\nFailure logs: {{failure_logs}}\n\nOutput: Root Cause | Contributing Factors | Fix Strategy | Refactoring Plan",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "test_name": {
+          "type": "string",
+          "description": "Name of the flaky test"
+        },
+        "failure_rate": {
+          "type": "string",
+          "description": "Failure frequency (e.g., '15% of runs', '3/20 executions')"
+        },
+        "failure_logs": {
+          "type": "string",
+          "description": "Recent failure logs or error messages"
+        }
+      },
+      "required": [
+        "project_name",
+        "test_name",
+        "failure_rate"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "order-processing",
+          "test_name": "testOrderCreationNotification",
+          "failure_rate": "20% of CI runs",
+          "failure_logs": "AssertionError: Expected 1 notification, got 0. Timeout after 5000ms"
+        },
+        "output_outline": "Root cause: race condition between order creation and notification listener setup, async notification processing, fixed 5s timeout insufficient under load, fix: use awaitility with condition polling, increase timeout to 10s, ensure listener registered before action, refactor to use test containers for reliable messaging"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "unit-test-gap-analysis",
+    "title": "Unit Test Coverage Gap Analysis",
+    "description": "Identifies untested or under-tested code paths, prioritizing areas that need test coverage based on complexity and risk.",
+    "category": "testing",
+    "tags": [
+      "testing",
+      "coverage",
+      "quality",
+      "tdd"
+    ],
+    "template": "Analyze test coverage gaps for {{project_name}}.\n\n1. Review current coverage metrics (line, branch, path coverage)\n2. Identify critical paths with no/low coverage\n3. Prioritize gaps by:\n   - Business criticality\n   - Code complexity (cyclomatic complexity)\n   - Bug history\n   - Recent changes\n4. Analyze coverage by component/module\n5. Identify edge cases and error paths not tested\n6. Review test quality (assertions, mocking, isolation)\n7. Suggest specific test cases for high-priority gaps\n8. Estimate effort to reach {{target_coverage}}% coverage\n9. Create phased testing roadmap\n\nCurrent coverage: {{current_coverage}}%\nTarget: {{target_coverage}}%\nCritical modules: {{critical_modules}}\n\nOutput: Gap Analysis Report | Prioritized Test Plan | Effort Estimate | Quick Wins",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "current_coverage": {
+          "type": "number",
+          "description": "Current test coverage percentage",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "target_coverage": {
+          "type": "number",
+          "description": "Target test coverage percentage",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 80
+        },
+        "critical_modules": {
+          "type": "string",
+          "description": "Comma-separated list of critical modules/packages"
+        }
+      },
+      "required": [
+        "project_name",
+        "current_coverage"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "payment-processor",
+          "current_coverage": 62,
+          "target_coverage": 85,
+          "critical_modules": "payment.gateway, fraud.detection, transaction.validator"
+        },
+        "output_outline": "Analysis showing payment.gateway at 45% (CRITICAL), fraud.detection 58%, 12 uncovered error paths in transaction validation, 23 edge cases missing, prioritized plan: Phase 1 (2 weeks) - critical paths to 80%, Phase 2 (3 weeks) - edge cases, Phase 3 (2 weeks) - error handling, 180 hours total, quick wins: 7 high-value tests (8 hours) covering 15% gaps"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

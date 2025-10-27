@@ -1,0 +1,661 @@
+[
+  {
+    "id": "react-spa-poc",
+    "title": "React Single Page Application POC",
+    "description": "Generates a complete proof of concept for a React SPA with routing, state management, and API integration.",
+    "category": "poc-frontend",
+    "tags": [
+      "react",
+      "spa",
+      "poc",
+      "frontend",
+      "starter"
+    ],
+    "template": "Create a proof of concept React Single Page Application for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Key features: {{features}}\n- Target users: {{target_users}}\n\n**Technical Stack:**\n- React 18+ with TypeScript\n- React Router for navigation\n- {{state_management}} for state (Redux Toolkit, Zustand, or Context API)\n- {{styling}} for styling (Tailwind CSS, Material-UI, or CSS Modules)\n- Axios for API calls\n- Vite for build tooling\n\n**Generate:**\n1. Project structure with organized folders (components, pages, hooks, services, utils)\n2. Main application shell with routing\n3. 3-5 example pages based on {{features}}\n4. Reusable component library (Button, Card, Form, Modal)\n5. API service layer with mock data\n6. State management setup\n7. Responsive layout with navigation\n8. README with setup instructions\n9. Basic unit tests with Vitest\n10. Environment configuration (.env.example)\n\n**Deliverables:**\n- Complete runnable codebase\n- Package.json with all dependencies\n- Development and production build scripts\n- Basic documentation\n\nAPI Backend: {{api_backend}}\n\nOutput: Complete React POC codebase | File structure | Setup guide | Next steps recommendations",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the POC project"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Business purpose (e.g., 'Customer dashboard for viewing orders')"
+        },
+        "features": {
+          "type": "string",
+          "description": "Comma-separated key features (e.g., 'user login, product catalog, shopping cart')"
+        },
+        "target_users": {
+          "type": "string",
+          "description": "Target user type",
+          "default": "end-users"
+        },
+        "state_management": {
+          "type": "string",
+          "enum": [
+            "redux-toolkit",
+            "zustand",
+            "context-api"
+          ],
+          "default": "zustand"
+        },
+        "styling": {
+          "type": "string",
+          "enum": [
+            "tailwind",
+            "material-ui",
+            "css-modules",
+            "styled-components"
+          ],
+          "default": "tailwind"
+        },
+        "api_backend": {
+          "type": "string",
+          "description": "API backend type",
+          "enum": [
+            "rest",
+            "graphql",
+            "mock"
+          ],
+          "default": "rest"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "features"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "inventory-dashboard",
+          "purpose": "Internal tool for warehouse managers",
+          "features": "inventory list, stock alerts, add/edit items",
+          "target_users": "warehouse staff",
+          "state_management": "zustand",
+          "styling": "tailwind",
+          "api_backend": "rest"
+        },
+        "output_outline": "Complete React app with: InventoryList page with table, StockAlerts with notifications, ItemForm for CRUD, Zustand store for inventory state, Tailwind-styled components, mock REST API with JSON data, responsive sidebar navigation, setup instructions, ready to run with npm run dev"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "nodejs-api-poc",
+    "title": "Node.js REST API POC",
+    "description": "Generates a production-ready Node.js REST API proof of concept with Express, authentication, and database integration.",
+    "category": "poc-backend",
+    "tags": [
+      "nodejs",
+      "express",
+      "api",
+      "backend",
+      "poc"
+    ],
+    "template": "Create a proof of concept Node.js REST API for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Resources to expose: {{resources}}\n- Authentication: {{auth_method}}\n- Database: {{database}}\n\n**Technical Stack:**\n- Node.js 18+ with TypeScript\n- Express.js framework\n- {{database}} database with Prisma/TypeORM\n- JWT authentication (if required)\n- Express Validator for input validation\n- Winston for logging\n- Jest for testing\n\n**Generate:**\n1. Project structure (controllers, services, models, middleware, routes)\n2. RESTful endpoints for {{resources}}:\n   - GET /resource (list with pagination)\n   - GET /resource/:id (single item)\n   - POST /resource (create)\n   - PUT /resource/:id (update)\n   - DELETE /resource/:id (delete)\n3. Authentication middleware (if needed)\n4. Request validation\n5. Error handling middleware\n6. Database models and migrations\n7. Environment configuration\n8. API documentation (Swagger/OpenAPI)\n9. Unit and integration tests\n10. Docker setup\n\n**Deliverables:**\n- Complete API codebase\n- OpenAPI specification\n- Postman collection\n- README with setup and API docs\n- Docker Compose for development\n\nOutput: Complete Node.js API POC | OpenAPI spec | Setup guide | Test examples",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the API project"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Business purpose of the API"
+        },
+        "resources": {
+          "type": "string",
+          "description": "Comma-separated resources (e.g., 'users, products, orders')"
+        },
+        "auth_method": {
+          "type": "string",
+          "enum": [
+            "jwt",
+            "api-key",
+            "oauth2",
+            "none"
+          ],
+          "default": "jwt"
+        },
+        "database": {
+          "type": "string",
+          "enum": [
+            "postgresql",
+            "mysql",
+            "mongodb",
+            "sqlite"
+          ],
+          "default": "postgresql"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "resources"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "task-management-api",
+          "purpose": "Team task tracking system",
+          "resources": "users, projects, tasks, comments",
+          "auth_method": "jwt",
+          "database": "postgresql"
+        },
+        "output_outline": "Express API with: 4 resource endpoints with full CRUD, JWT auth with login/register, PostgreSQL with Prisma, input validation, error handling, Swagger UI at /api-docs, 15 unit tests, Dockerfile, docker-compose with db, README with curl examples, ready to run with npm start"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "python-fastapi-poc",
+    "title": "Python FastAPI Microservice POC",
+    "description": "Creates a modern Python microservice POC using FastAPI with async support, validation, and documentation.",
+    "category": "poc-backend",
+    "tags": [
+      "python",
+      "fastapi",
+      "microservice",
+      "backend",
+      "poc"
+    ],
+    "template": "Create a proof of concept Python FastAPI microservice for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Endpoints: {{endpoints}}\n- Data processing: {{data_processing}}\n- Database: {{database}}\n\n**Technical Stack:**\n- Python 3.11+ with type hints\n- FastAPI framework\n- Pydantic for validation\n- SQLAlchemy/Tortoise ORM\n- Alembic for migrations\n- pytest for testing\n- uvicorn server\n\n**Generate:**\n1. Project structure (routers, models, schemas, services, dependencies)\n2. API endpoints for {{endpoints}}\n3. Request/response models with Pydantic\n4. Async database operations\n5. Dependency injection\n6. CORS middleware\n7. Health check endpoint\n8. Auto-generated OpenAPI docs\n9. Environment configuration with pydantic-settings\n10. Unit tests with pytest\n11. Docker setup\n\n**Features:**\n- Automatic API documentation (Swagger UI, ReDoc)\n- Type checking with mypy\n- Code formatting with black/ruff\n- Async/await throughout\n- Error handling with custom exceptions\n\n**Deliverables:**\n- Complete FastAPI codebase\n- requirements.txt and pyproject.toml\n- Dockerfile and docker-compose\n- README with examples\n- Test suite\n\nOutput: Complete FastAPI POC | API documentation | Setup guide | Test coverage report",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the microservice"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Business purpose"
+        },
+        "endpoints": {
+          "type": "string",
+          "description": "Comma-separated endpoints (e.g., 'process-image, analyze-text, generate-report')"
+        },
+        "data_processing": {
+          "type": "string",
+          "description": "Type of data processing",
+          "default": "REST API"
+        },
+        "database": {
+          "type": "string",
+          "enum": [
+            "postgresql",
+            "mysql",
+            "mongodb",
+            "none"
+          ],
+          "default": "postgresql"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "endpoints"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "document-processor",
+          "purpose": "Document analysis service",
+          "endpoints": "upload-document, extract-text, analyze-content, get-results",
+          "data_processing": "File processing with background tasks",
+          "database": "postgresql"
+        },
+        "output_outline": "FastAPI service with: 4 async endpoints, file upload handling, background task queue for processing, PostgreSQL with SQLAlchemy, Pydantic models for validation, Swagger at /docs, pytest fixtures, Docker with worker process, README with curl examples, 90% test coverage"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "nextjs-fullstack-poc",
+    "title": "Next.js Full-Stack Application POC",
+    "description": "Generates a full-stack Next.js application with API routes, database integration, and authentication.",
+    "category": "poc-fullstack",
+    "tags": [
+      "nextjs",
+      "react",
+      "fullstack",
+      "poc",
+      "typescript"
+    ],
+    "template": "Create a proof of concept full-stack application using Next.js for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Features: {{features}}\n- Authentication: {{auth_required}}\n- Database: {{database}}\n\n**Technical Stack:**\n- Next.js 14+ with App Router\n- TypeScript\n- React Server Components\n- API Routes\n- {{database}} with Prisma\n- {{auth_provider}} for authentication\n- Tailwind CSS for styling\n- Server Actions\n\n**Generate:**\n1. Next.js app structure (app directory, components, lib)\n2. Pages for {{features}}\n3. API routes for backend logic\n4. Database schema and Prisma client\n5. Authentication setup (if required)\n6. Server and client components\n7. Form handling with Server Actions\n8. Loading and error states\n9. Responsive UI with Tailwind\n10. Environment configuration\n11. Testing setup\n\n**Features:**\n- Server-side rendering (SSR)\n- Static site generation (SSG) where applicable\n- API routes for backend\n- Optimized images and fonts\n- SEO-friendly\n\n**Deliverables:**\n- Complete Next.js application\n- Database schema and migrations\n- README with setup instructions\n- Vercel deployment config\n\nOutput: Complete Next.js POC | Database schema | Deployment guide | Feature documentation",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Application purpose"
+        },
+        "features": {
+          "type": "string",
+          "description": "Comma-separated features"
+        },
+        "auth_required": {
+          "type": "boolean",
+          "description": "Whether authentication is required",
+          "default": true
+        },
+        "auth_provider": {
+          "type": "string",
+          "enum": [
+            "nextauth",
+            "clerk",
+            "auth0",
+            "custom"
+          ],
+          "default": "nextauth"
+        },
+        "database": {
+          "type": "string",
+          "enum": [
+            "postgresql",
+            "mysql",
+            "mongodb",
+            "sqlite"
+          ],
+          "default": "postgresql"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "features"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "blog-platform",
+          "purpose": "Personal blogging platform",
+          "features": "user profiles, create posts, comments, search",
+          "auth_required": true,
+          "auth_provider": "nextauth",
+          "database": "postgresql"
+        },
+        "output_outline": "Next.js app with: App router structure, 5 pages (home, profile, new post, post detail, search), API routes for CRUD, Prisma schema for User/Post/Comment, NextAuth with GitHub/Google, RSC for performance, Tailwind UI, Server Actions for mutations, ready to deploy on Vercel"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "spring-boot-api-poc",
+    "title": "Spring Boot REST API POC",
+    "description": "Creates an enterprise-grade Spring Boot REST API proof of concept with security, validation, and persistence.",
+    "category": "poc-backend",
+    "tags": [
+      "java",
+      "spring-boot",
+      "api",
+      "backend",
+      "poc"
+    ],
+    "template": "Create a proof of concept Spring Boot REST API for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Domain entities: {{entities}}\n- Security: {{security_type}}\n- Database: {{database}}\n\n**Technical Stack:**\n- Spring Boot 3.2+\n- Spring Web (REST)\n- Spring Data JPA\n- Spring Security\n- {{database}} database\n- Maven/Gradle build\n- Lombok for boilerplate reduction\n- MapStruct for DTO mapping\n- Springdoc OpenAPI for docs\n\n**Generate:**\n1. Spring Boot project structure (controller, service, repository, model, dto)\n2. RESTful endpoints for {{entities}}\n3. JPA entities and relationships\n4. Repository interfaces with custom queries\n5. Service layer with business logic\n6. DTO classes with validation\n7. Global exception handling\n8. Security configuration\n9. Database configuration with Flyway/Liquibase\n10. OpenAPI documentation\n11. Integration tests\n12. Application properties\n\n**Features:**\n- Pagination and sorting\n- HATEOAS links (optional)\n- Input validation\n- Actuator endpoints\n- Profile-based configuration\n\n**Deliverables:**\n- Complete Spring Boot application\n- Database migration scripts\n- README with API documentation\n- Postman collection\n- Docker configuration\n\nOutput: Complete Spring Boot POC | OpenAPI spec | Setup guide | Test examples",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the API project"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Business purpose"
+        },
+        "entities": {
+          "type": "string",
+          "description": "Comma-separated domain entities (e.g., 'Customer, Order, Product')"
+        },
+        "security_type": {
+          "type": "string",
+          "enum": [
+            "jwt",
+            "basic-auth",
+            "oauth2",
+            "none"
+          ],
+          "default": "jwt"
+        },
+        "database": {
+          "type": "string",
+          "enum": [
+            "postgresql",
+            "mysql",
+            "h2"
+          ],
+          "default": "postgresql"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "entities"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "inventory-service",
+          "purpose": "Warehouse inventory management",
+          "entities": "Product, Category, Supplier, StockLevel",
+          "security_type": "jwt",
+          "database": "postgresql"
+        },
+        "output_outline": "Spring Boot API with: 4 REST controllers with CRUD, JPA entities with relationships, pagination support, JWT security with role-based access, Flyway migrations, Springdoc at /swagger-ui, 20 integration tests, Docker Compose with PostgreSQL, application-dev.properties, ready to run with ./mvnw spring-boot:run"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "vue-spa-poc",
+    "title": "Vue.js Single Page Application POC",
+    "description": "Creates a modern Vue.js 3 SPA with Composition API, Pinia state management, and TypeScript.",
+    "category": "poc-frontend",
+    "tags": [
+      "vue",
+      "spa",
+      "frontend",
+      "poc",
+      "composition-api"
+    ],
+    "template": "Create a proof of concept Vue.js Single Page Application for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Key features: {{features}}\n- UI framework: {{ui_framework}}\n\n**Technical Stack:**\n- Vue 3 with Composition API\n- TypeScript\n- Vite for build tooling\n- Vue Router\n- Pinia for state management\n- {{ui_framework}} for UI components\n- Axios for HTTP\n- Vitest for testing\n\n**Generate:**\n1. Vue project structure (views, components, composables, stores)\n2. Main pages for {{features}}\n3. Reusable component library\n4. Pinia stores with actions and getters\n5. Vue Router with navigation guards\n6. Composables for shared logic\n7. API service layer\n8. Form validation\n9. Responsive layout\n10. Unit tests\n11. Environment configuration\n\n**Features:**\n- Composition API with `<script setup>`\n- TypeScript throughout\n- Reactive state management\n- Route-based code splitting\n- Optimized builds\n\n**Deliverables:**\n- Complete Vue.js codebase\n- Component documentation\n- README with setup\n- Dev and prod configurations\n\nOutput: Complete Vue POC | Component library | Setup guide | Best practices",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the POC project"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Application purpose"
+        },
+        "features": {
+          "type": "string",
+          "description": "Comma-separated features"
+        },
+        "ui_framework": {
+          "type": "string",
+          "enum": [
+            "vuetify",
+            "element-plus",
+            "primevue",
+            "naive-ui",
+            "none"
+          ],
+          "default": "element-plus"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "features"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "project-tracker",
+          "purpose": "Team project management tool",
+          "features": "project list, task board, time tracking, reports",
+          "ui_framework": "element-plus"
+        },
+        "output_outline": "Vue 3 app with: Composition API, 4 main views, Pinia stores for projects/tasks, Vue Router with auth guards, Element Plus components, composables for API calls, drag-drop task board, chart.js for reports, TypeScript interfaces, Vitest tests, ready with npm run dev"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "graphql-api-poc",
+    "title": "GraphQL API POC with Apollo Server",
+    "description": "Generates a GraphQL API proof of concept with Apollo Server, type-safe resolvers, and database integration.",
+    "category": "poc-backend",
+    "tags": [
+      "graphql",
+      "apollo",
+      "api",
+      "backend",
+      "poc"
+    ],
+    "template": "Create a proof of concept GraphQL API for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Types to expose: {{types}}\n- Database: {{database}}\n- Authentication: {{auth_required}}\n\n**Technical Stack:**\n- Node.js with TypeScript\n- Apollo Server 4\n- GraphQL Code Generator\n- {{database}} with Prisma/TypeORM\n- DataLoader for batching\n- GraphQL Shield for authorization\n\n**Generate:**\n1. GraphQL schema (schema.graphql)\n2. Type definitions for {{types}}\n3. Query resolvers (list, single, filtered)\n4. Mutation resolvers (create, update, delete)\n5. Subscription resolvers (if needed)\n6. Database models and relations\n7. Context setup with auth\n8. DataLoader for N+1 prevention\n9. Custom scalars (Date, JSON, etc.)\n10. Error handling\n11. GraphQL Playground/Apollo Studio\n12. Unit tests for resolvers\n\n**Features:**\n- Type-safe resolvers with codegen\n- Pagination (cursor-based)\n- Filtering and sorting\n- Field-level authorization\n- Query complexity analysis\n- Performance monitoring\n\n**Deliverables:**\n- Complete GraphQL API\n- Schema documentation\n- Example queries and mutations\n- README with usage\n- Docker setup\n\nOutput: Complete GraphQL POC | Schema docs | Query examples | Performance guide",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the API"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "API purpose"
+        },
+        "types": {
+          "type": "string",
+          "description": "Comma-separated GraphQL types (e.g., 'User, Post, Comment')"
+        },
+        "database": {
+          "type": "string",
+          "enum": [
+            "postgresql",
+            "mysql",
+            "mongodb"
+          ],
+          "default": "postgresql"
+        },
+        "auth_required": {
+          "type": "boolean",
+          "description": "Whether authentication is required",
+          "default": true
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "types"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "social-api",
+          "purpose": "Social media platform API",
+          "types": "User, Post, Comment, Like",
+          "database": "postgresql",
+          "auth_required": true
+        },
+        "output_outline": "Apollo Server with: GraphQL schema for 4 types, queries with filtering/pagination, mutations with validation, Prisma with PostgreSQL, JWT auth in context, DataLoader for user/post batching, GraphQL Playground, 15 resolver tests, subscription for new posts, Docker Compose, README with curl examples"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "mobile-app-poc",
+    "title": "React Native Mobile App POC",
+    "description": "Creates a cross-platform mobile app proof of concept using React Native with navigation and API integration.",
+    "category": "poc-mobile",
+    "tags": [
+      "react-native",
+      "mobile",
+      "ios",
+      "android",
+      "poc"
+    ],
+    "template": "Create a proof of concept React Native mobile application for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Key screens: {{screens}}\n- Platform: {{platform}}\n- API backend: {{api_type}}\n\n**Technical Stack:**\n- React Native with TypeScript\n- React Navigation\n- Redux Toolkit or Zustand\n- React Query for data fetching\n- {{ui_library}} for UI components\n- AsyncStorage for persistence\n- Expo (optional)\n\n**Generate:**\n1. Project structure (screens, components, navigation, services)\n2. Navigation setup (Stack, Tab, Drawer)\n3. Screens for {{screens}}\n4. Reusable UI components\n5. API service layer\n6. State management setup\n7. Authentication flow\n8. Local data persistence\n9. Platform-specific code (if needed)\n10. Push notification setup\n11. App icons and splash screen\n\n**Features:**\n- Cross-platform (iOS/Android)\n- Native navigation\n- Offline support\n- Form handling\n- Image upload\n- Responsive design\n\n**Deliverables:**\n- Complete React Native app\n- Build configurations\n- README with setup\n- Screenshots\n- App Store submission checklist\n\nOutput: Complete React Native POC | Navigation flow | Build guide | Platform notes",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the mobile app"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "App purpose"
+        },
+        "screens": {
+          "type": "string",
+          "description": "Comma-separated screens (e.g., 'login, home, profile, settings')"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "both",
+            "ios",
+            "android"
+          ],
+          "default": "both"
+        },
+        "api_type": {
+          "type": "string",
+          "enum": [
+            "rest",
+            "graphql",
+            "firebase"
+          ],
+          "default": "rest"
+        },
+        "ui_library": {
+          "type": "string",
+          "enum": [
+            "react-native-paper",
+            "native-base",
+            "ui-kitten",
+            "custom"
+          ],
+          "default": "react-native-paper"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "screens"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "fitness-tracker",
+          "purpose": "Personal fitness tracking app",
+          "screens": "login, dashboard, workout-log, progress-charts, settings",
+          "platform": "both",
+          "api_type": "rest",
+          "ui_library": "react-native-paper"
+        },
+        "output_outline": "React Native app with: 5 screens, Tab + Stack navigation, Zustand for state, React Query for API, AsyncStorage for workouts, Material Design with Paper, chart.js for progress, camera for photos, push notifications, works on iOS/Android, build configs for both platforms, README with Xcode/Android Studio setup"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "angular-spa-poc",
+    "title": "Angular Single Page Application POC",
+    "description": "Creates an enterprise-grade Angular SPA with reactive forms, routing, state management, and HTTP services.",
+    "category": "poc-frontend",
+    "tags": [
+      "angular",
+      "spa",
+      "typescript",
+      "rxjs",
+      "poc"
+    ],
+    "template": "Create a proof of concept Angular Single Page Application for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Key features: {{features}}\n- Angular version: {{angular_version}}\n- State management: {{state_management}}\n\n**Technical Stack:**\n- Angular 17+ with TypeScript\n- Standalone components (or NgModules)\n- Angular Router with guards\n- RxJS for reactive programming\n- {{state_management}} for state (NgRx, Akita, or Services)\n- {{ui_framework}} for UI components\n- HttpClient with interceptors\n- Angular CLI for tooling\n\n**Generate:**\n1. Angular project structure:\n   - Core module (services, guards, interceptors)\n   - Shared module (components, directives, pipes)\n   - Feature modules for {{features}}\n   - Models and interfaces\n2. Routing configuration:\n   - Route definitions with lazy loading\n   - Route guards (auth, can-deactivate)\n   - Resolver services\n3. Components for {{features}}:\n   - Smart (container) components\n   - Dumb (presentational) components\n   - Reactive forms with validation\n4. Services:\n   - HTTP API services\n   - Authentication service\n   - State management services\n5. State management setup:\n   - NgRx store/effects/selectors (if NgRx)\n   - Service-based state (if simpler)\n6. Interceptors:\n   - Auth token interceptor\n   - Error handling interceptor\n   - Loading interceptor\n7. Pipes and directives\n8. Unit tests (Jasmine/Jest)\n9. E2E tests (Cypress/Playwright)\n10. Environment configuration\n\n**Angular Features:**\n- Signals (Angular 16+)\n- Standalone components\n- Dependency injection\n- OnPush change detection\n- Lazy loading\n- AOT compilation\n\n**Deliverables:**\n- Complete Angular application\n- Component library\n- README with setup\n- Testing configuration\n- Build optimization config\n\nOutput: Complete Angular POC | Component Structure | Setup Guide | Best Practices",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the Angular project"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Business purpose (e.g., 'Enterprise dashboard for analytics')"
+        },
+        "features": {
+          "type": "string",
+          "description": "Comma-separated features (e.g., 'user management, reporting, settings')"
+        },
+        "angular_version": {
+          "type": "string",
+          "enum": [
+            "17",
+            "16",
+            "15"
+          ],
+          "default": "17",
+          "description": "Angular version"
+        },
+        "state_management": {
+          "type": "string",
+          "enum": [
+            "ngrx",
+            "akita",
+            "services",
+            "signals"
+          ],
+          "default": "signals"
+        },
+        "ui_framework": {
+          "type": "string",
+          "enum": [
+            "angular-material",
+            "primeng",
+            "ng-bootstrap",
+            "custom"
+          ],
+          "default": "angular-material"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "features"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "enterprise-dashboard",
+          "purpose": "Internal analytics and reporting platform",
+          "features": "dashboard, user management, reports, settings",
+          "angular_version": "17",
+          "state_management": "signals",
+          "ui_framework": "angular-material"
+        },
+        "output_outline": "Angular 17 app with: Standalone components, 4 feature modules (lazy loaded), Angular Material UI, Signals for state, reactive forms, HTTP interceptors for auth/errors, route guards, chart.js integration for dashboard, data table with sorting/filtering, 25 unit tests with Jest, Cypress E2E tests, production build optimizations, README with ng serve instructions"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

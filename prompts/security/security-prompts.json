@@ -1,0 +1,389 @@
+[
+  {
+    "id": "owasp-top10-assessment",
+    "title": "OWASP Top 10 Security Assessment",
+    "description": "Comprehensive security assessment against OWASP Top 10 vulnerabilities with remediation guidance and testing recommendations.",
+    "category": "security",
+    "tags": [
+      "owasp",
+      "security",
+      "vulnerabilities",
+      "web-security"
+    ],
+    "template": "Conduct OWASP Top 10 security assessment for {{application_name}}.\n\n1. Test for each OWASP Top 10 category:\n   A01:2021 - Broken Access Control\n   A02:2021 - Cryptographic Failures\n   A03:2021 - Injection\n   A04:2021 - Insecure Design\n   A05:2021 - Security Misconfiguration\n   A06:2021 - Vulnerable Components\n   A07:2021 - Authentication Failures\n   A08:2021 - Software and Data Integrity\n   A09:2021 - Security Logging & Monitoring\n   A10:2021 - Server-Side Request Forgery\n2. For each vulnerability found:\n   - Severity assessment (Critical/High/Medium/Low)\n   - Attack vector and exploitability\n   - Proof of concept (if applicable)\n   - Business impact\n3. Provide remediation steps:\n   - Code fixes with examples\n   - Configuration changes\n   - Architecture improvements\n4. Recommend security testing tools\n5. Create security hardening checklist\n\nApplication type: {{app_type}}\nFramework: {{framework}}\nAuthentication: {{auth_method}}\n\nOutput: Vulnerability Report | Risk Assessment | Remediation Plan | Security Checklist",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "app_type": {
+          "type": "string",
+          "enum": [
+            "web-app",
+            "api",
+            "mobile-backend",
+            "spa"
+          ],
+          "description": "Application type"
+        },
+        "framework": {
+          "type": "string",
+          "description": "Framework (e.g., Express, Django, Spring Boot)"
+        },
+        "auth_method": {
+          "type": "string",
+          "description": "Authentication method (e.g., JWT, OAuth2, Session)",
+          "default": "unknown"
+        }
+      },
+      "required": [
+        "application_name",
+        "app_type",
+        "framework"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "customer-portal",
+          "app_type": "web-app",
+          "framework": "Express.js",
+          "auth_method": "JWT"
+        },
+        "output_outline": "Vulnerabilities: A01-CRITICAL: IDOR in /api/users/:id (no authorization), A03-HIGH: SQL injection in search, A05-MEDIUM: permissive CORS, A07-HIGH: weak JWT secret, remediation: implement RBAC middleware, use parameterized queries, restrict CORS origins, rotate JWT secret (256-bit), add rate limiting, tools: OWASP ZAP, Burp Suite"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "security-vulnerability-audit",
+    "title": "Security Vulnerability Audit & Remediation",
+    "description": "Performs comprehensive security audit of dependencies and code, identifying vulnerabilities with severity ratings and providing remediation steps.",
+    "category": "security",
+    "tags": [
+      "security",
+      "vulnerabilities",
+      "cve",
+      "audit"
+    ],
+    "template": "Conduct security vulnerability audit for {{project_name}}.\n\n1. Scan dependencies for known CVEs above {{severity_threshold}} severity\n2. List each vulnerability with CVE ID, CVSS score, and affected versions\n3. Identify vulnerable code patterns:\n   - SQL injection\n   - XSS vulnerabilities\n   - Command injection\n   - Path traversal\n   - Insecure deserialization\n4. Check for hardcoded secrets or credentials\n5. Review authentication and authorization implementations\n6. Assess cryptographic practices\n7. For each vulnerability, provide:\n   - Impact analysis\n   - Exploitability assessment\n   - Remediation steps with code examples\n   - Workarounds if immediate fix not possible\n8. Prioritize fixes by risk score (severity × exploitability × exposure)\n9. Generate security patch timeline\n\nLanguage: {{language}}\nFramework: {{framework}}\nSeverity threshold: {{severity_threshold}}\n\nOutput: Vulnerability Report | Risk Matrix | Prioritized Remediation Plan | Quick Wins",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "language": {
+          "type": "string",
+          "description": "Primary programming language"
+        },
+        "framework": {
+          "type": "string",
+          "description": "Main framework or library"
+        },
+        "severity_threshold": {
+          "type": "string",
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL"
+          ],
+          "default": "MEDIUM"
+        }
+      },
+      "required": [
+        "project_name",
+        "language"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "payment-gateway",
+          "language": "Java",
+          "framework": "Spring Boot",
+          "severity_threshold": "HIGH"
+        },
+        "output_outline": "Report showing 3 CRITICAL vulnerabilities (Log4Shell CVE-2021-44228, Spring4Shell), 5 HIGH issues (outdated JWT library), hardcoded API keys in config, SQL injection in custom query, remediation timeline: immediate (2 days), short-term (1 week), medium-term (1 month)"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "api-security-hardening",
+    "title": "API Security Hardening & Protection",
+    "description": "Comprehensive API security review with authentication, authorization, rate limiting, and input validation improvements.",
+    "category": "security",
+    "tags": [
+      "api",
+      "security",
+      "authentication",
+      "authorization"
+    ],
+    "template": "Harden API security for {{api_name}}.\n\n1. Authentication review:\n   - Authentication mechanism ({{auth_method}})\n   - Token security (generation, storage, rotation)\n   - Session management\n   - Multi-factor authentication support\n2. Authorization assessment:\n   - RBAC/ABAC implementation\n   - Least privilege principle\n   - Resource-level permissions\n   - API scope definitions\n3. Input validation:\n   - Request validation (headers, body, query params)\n   - Content-Type enforcement\n   - Size limits\n   - Sanitization practices\n4. Rate limiting and throttling:\n   - Current limits\n   - Per-user/IP limits\n   - Distributed rate limiting\n   - DDoS protection\n5. API security headers:\n   - CORS configuration\n   - CSP headers\n   - HSTS, X-Frame-Options, etc.\n6. Error handling:\n   - Information disclosure in errors\n   - Stack trace exposure\n   - Consistent error responses\n7. API monitoring and logging:\n   - Security event logging\n   - Anomaly detection\n   - Audit trails\n\nAPI Gateway: {{api_gateway}}\nAuthentication: {{auth_method}}\n\nOutput: Security Assessment | Hardening Recommendations | Implementation Guide | Security Checklist",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "api_name": {
+          "type": "string",
+          "description": "Name of the API"
+        },
+        "auth_method": {
+          "type": "string",
+          "enum": [
+            "jwt",
+            "oauth2",
+            "api-key",
+            "basic-auth",
+            "mtls"
+          ],
+          "description": "Authentication method"
+        },
+        "api_gateway": {
+          "type": "string",
+          "description": "API Gateway (e.g., Kong, AWS API Gateway, none)",
+          "default": "none"
+        }
+      },
+      "required": [
+        "api_name",
+        "auth_method"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "api_name": "partner-api",
+          "auth_method": "oauth2",
+          "api_gateway": "Kong"
+        },
+        "output_outline": "Issues: no request size limits (DoS risk), missing rate limiting per partner, verbose error messages expose internal paths, weak CORS (allow all), recommendations: implement 10MB request limit, rate limit: 1000 req/hour per partner, sanitize errors, restrict CORS to partner domains, add JWT validation in Kong, enable request/response logging, implement circuit breaker"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "container-image-hardening",
+    "title": "Container Image Security Hardening",
+    "description": "Reviews container images for security vulnerabilities and provides hardening recommendations following best practices.",
+    "category": "security",
+    "tags": [
+      "docker",
+      "security",
+      "containers",
+      "hardening"
+    ],
+    "template": "Harden container image for {{project_name}}.\n\n1. Analyze current Dockerfile:\n   - Base image selection and vulnerabilities\n   - Image layers and size optimization\n   - Running as root vs non-root user\n   - Exposed ports and attack surface\n   - Secrets management\n2. Scan image for CVEs using {{scanner}}\n3. Apply security best practices:\n   - Use minimal base images (alpine, distroless)\n   - Multi-stage builds\n   - Run as non-root user\n   - Remove unnecessary packages\n   - Pin dependency versions\n   - Use .dockerignore\n4. Implement runtime security:\n   - Read-only filesystem\n   - Drop Linux capabilities\n   - Resource limits (CPU, memory)\n   - Security profiles (AppArmor, SELinux)\n5. Image signing and verification:\n   - Docker Content Trust\n   - Cosign for OCI images\n6. Provide hardened Dockerfile\n7. Document security improvements\n\nCurrent base image: {{base_image}}\nScanner: {{scanner}}\n\nOutput: Vulnerability Report | Hardened Dockerfile | Security Checklist | Before/After Comparison",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "base_image": {
+          "type": "string",
+          "description": "Current base image (e.g., node:18, python:3.11)"
+        },
+        "scanner": {
+          "type": "string",
+          "enum": [
+            "trivy",
+            "grype",
+            "snyk",
+            "aqua",
+            "clair"
+          ],
+          "default": "trivy"
+        }
+      },
+      "required": [
+        "project_name",
+        "base_image"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "api-gateway",
+          "base_image": "node:18",
+          "scanner": "trivy"
+        },
+        "output_outline": "Report: 47 vulnerabilities in node:18 (23 HIGH), image 980MB; hardening: switch to node:18-alpine (reduce to 3 HIGH CVEs, 180MB), multi-stage build, non-root user (node), drop all capabilities except NET_BIND_SERVICE, read-only root FS, security improvements: 96% fewer HIGH CVEs, 82% smaller image"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "secret-scanning-remediation",
+    "title": "Hardcoded Secret Detection & Remediation",
+    "description": "Scans codebase for hardcoded secrets and credentials, providing secure remediation plan with secret management integration.",
+    "category": "security",
+    "tags": [
+      "secrets",
+      "security",
+      "credentials",
+      "vault"
+    ],
+    "template": "Scan and remediate hardcoded secrets in {{project_name}}.\n\n1. Scan codebase for secrets:\n   - API keys and tokens\n   - Passwords and credentials\n   - Private keys and certificates\n   - Database connection strings\n   - OAuth secrets\n2. Use tools: gitleaks, truffleHog, detect-secrets\n3. Scan git history for leaked secrets\n4. For each secret found:\n   - Location and type\n   - Exposure risk (public repo, commit history)\n   - Rotation urgency\n5. Design secret management strategy:\n   - Choose solution ({{secret_manager}})\n   - Define secret lifecycle\n   - Access control policies\n   - Rotation schedules\n6. Provide remediation steps:\n   - Rotate compromised secrets immediately\n   - Remove from code and git history\n   - Integrate secret manager\n   - Update deployment process\n7. Implement prevention:\n   - Pre-commit hooks\n   - CI/CD secret scanning\n   - Developer training\n\nRepository: {{repo_url}}\nSecret Manager: {{secret_manager}}\n\nOutput: Secret Inventory | Risk Assessment | Remediation Plan | Secret Manager Integration Guide",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "repo_url": {
+          "type": "string",
+          "description": "Repository URL"
+        },
+        "secret_manager": {
+          "type": "string",
+          "enum": [
+            "vault",
+            "aws-secrets-manager",
+            "azure-keyvault",
+            "gcp-secret-manager",
+            "doppler",
+            "1password"
+          ],
+          "default": "vault"
+        }
+      },
+      "required": [
+        "project_name",
+        "repo_url"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "backend-services",
+          "repo_url": "https://github.com/company/backend",
+          "secret_manager": "aws-secrets-manager"
+        },
+        "output_outline": "Found: 12 secrets (3 API keys in config.js, 2 DB passwords in deployment.yml, 4 tokens in .env committed, 3 AWS keys in git history), risk: HIGH (public repo), remediation: immediately rotate all secrets, use AWS Secrets Manager with IAM roles, remove secrets from git history using BFG, integrate secrets SDK, add pre-commit hook, 24-hour timeline for rotation"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "cloud-security-posture",
+    "title": "Cloud Security Posture Assessment (CSPM)",
+    "description": "Evaluates cloud infrastructure security posture against CIS benchmarks and best practices with remediation guidance.",
+    "category": "security",
+    "tags": [
+      "cloud",
+      "security",
+      "cspm",
+      "compliance"
+    ],
+    "template": "Assess cloud security posture for {{cloud_account}}.\n\n1. Evaluate against CIS benchmarks:\n   - Identity and Access Management\n   - Storage security\n   - Network configuration\n   - Logging and monitoring\n   - Compute security\n2. Identity security review:\n   - Root account usage\n   - MFA enforcement\n   - IAM policy analysis (overly permissive)\n   - Service account management\n   - Access key rotation\n3. Network security:\n   - Security group rules\n   - Network ACLs\n   - VPC flow logs\n   - Public exposure\n   - Transit encryption\n4. Data protection:\n   - Encryption at rest\n   - Encryption in transit\n   - Backup configuration\n   - Data lifecycle policies\n5. Compliance assessment:\n   - Regulatory requirements ({{compliance}})\n   - Policy violations\n   - Audit trail completeness\n6. Prioritize findings by risk\n7. Provide remediation steps\n8. Recommend automation (Cloud Custodian, Prowler)\n\nCloud Provider: {{cloud_provider}}\nCompliance: {{compliance}}\n\nOutput: Security Posture Report | CIS Benchmark Score | Prioritized Findings | Remediation Playbook",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "cloud_account": {
+          "type": "string",
+          "description": "Cloud account identifier"
+        },
+        "cloud_provider": {
+          "type": "string",
+          "enum": [
+            "aws",
+            "gcp",
+            "azure"
+          ],
+          "description": "Cloud provider"
+        },
+        "compliance": {
+          "type": "string",
+          "description": "Compliance requirements (e.g., 'PCI-DSS, HIPAA')",
+          "default": "CIS"
+        }
+      },
+      "required": [
+        "cloud_account",
+        "cloud_provider"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "cloud_account": "prod-aws-123456",
+          "cloud_provider": "aws",
+          "compliance": "PCI-DSS"
+        },
+        "output_outline": "CIS score: 67/100, findings: CRITICAL-root account no MFA (CIS 1.13), HIGH-S3 buckets public access (CIS 2.1.5), HIGH-no CloudTrail encryption (CIS 3.7), MEDIUM-security groups allow 0.0.0.0/0 SSH, remediation: enable MFA (immediate), block S3 public access, enable CloudTrail KMS encryption, restrict security groups, implement SCPs for prevention, estimated 2-week remediation"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "penetration-test-scope",
+    "title": "Penetration Testing Scope & Planning",
+    "description": "Defines comprehensive penetration testing scope, methodology, and success criteria for security validation.",
+    "category": "security",
+    "tags": [
+      "pentest",
+      "security-testing",
+      "vulnerability-assessment"
+    ],
+    "template": "Define penetration testing scope for {{target_system}}.\n\n1. Define testing scope:\n   - In-scope systems and assets\n   - Out-of-scope items\n   - Testing boundaries\n   - Allowed/prohibited actions\n2. Specify test types:\n   - Black box, gray box, or white box\n   - External vs internal testing\n   - Application layer testing\n   - Network infrastructure testing\n   - Social engineering (if applicable)\n3. Testing methodology:\n   - Reconnaissance phase\n   - Vulnerability discovery\n   - Exploitation attempts\n   - Post-exploitation activities\n   - Reporting format\n4. Define success criteria:\n   - Vulnerability severity thresholds\n   - Critical findings\n   - Proof of concept requirements\n5. Establish rules of engagement:\n   - Testing windows\n   - Communication protocols\n   - Escalation procedures\n   - Data handling\n6. Compliance requirements:\n   - Standards to test against ({{compliance_standard}})\n   - Regulatory obligations\n7. Deliverables:\n   - Executive summary\n   - Technical report\n   - Remediation recommendations\n\nTest type: {{test_type}}\nCompliance: {{compliance_standard}}\n\nOutput: Testing Scope Document | Methodology | Rules of Engagement | Success Criteria",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "target_system": {
+          "type": "string",
+          "description": "System to be tested"
+        },
+        "test_type": {
+          "type": "string",
+          "enum": [
+            "black-box",
+            "gray-box",
+            "white-box"
+          ],
+          "description": "Penetration test type"
+        },
+        "compliance_standard": {
+          "type": "string",
+          "description": "Compliance standard (e.g., 'PCI-DSS', 'ISO 27001')",
+          "default": "OWASP"
+        }
+      },
+      "required": [
+        "target_system",
+        "test_type"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "target_system": "customer-facing-web-app",
+          "test_type": "gray-box",
+          "compliance_standard": "PCI-DSS"
+        },
+        "output_outline": "Scope: web application (app.example.com), API endpoints, authentication system; excluded: production database, payment processor; gray-box with user credentials; testing: OWASP methodology, social engineering excluded; schedule: 2 weeks, off-peak hours; success: identify CRITICAL/HIGH vulns, PoC for exploits, PCI-DSS 11.3 compliance validation; deliverables: exec summary, detailed findings, remediation timeline"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

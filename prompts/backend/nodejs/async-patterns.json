@@ -1,0 +1,56 @@
+{
+  "id": "nodejs-async-best-practices",
+  "title": "Node.js Async Patterns & Best Practices",
+  "description": "Analyzes Node.js async code for proper Promise usage, async/await patterns, error handling, and callback hell prevention.",
+  "category": "backend-nodejs",
+  "tags": [
+    "nodejs",
+    "async",
+    "promises",
+    "callbacks",
+    "error-handling",
+    "concurrency"
+  ],
+  "template": "Review Node.js async code for best practices and optimization opportunities.\n\n**Code Context:**\n- Project: {{project_name}}\n- Node Version: {{node_version}}\n- Issue: {{async_issue}}\n\n**Code to Analyze:**\n```javascript\n{{nodejs_code}}\n```\n\n**Analysis Areas:**\n\n1. **Promise Patterns:**\n   - Promise chaining vs async/await\n   - Error handling with .catch() vs try/catch\n   - Promise.all() for parallel execution\n   - Promise.allSettled() for resilient parallel\n   - Promise.race() and Promise.any()\n   - Avoiding unhandled promise rejections\n   - Promise creation anti-patterns\n\n2. **Async/Await Best Practices:**\n   - Sequential vs parallel execution\n   - Error handling with try/catch\n   - Async function gotchas\n   - Top-level await (ES modules)\n   - Async generators and iterators\n   - Proper await usage\n\n3. **Callback Patterns:**\n   - Callback hell identification\n   - Promisify utility usage\n   - Error-first callback convention\n   - Converting callbacks to promises\n   - Avoiding callback pyramids\n\n4. **Error Handling:**\n   - Unhandled rejection handling\n   - process.on('unhandledRejection')\n   - Error propagation strategies\n   - Custom error classes\n   - Operational vs programmer errors\n   - Error logging best practices\n\n5. **Concurrency Control:**\n   - Rate limiting async operations\n   - Queue-based execution (p-queue)\n   - Semaphore patterns\n   - Worker threads for CPU-bound tasks\n   - Cluster module for scaling\n\n6. **Stream Patterns:**\n   - Readable/Writable stream handling\n   - Pipeline for stream composition\n   - Backpressure management\n   - Error handling in streams\n   - Async iterators with streams\n\n7. **Event Emitter Patterns:**\n   - Memory leaks from listeners\n   - once() vs on()\n   - Error events\n   - Event ordering\n   - Async event handlers\n\n8. **Performance:**\n   - Avoiding blocking the event loop\n   - CPU-bound vs I/O-bound operations\n   - Microtask queue understanding\n   - setImmediate vs process.nextTick\n   - Worker threads for heavy computation\n\n9. **Testing Async Code:**\n   - Jest/Mocha async test patterns\n   - Mocking async functions\n   - Timeout handling in tests\n   - Testing error scenarios\n   - Async test cleanup\n\n10. **Common Mistakes:**\n    - Missing await keywords\n    - Not returning promises\n    - Mixing callbacks and promises\n    - Uncaught exceptions in async functions\n    - Race conditions\n    - Memory leaks from pending promises\n\n**Output Format:**\n- **Critical Issues:** Bugs and error handling gaps\n- **Callback Hell Solutions:** Refactored promise-based code\n- **Concurrency Improvements:** Parallel execution opportunities\n- **Error Handling:** Proper try/catch and rejection handling\n- **Performance Optimizations:** Event loop and blocking operation fixes\n- **Refactored Code:** Complete async/await version\n- **Testing Examples:** How to test the refactored code",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Node.js project"
+      },
+      "nodejs_code": {
+        "type": "string",
+        "description": "Node.js async code to analyze"
+      },
+      "node_version": {
+        "type": "string",
+        "description": "Node.js version (e.g., '18.x', '20.x')",
+        "default": "20.x"
+      },
+      "async_issue": {
+        "type": "string",
+        "description": "Specific async problem observed",
+        "default": "General async review"
+      }
+    },
+    "required": [
+      "project_name",
+      "nodejs_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "DataProcessor",
+        "nodejs_code": "function processFiles(files, callback) {\n  let results = [];\n  files.forEach((file, index) => {\n    fs.readFile(file, (err, data) => {\n      if (err) return callback(err);\n      processData(data, (err, processed) => {\n        if (err) return callback(err);\n        results[index] = processed;\n        if (results.length === files.length) {\n          callback(null, results);\n        }\n      });\n    });\n  });\n}",
+        "node_version": "20.x",
+        "async_issue": "Callback hell and potential race condition with results array"
+      },
+      "output_outline": "Issues: 1) Callback hell (nested callbacks), 2) Race condition with results.length check, 3) Results array may have holes, 4) No timeout handling, 5) Hard to test and maintain. Solution: Convert to async/await with fs.promises, use Promise.all() for parallel processing, proper error handling with try/catch. Refactored: async function with map(), Promise.all(), structured error handling. Show both sequential and parallel versions. Add error aggregation for partial failures. Include Jest test examples with mocked fs.promises."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

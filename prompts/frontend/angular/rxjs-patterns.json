@@ -1,0 +1,60 @@
+{
+  "id": "angular-rxjs-patterns",
+  "title": "Angular RxJS Reactive Patterns",
+  "description": "Optimizes RxJS usage in Angular applications with proper operators, error handling, and subscription management.",
+  "category": "frontend-angular",
+  "tags": [
+    "angular",
+    "rxjs",
+    "observables",
+    "reactive",
+    "subscriptions"
+  ],
+  "template": "Analyze and optimize RxJS usage in the following Angular code.\n\n**Code to Analyze:**\n```typescript\n{{angular_code}}\n```\n\n**RxJS Analysis Areas:**\n\n1. **Subscription Management:**\n   - Memory leak detection (unsubscribed observables)\n   - Proper cleanup strategies (takeUntil, async pipe, takeUntilDestroyed)\n   - Subscription timing issues\n   - Multiple subscriptions to same observable\n\n2. **Operator Usage:**\n   - Correct operator selection for use case\n   - Operator chaining optimization\n   - Common operator mistakes (switchMap vs mergeMap vs concatMap)\n   - Unnecessary operators\n\n3. **Error Handling:**\n   - Missing error handlers\n   - catchError placement\n   - Error recovery strategies\n   - Global error handling\n\n4. **Performance Patterns:**\n   - Share operators (share, shareReplay)\n   - Debouncing user input\n   - Throttling requests\n   - Combining multiple observables efficiently\n\n5. **Best Practices:**\n   - Prefer async pipe over manual subscriptions\n   - Use proper TypeScript typing\n   - Subject vs BehaviorSubject usage\n   - Hot vs cold observables\n   - Avoid nested subscriptions\n\n6. **Angular-Specific:**\n   - Service observable patterns\n   - Component lifecycle integration\n   - HttpClient usage\n   - Form reactive patterns\n\n**Output Format:**\n- **Memory Leak Analysis:** Unhandled subscriptions with severity\n- **Operator Optimizations:** Better operator choices with explanations\n- **Refactored Code:** Optimized version with comments\n- **Performance Impact:** Expected improvements\n- **Best Practices Applied:** List of improvements made\n- **Testing Suggestions:** How to test reactive code",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "angular_code": {
+        "type": "string",
+        "description": "Angular component, service, or code using RxJS"
+      },
+      "angular_version": {
+        "type": "string",
+        "enum": [
+          "15",
+          "16",
+          "17"
+        ],
+        "default": "17",
+        "description": "Angular version (affects available APIs like takeUntilDestroyed)"
+      },
+      "issue_type": {
+        "type": "string",
+        "enum": [
+          "memory-leaks",
+          "performance",
+          "error-handling",
+          "general"
+        ],
+        "default": "general",
+        "description": "Specific issue to focus on"
+      }
+    },
+    "required": [
+      "angular_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "angular_code": "@Component({})\nexport class UserComponent {\n  users$ = this.http.get('/api/users');\n  \n  ngOnInit() {\n    this.users$.subscribe(users => {\n      this.filteredUsers = users.filter(u => u.active);\n      this.getDetails(users[0].id).subscribe(details => {\n        this.details = details;\n      });\n    });\n  }\n}",
+        "angular_version": "17",
+        "issue_type": "memory-leaks"
+      },
+      "output_outline": "Critical: 2 unmanaged subscriptions cause memory leaks. Issues: nested subscriptions (anti-pattern), multiple HTTP calls on every subscription. Refactored: Use async pipe + RxJS operators (switchMap, map), remove manual subscriptions, add proper typing. Performance: Eliminate nested subscriptions using switchMap. Result: Zero manual subscriptions, automatic cleanup, 60% less code, reactive data flow."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

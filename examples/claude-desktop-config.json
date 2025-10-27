@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "generic-prompts": {
+      "command": "node",
+      "args": ["/absolute/path/to/mcp-generic-prompt/dist/mcp-entry.js"]
+    }
+  }
+}

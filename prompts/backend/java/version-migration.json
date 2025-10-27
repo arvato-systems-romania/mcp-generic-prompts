@@ -1,0 +1,65 @@
+{
+  "id": "java-version-migration",
+  "title": "Java Major Version Migration Plan",
+  "description": "Creates a detailed migration plan for upgrading Java projects from one major version to another, covering deprecated APIs, new features, and tooling updates.",
+  "category": "language-upgrade",
+  "tags": [
+    "java",
+    "migration",
+    "jdk",
+    "upgrade"
+  ],
+  "template": "Create a comprehensive migration plan for {{project_name}} from Java {{current_version}} to Java {{target_version}}.\n\n1. Scan codebase for deprecated API usage that will break in {{target_version}}\n2. List removed APIs and suggest modern replacements\n3. Identify new language features in {{target_version}} that could simplify existing code\n4. Review third-party library compatibility\n5. Update build tool configuration ({{build_tool}})\n6. Outline JVM flag changes and performance considerations\n7. Create testing strategy for validation\n8. Estimate effort (hours) and risk level (1-10)\n9. Provide step-by-step migration checklist\n\nBuild Tool: {{build_tool}}\nKey frameworks: {{frameworks}}\n\nOutput as: Executive Summary | Breaking Changes | Modernization Opportunities | Migration Steps | Risk Mitigation",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Java project"
+      },
+      "current_version": {
+        "type": "string",
+        "description": "Current Java version (e.g., 8, 11, 17)",
+        "pattern": "^(8|11|17|21)$"
+      },
+      "target_version": {
+        "type": "string",
+        "description": "Target Java version",
+        "pattern": "^(11|17|21|23)$"
+      },
+      "build_tool": {
+        "type": "string",
+        "description": "Build tool in use",
+        "enum": [
+          "maven",
+          "gradle"
+        ]
+      },
+      "frameworks": {
+        "type": "string",
+        "description": "Comma-separated list of major frameworks"
+      }
+    },
+    "required": [
+      "project_name",
+      "current_version",
+      "target_version",
+      "build_tool"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "legacy-banking-system",
+        "current_version": "8",
+        "target_version": "17",
+        "build_tool": "maven",
+        "frameworks": "Spring Boot 2.5, Hibernate 5.4"
+      },
+      "output_outline": "Migration plan showing removal of java.util.Date usage, switch to records, update to Spring Boot 3.x, module system adoption, toolchain configuration, 80-hour estimate, risk score 7/10"
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

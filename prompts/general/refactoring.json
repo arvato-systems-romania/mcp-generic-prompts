@@ -1,0 +1,240 @@
+[
+  {
+    "id": "modular-architecture-refactor",
+    "title": "Modular Architecture Refactoring Plan",
+    "description": "Designs a refactoring strategy to transform monolithic code into modular, loosely-coupled components with clear boundaries.",
+    "category": "refactoring",
+    "tags": [
+      "architecture",
+      "refactoring",
+      "modularity",
+      "design"
+    ],
+    "template": "Design modular architecture refactoring for {{project_name}}.\n\n1. Analyze current architecture and identify coupling issues\n2. Define module boundaries based on domain/functionality\n3. Identify shared dependencies and cross-cutting concerns\n4. Design module interfaces and contracts\n5. Plan dependency injection strategy\n6. Create migration path from current to target architecture\n7. Identify strangler fig opportunities (incremental migration)\n8. Define module packaging strategy (libraries, services, packages)\n9. Assess impact on build, deployment, and testing\n10. Estimate effort and risk for each module extraction\n\nCurrent structure: {{current_structure}}\nTarget pattern: {{target_pattern}}\n\nOutput: Architecture Diagram | Module Definitions | Migration Roadmap | Risk Assessment",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "current_structure": {
+          "type": "string",
+          "description": "Description of current architecture (monolith, layered, etc.)"
+        },
+        "target_pattern": {
+          "type": "string",
+          "description": "Target architecture pattern",
+          "enum": [
+            "microservices",
+            "modular-monolith",
+            "hexagonal",
+            "clean-architecture",
+            "domain-driven"
+          ],
+          "default": "modular-monolith"
+        }
+      },
+      "required": [
+        "project_name",
+        "current_structure"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "legacy-erp",
+          "current_structure": "Monolithic 3-tier with tight coupling, 200K LOC, shared database",
+          "target_pattern": "modular-monolith"
+        },
+        "output_outline": "Plan showing 8 modules (user-mgmt, inventory, orders, billing, reporting, notifications, audit, integration), interface definitions, shared-kernel for common types, migration: Phase 1-extract services layer, Phase 2-introduce bounded contexts, Phase 3-split persistence, 6-month timeline, risk: data migration (HIGH), integration testing (MEDIUM)"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "api-deprecation-remediation",
+    "title": "Deprecated API Migration & Remediation",
+    "description": "Identifies usage of deprecated APIs across codebase and provides migration plan to modern alternatives with automated refactoring suggestions.",
+    "category": "refactoring",
+    "tags": [
+      "api",
+      "deprecation",
+      "migration",
+      "modernization"
+    ],
+    "template": "Create deprecation remediation plan for {{project_name}} targeting {{framework}} {{target_version}}.\n\n1. Scan codebase for deprecated API usage\n2. List each deprecated API with:\n   - Current usage count and locations\n   - Deprecation reason\n   - Recommended replacement\n   - Migration complexity\n3. Group by category (high/medium/low effort)\n4. Provide code migration examples for each pattern\n5. Identify automated refactoring opportunities (IDE, OpenRewrite, etc.)\n6. Estimate risk and effort per API migration\n7. Create prioritized migration sequence\n8. Define validation strategy\n\nFramework: {{framework}}\nCurrent version: {{current_version}}\nTarget version: {{target_version}}\n\nOutput: Deprecation Inventory | Migration Guide | Automation Opportunities | Timeline",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "framework": {
+          "type": "string",
+          "description": "Framework with deprecated APIs"
+        },
+        "current_version": {
+          "type": "string",
+          "description": "Current framework version"
+        },
+        "target_version": {
+          "type": "string",
+          "description": "Target framework version with deprecated APIs removed"
+        }
+      },
+      "required": [
+        "project_name",
+        "framework",
+        "target_version"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "customer-portal",
+          "framework": "React",
+          "current_version": "17.0.2",
+          "target_version": "18.2.0"
+        },
+        "output_outline": "Report showing 47 uses of ReactDOM.render (replace with createRoot), 12 componentWillMount (use useEffect), 8 findDOMNode calls (use refs), OpenRewrite recipes available for 80% of changes, manual updates needed for context API usage, effort: 24 hours, risk: LOW for automated changes, MEDIUM for state management updates"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "logging-standardization",
+    "title": "Logging Framework Standardization",
+    "description": "Audits logging practices and creates standardization plan for consistent, structured logging across the application.",
+    "category": "refactoring",
+    "tags": [
+      "logging",
+      "observability",
+      "standards",
+      "monitoring"
+    ],
+    "template": "Standardize logging for {{project_name}} using {{logging_framework}}.\n\n1. Audit current logging practices:\n   - Multiple logging frameworks in use\n   - Inconsistent log levels\n   - Unstructured vs structured logging\n   - Missing context (correlation IDs, user IDs)\n2. Define logging standards:\n   - Log levels (DEBUG, INFO, WARN, ERROR)\n   - Structured format (JSON)\n   - Required context fields\n   - Sensitive data handling\n3. Create migration plan:\n   - Consolidate to single logging framework\n   - Add structured logging support\n   - Implement MDC/NDC for context\n4. Provide code examples and templates\n5. Define log aggregation strategy\n6. Create logging guidelines document\n\nCurrent frameworks: {{current_frameworks}}\nTarget: {{logging_framework}}\nEnvironment: {{environment}}\n\nOutput: Logging Standards | Migration Plan | Code Templates | Guidelines Document",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "current_frameworks": {
+          "type": "string",
+          "description": "Current logging frameworks in use (comma-separated)"
+        },
+        "logging_framework": {
+          "type": "string",
+          "description": "Target logging framework",
+          "enum": [
+            "slf4j+logback",
+            "log4j2",
+            "winston",
+            "serilog",
+            "python-logging",
+            "zap",
+            "zerolog"
+          ]
+        },
+        "environment": {
+          "type": "string",
+          "description": "Deployment environment",
+          "enum": [
+            "kubernetes",
+            "vm",
+            "serverless",
+            "cloud"
+          ],
+          "default": "kubernetes"
+        }
+      },
+      "required": [
+        "project_name",
+        "logging_framework"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "order-service",
+          "current_frameworks": "log4j, System.out.println, custom logger",
+          "logging_framework": "slf4j+logback",
+          "environment": "kubernetes"
+        },
+        "output_outline": "Plan showing migration from 3 frameworks to SLF4J facade + Logback, JSON structured logging via logstash-logback-encoder, MDC for request-id/user-id/tenant-id, log level standardization (70% INFO currently should be DEBUG), sample configuration, 40-hour effort, output to stdout for k8s log collection"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "code-style-autofix",
+    "title": "Code Style Auto-Fix Proposal",
+    "description": "Analyzes code style inconsistencies and generates automated fix proposals using linters and formatters.",
+    "category": "refactoring",
+    "tags": [
+      "code-style",
+      "linting",
+      "formatting",
+      "quality"
+    ],
+    "template": "Generate code style auto-fix proposal for {{project_name}} ({{language}}).\n\n1. Analyze current code style issues:\n   - Run linter (ESLint, Checkstyle, Pylint, etc.)\n   - Identify formatting inconsistencies\n   - Check naming conventions\n   - Detect anti-patterns\n2. Categorize issues:\n   - Auto-fixable (formatting, imports)\n   - Semi-automatic (naming, simple refactors)\n   - Manual review required (logic, architecture)\n3. Configure linter/formatter for project standards\n4. Generate fix statistics and impact analysis\n5. Provide step-by-step fix plan:\n   - Stage 1: Auto-fix safe changes\n   - Stage 2: Semi-automatic with review\n   - Stage 3: Manual improvements\n6. Estimate time and risk\n7. Set up pre-commit hooks and CI checks\n\nLanguage/Framework: {{language}}/{{framework}}\nStyle guide: {{style_guide}}\n\nOutput: Issue Report | Auto-Fix Proposal | Configuration Files | Implementation Plan",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "language": {
+          "type": "string",
+          "description": "Programming language"
+        },
+        "framework": {
+          "type": "string",
+          "description": "Framework"
+        },
+        "style_guide": {
+          "type": "string",
+          "description": "Target style guide",
+          "enum": [
+            "airbnb",
+            "google",
+            "standard",
+            "prettier",
+            "black",
+            "pep8",
+            "sun"
+          ],
+          "default": "standard"
+        }
+      },
+      "required": [
+        "project_name",
+        "language"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "mobile-app",
+          "language": "JavaScript",
+          "framework": "React Native",
+          "style_guide": "airbnb"
+        },
+        "output_outline": "Report: 847 issues (623 auto-fixable, 158 semi-automatic, 66 manual), categories: indentation (340), quotes (187), semicolons (96), naming (82), plan: Stage 1 auto-fix with --fix (2 hours), Stage 2 naming refactor (12 hours), ESLint config provided, pre-commit hook setup, CI integration, risk: LOW for auto-fixes, MEDIUM for renames"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

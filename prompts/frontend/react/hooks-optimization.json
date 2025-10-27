@@ -1,0 +1,56 @@
+{
+  "id": "react-hooks-optimization",
+  "title": "React Hooks Optimization & Best Practices",
+  "description": "Analyzes React hooks usage for performance issues, dependency arrays, and provides optimization recommendations.",
+  "category": "frontend-react",
+  "tags": [
+    "react",
+    "hooks",
+    "performance",
+    "usememo",
+    "usecallback",
+    "useeffect"
+  ],
+  "template": "Analyze and optimize React hooks usage in the following component.\n\n**Component Code:**\n```jsx\n{{component_code}}\n```\n\n**Analysis Focus:**\n\n1. **useEffect Hook Issues:**\n   - Missing or incorrect dependency arrays\n   - Unnecessary effects\n   - Effect cleanup requirements\n   - Infinite loop risks\n   - Race condition vulnerabilities\n\n2. **Performance Hooks:**\n   - useMemo opportunities for expensive calculations\n   - useCallback for function memoization\n   - Premature optimization detection\n   - Over-memoization issues\n\n3. **Custom Hooks:**\n   - Opportunities to extract custom hooks\n   - Hook composition patterns\n   - Reusability improvements\n\n4. **Common Pitfalls:**\n   - Stale closure issues\n   - Conditional hook calls\n   - Hook ordering problems\n   - State update batching\n\n5. **Best Practices:**\n   - Dependency array management\n   - Effect separation\n   - State colocation\n   - Hook naming conventions\n\n**Output Format:**\n- **Summary:** Overall hooks health assessment\n- **Critical Issues:** Must-fix problems (violations of Rules of Hooks)\n- **Performance Optimizations:** useMemo/useCallback recommendations with before/after examples\n- **Refactoring Suggestions:** Custom hook extraction opportunities\n- **Dependency Array Fixes:** Correct dependencies for each effect\n- **Code Examples:** Optimized versions of problematic hooks\n\nProvide specific line-by-line analysis with ESLint warnings that would be triggered.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "component_code": {
+        "type": "string",
+        "description": "The React component code to analyze"
+      },
+      "performance_concern": {
+        "type": "string",
+        "description": "Specific performance issue observed (e.g., 'component re-renders too often')",
+        "default": ""
+      },
+      "react_version": {
+        "type": "string",
+        "enum": [
+          "16.8+",
+          "17.x",
+          "18.x",
+          "19.x"
+        ],
+        "default": "18.x",
+        "description": "React version in use"
+      }
+    },
+    "required": [
+      "component_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "component_code": "function UserList() {\n  const [users, setUsers] = useState([]);\n  const [filter, setFilter] = useState('');\n  \n  useEffect(() => {\n    fetchUsers().then(setUsers);\n  });\n  \n  const filteredUsers = users.filter(u => u.name.includes(filter));\n  \n  return <div>{filteredUsers.map(u => <User key={u.id} data={u} onClick={() => console.log(u)} />)}</div>;\n}",
+        "performance_concern": "Component re-renders constantly",
+        "react_version": "18.x"
+      },
+      "output_outline": "Critical: useEffect missing dependency array causes infinite re-renders. Performance: filter operation not memoized (use useMemo), onClick creates new function every render (use useCallback). Refactoring: extract useFilteredUsers custom hook. Fixed code with useMemo for filtering, useCallback for onClick, proper useEffect dependencies, estimated 80% reduction in re-renders."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

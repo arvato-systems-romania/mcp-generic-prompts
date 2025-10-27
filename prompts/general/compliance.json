@@ -1,0 +1,128 @@
+[
+  {
+    "id": "sbom-generation",
+    "title": "Software Bill of Materials (SBOM) Generator",
+    "description": "Generates a comprehensive SBOM in CycloneDX or SPDX format, documenting all dependencies, licenses, and security metadata.",
+    "category": "compliance",
+    "tags": [
+      "sbom",
+      "compliance",
+      "dependencies",
+      "cyclonedx",
+      "spdx"
+    ],
+    "template": "Generate a Software Bill of Materials (SBOM) for {{project_name}} in {{sbom_format}} format.\n\n1. List all direct and transitive dependencies with exact versions\n2. Include component metadata: name, version, supplier, download location\n3. Document license information for each component\n4. Add vulnerability references (CVE IDs) for known issues\n5. Include hashes (SHA-256) for integrity verification\n6. Document dependency relationships and scope (runtime, test, build)\n7. Add project metadata: name, version, authors, repository URL\n8. Validate against {{sbom_format}} specification\n9. Provide summary statistics\n\nProject: {{project_name}}\nVersion: {{project_version}}\nRepository: {{repo_url}}\nFormat: {{sbom_format}}\n\nOutput: Valid {{sbom_format}} JSON/XML + Summary Statistics",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "project_version": {
+          "type": "string",
+          "description": "Current version of the project"
+        },
+        "repo_url": {
+          "type": "string",
+          "description": "Repository URL"
+        },
+        "sbom_format": {
+          "type": "string",
+          "description": "SBOM format specification",
+          "enum": [
+            "CycloneDX",
+            "SPDX"
+          ],
+          "default": "CycloneDX"
+        }
+      },
+      "required": [
+        "project_name",
+        "project_version"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "cloud-auth-service",
+          "project_version": "2.3.1",
+          "repo_url": "https://github.com/company/auth-service",
+          "sbom_format": "CycloneDX"
+        },
+        "output_outline": "CycloneDX 1.5 JSON with 127 components (45 direct, 82 transitive), 23 unique licenses, 3 components with known vulnerabilities, complete dependency graph, SHA-256 hashes, summary: 89% OSI-approved licenses, 97.6% up-to-date dependencies"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "license-compliance-check",
+    "title": "Open Source License Compliance Checker",
+    "description": "Audits project dependencies for license compliance issues, identifying incompatible licenses and potential legal risks.",
+    "category": "compliance",
+    "tags": [
+      "license",
+      "compliance",
+      "legal",
+      "oss"
+    ],
+    "template": "Perform license compliance audit for {{project_name}} with {{target_license}} licensing.\n\n1. Scan all dependencies and extract license information\n2. Identify licenses incompatible with {{target_license}} (e.g., GPL vs MIT)\n3. Detect missing or ambiguous license declarations\n4. Flag copyleft licenses that require source disclosure\n5. Check for license conflicts between dependencies\n6. Assess commercial use restrictions\n7. Identify deprecated licenses (JSON, WTFPL)\n8. Generate compliance report with risk levels\n9. Suggest alternative packages where conflicts exist\n\nTarget License: {{target_license}}\nCommercial Use: {{commercial_use}}\nDistribution Method: {{distribution_method}}\n\nOutput: License Matrix | Conflict Report | Recommendations | Approval Requirements",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "target_license": {
+          "type": "string",
+          "description": "Project's intended license",
+          "enum": [
+            "MIT",
+            "Apache-2.0",
+            "GPL-3.0",
+            "LGPL-3.0",
+            "BSD-3-Clause",
+            "Proprietary"
+          ]
+        },
+        "commercial_use": {
+          "type": "boolean",
+          "description": "Whether project is for commercial use",
+          "default": false
+        },
+        "distribution_method": {
+          "type": "string",
+          "description": "How the software will be distributed",
+          "enum": [
+            "SaaS",
+            "Binary",
+            "Source",
+            "Library"
+          ],
+          "default": "SaaS"
+        }
+      },
+      "required": [
+        "project_name",
+        "target_license"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "enterprise-crm",
+          "target_license": "Proprietary",
+          "commercial_use": true,
+          "distribution_method": "Binary"
+        },
+        "output_outline": "Report showing 4 GPL dependencies requiring removal/replacement, 2 AGPL packages incompatible with SaaS, 89% permissive licenses (MIT/Apache), recommendations to replace GPL components with permissive alternatives, legal review required for 6 packages"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

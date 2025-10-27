@@ -1,0 +1,64 @@
+{
+  "id": "react-component-patterns",
+  "title": "React Component Design Patterns",
+  "description": "Refactors React components using modern patterns like compound components, render props, HOCs, and hooks composition.",
+  "category": "frontend-react",
+  "tags": [
+    "react",
+    "patterns",
+    "compound-components",
+    "render-props",
+    "hoc",
+    "composition"
+  ],
+  "template": "Refactor the following React component using appropriate design patterns.\n\n**Current Component:**\n```jsx\n{{component_code}}\n```\n\n**Refactoring Goal:** {{refactoring_goal}}\n\n**Design Patterns to Consider:**\n\n1. **Compound Components:**\n   - When: Component needs flexible composition (e.g., Tabs, Accordion)\n   - Benefits: Flexible API, implicit state sharing\n   - Example: `<Tabs><Tab>...</Tab><TabPanel>...</TabPanel></Tabs>`\n\n2. **Render Props:**\n   - When: Need to share logic with render flexibility\n   - Benefits: Inversion of control, reusable logic\n   - Example: `<DataProvider render={(data) => <UI data={data} />} />`\n\n3. **Higher-Order Components (HOCs):**\n   - When: Need to enhance multiple components with same behavior\n   - Benefits: Code reuse, separation of concerns\n   - Example: `withAuth(Component)`, `withTheme(Component)`\n\n4. **Custom Hooks:**\n   - When: Sharing stateful logic between components\n   - Benefits: Composable, testable, React-native\n   - Example: `useAuth()`, `useLocalStorage()`\n\n5. **Container/Presentational Pattern:**\n   - When: Separating logic from UI\n   - Benefits: Testing, reusability, clarity\n   - Example: `UserContainer` + `UserView`\n\n6. **Props Getter Pattern:**\n   - When: Complex prop management\n   - Benefits: Flexibility, prop composition\n   - Example: Downshift pattern\n\n7. **State Reducer Pattern:**\n   - When: Complex state transitions, customization needed\n   - Benefits: Predictability, extensibility\n   - Example: `useReducer` with action types\n\n**Analysis Steps:**\n1. Identify current anti-patterns or complexity issues\n2. Determine appropriate pattern(s) for the use case\n3. Refactor with modern React practices\n4. Provide TypeScript types if applicable\n5. Include usage examples\n\n**Output Format:**\n- **Current Issues:** Problems with existing component\n- **Recommended Pattern:** Which pattern(s) to use and why\n- **Refactored Code:** Complete implementation with comments\n- **Usage Examples:** How to use the refactored component\n- **Benefits:** Specific improvements gained\n- **Migration Guide:** How to update existing usages",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "component_code": {
+        "type": "string",
+        "description": "The React component to refactor"
+      },
+      "refactoring_goal": {
+        "type": "string",
+        "description": "What you want to achieve (e.g., 'Make more reusable', 'Separate concerns')",
+        "default": "Improve reusability and maintainability"
+      },
+      "typescript": {
+        "type": "boolean",
+        "description": "Whether to use TypeScript",
+        "default": false
+      },
+      "target_pattern": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "compound-components",
+          "render-props",
+          "hoc",
+          "custom-hooks",
+          "container-presentational"
+        ],
+        "default": "auto",
+        "description": "Specific pattern to use, or 'auto' to recommend"
+      }
+    },
+    "required": [
+      "component_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "component_code": "function Modal({ isOpen, onClose, title, content, footer }) {\n  if (!isOpen) return null;\n  return (\n    <div className=\"modal\">\n      <div className=\"header\">{title}</div>\n      <div className=\"content\">{content}</div>\n      <div className=\"footer\">{footer}</div>\n    </div>\n  );\n}",
+        "refactoring_goal": "Make modal more flexible and composable",
+        "typescript": true,
+        "target_pattern": "compound-components"
+      },
+      "output_outline": "Refactored using Compound Components pattern: Modal, Modal.Header, Modal.Content, Modal.Footer with shared context. Benefits: Flexible composition, no prop drilling, better API. TypeScript interfaces provided. Usage examples showing 3 different modal configurations. Migration guide for existing Modal usages."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

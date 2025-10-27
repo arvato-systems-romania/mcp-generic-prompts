@@ -1,0 +1,6 @@
+{
+  "generic-prompts": {
+    "command": "node",
+    "args": ["${workspaceFolder}/../mcp-generic-prompt/dist/mcp-entry.js"]
+  }
+}

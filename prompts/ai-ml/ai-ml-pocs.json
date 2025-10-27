@@ -1,0 +1,378 @@
+[
+  {
+    "id": "mcp-server-poc",
+    "title": "MCP Server Implementation POC",
+    "description": "Creates a Model Context Protocol (MCP) server with custom tools and resources for AI agent integration.",
+    "category": "poc-ai",
+    "tags": [
+      "mcp",
+      "ai",
+      "server",
+      "tools",
+      "resources"
+    ],
+    "template": "Create a proof of concept MCP (Model Context Protocol) server for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Tools to implement: {{tools}}\n- Resources to expose: {{resources}}\n- Transport: {{transport}}\n\n**Technical Stack:**\n- TypeScript/Python for implementation\n- MCP SDK (@modelcontextprotocol/sdk)\n- {{transport}} transport (stdio or SSE)\n- Zod for schema validation\n- Testing framework\n\n**Generate:**\n1. MCP server project structure\n2. Tool implementations for {{tools}}:\n   - Input schema with validation\n   - Handler function with error handling\n   - Response formatting\n3. Resource implementations for {{resources}}:\n   - URI templates\n   - Content providers\n   - MIME types\n4. Server configuration:\n   - Transport setup\n   - Capability declarations\n   - Metadata\n5. Testing suite:\n   - Tool invocation tests\n   - Resource access tests\n   - Error handling tests\n6. Documentation:\n   - Tool descriptions and examples\n   - Resource URI patterns\n   - Integration guide\n7. Claude Desktop/MCP client config\n\n**MCP Server Features:**\n- Tool registration with JSON Schema\n- Resource discovery and access\n- Progress notifications\n- Error handling with proper codes\n- Logging and debugging\n\n**Deliverables:**\n- Complete MCP server codebase\n- Tool and resource catalog\n- Test suite\n- README with setup and usage\n- Example client integration\n\nOutput: Complete MCP Server | Tool/Resource Docs | Integration Guide | Test Coverage",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the MCP server"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "What the MCP server provides"
+        },
+        "tools": {
+          "type": "string",
+          "description": "Comma-separated tools (e.g., 'search_docs, execute_query, generate_report')"
+        },
+        "resources": {
+          "type": "string",
+          "description": "Comma-separated resources (e.g., 'config files, database schemas, API specs')"
+        },
+        "transport": {
+          "type": "string",
+          "enum": [
+            "stdio",
+            "sse"
+          ],
+          "default": "stdio",
+          "description": "MCP transport mechanism"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "tools"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "database-mcp-server",
+          "purpose": "Database query and schema exploration",
+          "tools": "execute_query, explain_query, list_tables, get_schema",
+          "resources": "table schemas, query history, database metadata",
+          "transport": "stdio"
+        },
+        "output_outline": "MCP server with: 4 tools for DB operations (execute_query with SQL validation, explain_query with EXPLAIN plan, list_tables with filtering, get_schema with JSON response), 3 resource types (schema://table/{name}, history://queries, metadata://database), Zod schemas for validation, SQLite test database, comprehensive tests, Claude Desktop config, README with tool examples, ready to use with npx or node"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "ollama-integration-poc",
+    "title": "Ollama Local LLM Integration POC",
+    "description": "Creates an application that integrates with Ollama for running LLMs locally with custom prompts and processing.",
+    "category": "poc-ai",
+    "tags": [
+      "ollama",
+      "llm",
+      "local-ai",
+      "langchain",
+      "poc"
+    ],
+    "template": "Create a proof of concept application integrating Ollama for local LLM inference for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Use cases: {{use_cases}}\n- LLM model: {{model_preference}}\n- Interface type: {{interface_type}}\n\n**Technical Stack:**\n- Ollama for local LLM hosting\n- {{implementation_language}} (Python/TypeScript/Go)\n- LangChain for orchestration (optional)\n- Streaming support\n- Vector database (Chroma/Qdrant) for RAG\n- {{interface_type}} interface\n\n**Generate:**\n1. Project structure\n2. Ollama client setup and configuration\n3. Prompt templates for {{use_cases}}\n4. Streaming response handler\n5. RAG implementation (if needed):\n   - Document ingestion\n   - Embedding generation\n   - Vector store setup\n   - Retrieval logic\n6. Conversation history management\n7. Response post-processing\n8. {{interface_type}} interface:\n   - CLI with rich formatting\n   - REST API with endpoints\n   - Web UI with real-time updates\n9. Model management:\n   - Download/update models\n   - Model switching\n   - Performance monitoring\n10. Error handling and retries\n11. Testing with mock responses\n12. Docker setup for portability\n\n**Features:**\n- Multi-model support (llama2, mistral, codellama, etc.)\n- Streaming responses\n- Context window management\n- Token counting\n- Temperature/top_p controls\n- System prompts\n- Few-shot examples\n\n**Deliverables:**\n- Complete application codebase\n- Ollama setup instructions\n- Prompt engineering guide\n- Performance benchmarks\n- README with examples\n\nModel: {{model_preference}}\n\nOutput: Complete Ollama Integration | Prompt Library | Usage Examples | Performance Guide",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "What the application does"
+        },
+        "use_cases": {
+          "type": "string",
+          "description": "Comma-separated use cases (e.g., 'code review, documentation, chat')"
+        },
+        "model_preference": {
+          "type": "string",
+          "enum": [
+            "llama2",
+            "llama3",
+            "mistral",
+            "codellama",
+            "mixtral",
+            "gemma",
+            "phi"
+          ],
+          "default": "llama3",
+          "description": "Preferred Ollama model"
+        },
+        "interface_type": {
+          "type": "string",
+          "enum": [
+            "cli",
+            "api",
+            "web-ui",
+            "all"
+          ],
+          "default": "cli"
+        },
+        "implementation_language": {
+          "type": "string",
+          "enum": [
+            "python",
+            "typescript",
+            "go"
+          ],
+          "default": "python"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "use_cases"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "code-reviewer",
+          "purpose": "Automated code review assistant",
+          "use_cases": "review code, suggest improvements, explain code, generate tests",
+          "model_preference": "codellama",
+          "interface_type": "cli",
+          "implementation_language": "python"
+        },
+        "output_outline": "Python CLI app with: Ollama client for CodeLlama 13B, 4 prompt templates for each use case, streaming output with rich library, git diff parser, syntax highlighting, conversation context (5 turns), model management CLI, example: 'review main.py --model codellama:13b', Docker Compose with Ollama, pytest tests with mocked responses, README with installation (ollama pull codellama), benchmarks showing 20 tokens/sec"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "rag-pipeline-poc",
+    "title": "RAG (Retrieval-Augmented Generation) Pipeline POC",
+    "description": "Implements a complete RAG pipeline with document ingestion, vector storage, retrieval, and LLM generation.",
+    "category": "poc-ai",
+    "tags": [
+      "rag",
+      "langchain",
+      "embeddings",
+      "vector-db",
+      "llm"
+    ],
+    "template": "Create a proof of concept RAG (Retrieval-Augmented Generation) pipeline for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Document sources: {{doc_sources}}\n- LLM backend: {{llm_backend}}\n- Vector database: {{vector_db}}\n\n**Technical Stack:**\n- LangChain for orchestration\n- {{vector_db}} for vector storage\n- {{embedding_model}} for embeddings\n- {{llm_backend}} for generation\n- Document loaders (PDF, Markdown, HTML, etc.)\n- Python with async support\n\n**Generate:**\n1. Document ingestion pipeline:\n   - Loaders for {{doc_sources}}\n   - Text splitting strategies\n   - Metadata extraction\n   - Chunking with overlap\n2. Embedding generation:\n   - Batch processing\n   - Caching strategy\n   - Cost optimization\n3. Vector database setup:\n   - Index configuration\n   - Similarity search\n   - Metadata filtering\n   - Hybrid search (if supported)\n4. Retrieval component:\n   - Semantic search\n   - Re-ranking\n   - Context assembly\n   - Source attribution\n5. Generation pipeline:\n   - Prompt engineering\n   - Context injection\n   - Citation formatting\n   - Response streaming\n6. Query interface:\n   - CLI or API\n   - Conversation memory\n   - Follow-up questions\n7. Evaluation framework:\n   - Retrieval metrics (precision, recall)\n   - Generation quality\n   - Latency tracking\n8. Admin tools:\n   - Document management\n   - Index updates\n   - Usage analytics\n\n**Advanced Features:**\n- Multi-modal support (text, images, tables)\n- Incremental updates\n- Query expansion\n- Answer confidence scoring\n- Source filtering\n\n**Deliverables:**\n- Complete RAG pipeline\n- Document ingestion scripts\n- Query interface\n- Evaluation results\n- Deployment guide\n\nOutput: Complete RAG System | Ingestion Pipeline | Query API | Performance Metrics",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the RAG system"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "What documents to search and why"
+        },
+        "doc_sources": {
+          "type": "string",
+          "description": "Document types (e.g., 'PDFs, markdown docs, web pages')"
+        },
+        "llm_backend": {
+          "type": "string",
+          "enum": [
+            "openai",
+            "anthropic",
+            "ollama",
+            "azure-openai"
+          ],
+          "default": "ollama"
+        },
+        "vector_db": {
+          "type": "string",
+          "enum": [
+            "chroma",
+            "qdrant",
+            "pinecone",
+            "weaviate",
+            "milvus"
+          ],
+          "default": "chroma"
+        },
+        "embedding_model": {
+          "type": "string",
+          "enum": [
+            "openai-ada",
+            "sentence-transformers",
+            "ollama-embed"
+          ],
+          "default": "sentence-transformers"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "doc_sources"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "docs-qa-system",
+          "purpose": "Answer questions about internal documentation",
+          "doc_sources": "Markdown docs, API specs (OpenAPI), PDF manuals",
+          "llm_backend": "ollama",
+          "vector_db": "chroma",
+          "embedding_model": "sentence-transformers"
+        },
+        "output_outline": "RAG system with: LangChain document loaders for MD/PDF/JSON, RecursiveCharacterTextSplitter (1000 chars, 200 overlap), sentence-transformers/all-MiniLM-L6-v2 embeddings, ChromaDB with metadata filtering, retrieval with top-k=5, Ollama Llama3 for generation, FastAPI query endpoint, source citations, conversation memory (5 turns), 200ms avg retrieval, 2s generation, CLI + web UI, ingestion script for /docs folder, evaluation: 85% answer relevance"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "langchain-agent-poc",
+    "title": "LangChain AI Agent with Tools POC",
+    "description": "Creates an autonomous AI agent using LangChain with custom tools, memory, and decision-making capabilities.",
+    "category": "poc-ai",
+    "tags": [
+      "langchain",
+      "agent",
+      "tools",
+      "ai",
+      "autonomous"
+    ],
+    "template": "Create a proof of concept LangChain AI agent for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Available tools: {{tools}}\n- LLM backend: {{llm_backend}}\n- Agent type: {{agent_type}}\n\n**Technical Stack:**\n- LangChain with LCEL (LangChain Expression Language)\n- {{llm_backend}} for reasoning\n- Custom tool implementations\n- Memory (conversation buffer, summary, entity)\n- Python with async support\n\n**Generate:**\n1. Agent configuration:\n   - Agent type (ReAct, OpenAI Functions, Structured Chat)\n   - System prompt and personality\n   - Tool descriptions\n   - Stop conditions\n2. Custom tool implementations for {{tools}}:\n   - Tool schemas with Pydantic\n   - Async handlers\n   - Error handling\n   - Output formatting\n3. Memory setup:\n   - Conversation history\n   - Entity memory\n   - Summary memory\n   - Token management\n4. Agent executor:\n   - Tool selection logic\n   - Observation processing\n   - Chain-of-thought tracking\n   - Max iterations control\n5. Callback handlers:\n   - Logging\n   - Cost tracking\n   - Performance monitoring\n6. Safety mechanisms:\n   - Tool validation\n   - Harmful output filtering\n   - Iteration limits\n   - Fallback responses\n7. Testing framework:\n   - Mock tools\n   - Scenario testing\n   - Tool selection accuracy\n8. Web interface or CLI\n\n**Advanced Features:**\n- Multi-agent collaboration\n- Human-in-the-loop approval\n- Dynamic tool loading\n- Planning and execution separation\n- Self-reflection and error correction\n\n**Deliverables:**\n- Complete agent codebase\n- Tool library\n- Example scenarios\n- Performance benchmarks\n- Safety guidelines\n\nOutput: Complete LangChain Agent | Tool Implementations | Usage Examples | Safety Guide",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the AI agent"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "What the agent does"
+        },
+        "tools": {
+          "type": "string",
+          "description": "Comma-separated tools (e.g., 'web_search, calculator, file_manager, api_caller')"
+        },
+        "llm_backend": {
+          "type": "string",
+          "enum": [
+            "openai",
+            "anthropic",
+            "ollama",
+            "azure-openai"
+          ],
+          "default": "openai"
+        },
+        "agent_type": {
+          "type": "string",
+          "enum": [
+            "react",
+            "openai-functions",
+            "structured-chat",
+            "self-ask"
+          ],
+          "default": "openai-functions"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "tools"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "research-assistant",
+          "purpose": "Autonomous research and report generation",
+          "tools": "web_search, wikipedia, arxiv_search, python_repl, file_writer",
+          "llm_backend": "openai",
+          "agent_type": "openai-functions"
+        },
+        "output_outline": "LangChain agent with: OpenAI GPT-4 as reasoner, 5 custom tools (DuckDuckGo search, Wikipedia API, arXiv API, safe Python REPL, file operations), ConversationBufferMemory for context, OpenAI Functions agent for tool selection, max 10 iterations, streaming output, cost tracking ($0.03/query avg), example: 'Research quantum computing advances in 2024 and write a summary', safety: sandboxed Python, content filtering, produces structured reports with citations"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "llm-fine-tuning-poc",
+    "title": "LLM Fine-Tuning Pipeline POC",
+    "description": "Sets up a complete pipeline for fine-tuning open-source LLMs on custom datasets with evaluation and deployment.",
+    "category": "poc-ai",
+    "tags": [
+      "fine-tuning",
+      "llm",
+      "training",
+      "lora",
+      "qlora"
+    ],
+    "template": "Create a proof of concept LLM fine-tuning pipeline for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Base model: {{base_model}}\n- Training data: {{data_description}}\n- Fine-tuning method: {{method}}\n\n**Technical Stack:**\n- HuggingFace Transformers\n- {{method}} (LoRA/QLoRA/Full fine-tuning)\n- PEFT library for parameter-efficient training\n- Accelerate for multi-GPU\n- bitsandbytes for quantization\n- W&B or TensorBoard for tracking\n- Python with PyTorch\n\n**Generate:**\n1. Data preparation pipeline:\n   - Data loading and validation\n   - Formatting for instruction tuning\n   - Train/validation/test split\n   - Tokenization\n   - Data collator\n2. Model configuration:\n   - Base model loading (4-bit/8-bit quantization)\n   - LoRA/QLoRA configuration\n   - Trainable parameters calculation\n3. Training setup:\n   - Training arguments (batch size, learning rate, epochs)\n   - Optimizer and scheduler\n   - Gradient accumulation\n   - Mixed precision training\n4. Training loop:\n   - Progress tracking\n   - Checkpoint saving\n   - Early stopping\n   - Loss logging\n5. Evaluation framework:\n   - Perplexity calculation\n   - Generation quality metrics\n   - Task-specific evaluation\n   - Comparison with base model\n6. Model merging and export:\n   - Merge LoRA weights\n   - GGUF conversion for Ollama\n   - Quantization options\n7. Inference testing:\n   - Sample predictions\n   - Response quality check\n   - Latency benchmarks\n8. Deployment:\n   - Ollama Modelfile\n   - HuggingFace Hub upload\n   - Docker container\n\n**Training Optimizations:**\n- Gradient checkpointing\n- Flash Attention 2\n- DeepSpeed integration\n- Multi-GPU support\n\n**Deliverables:**\n- Complete training pipeline\n- Dataset preparation scripts\n- Training configuration\n- Evaluation reports\n- Deployment guide\n\nOutput: Fine-Tuning Pipeline | Training Scripts | Evaluation Results | Deployment Package",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the fine-tuning project"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "What the fine-tuned model should do"
+        },
+        "base_model": {
+          "type": "string",
+          "description": "Base model to fine-tune",
+          "enum": [
+            "llama-2-7b",
+            "llama-3-8b",
+            "mistral-7b",
+            "phi-2",
+            "gemma-7b"
+          ],
+          "default": "mistral-7b"
+        },
+        "data_description": {
+          "type": "string",
+          "description": "Description of training data (e.g., '1000 customer support conversations')"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "lora",
+            "qlora",
+            "full"
+          ],
+          "default": "qlora",
+          "description": "Fine-tuning method"
+        }
+      },
+      "required": [
+        "project_name",
+        "purpose",
+        "base_model",
+        "data_description"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "customer-support-bot",
+          "purpose": "Fine-tune for customer support responses",
+          "base_model": "mistral-7b",
+          "data_description": "2000 annotated customer support conversations with company-specific knowledge",
+          "method": "qlora"
+        },
+        "output_outline": "Fine-tuning pipeline with: Mistral-7B-Instruct-v0.2 base, QLoRA (r=16, alpha=32) for efficiency, 4-bit quantization, custom dataset in instruction format, 3 epochs training (4 hours on single A100), W&B tracking, validation perplexity improved 35%, task accuracy 89% vs 67% baseline, merged model exported to Ollama GGUF, Modelfile included, Docker container with serving API, evaluation showing better product knowledge and tone"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

@@ -1,0 +1,331 @@
+[
+  {
+    "id": "api-design-review",
+    "title": "RESTful API Design Review & Best Practices",
+    "description": "Comprehensive review of API design against REST principles, consistency, and industry best practices.",
+    "category": "backend",
+    "tags": [
+      "api",
+      "rest",
+      "design",
+      "architecture"
+    ],
+    "template": "Review API design for {{service_name}} API.\n\n1. Evaluate REST compliance:\n   - Resource naming conventions\n   - HTTP method usage (GET, POST, PUT, PATCH, DELETE)\n   - Status code appropriateness\n   - HATEOAS implementation\n2. Consistency analysis:\n   - Endpoint naming patterns\n   - Response structure uniformity\n   - Error response format\n   - Pagination approach\n3. Versioning strategy:\n   - Current approach (URL, header, content negotiation)\n   - Breaking vs non-breaking changes\n   - Deprecation policy\n4. Security review:\n   - Authentication/authorization\n   - Input validation\n   - Rate limiting\n   - CORS configuration\n5. Documentation quality:\n   - OpenAPI/Swagger completeness\n   - Example requests/responses\n   - Error scenarios\n6. Performance considerations:\n   - N+1 query problems\n   - Payload size\n   - Caching headers\n\nAPI specification: {{api_spec}}\nFramework: {{framework}}\n\nOutput: Design Analysis | Inconsistencies | Security Issues | Recommendations | Refactoring Plan",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "service_name": {
+          "type": "string",
+          "description": "Name of the API service"
+        },
+        "api_spec": {
+          "type": "string",
+          "description": "OpenAPI/Swagger spec or endpoint list"
+        },
+        "framework": {
+          "type": "string",
+          "description": "Backend framework (e.g., Express, Spring Boot, FastAPI)"
+        }
+      },
+      "required": [
+        "service_name",
+        "framework"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "service_name": "user-management-api",
+          "api_spec": "23 endpoints, mixed naming conventions",
+          "framework": "Spring Boot"
+        },
+        "output_outline": "Issues: inconsistent naming (GET /users vs GET /user-profile), wrong status codes (200 for errors), no pagination on lists, missing rate limiting, recommendations: standardize to kebab-case, use 400/404/500 properly, implement page/size params, add bucket4j for rate limiting, update OpenAPI spec"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "database-query-optimization",
+    "title": "Database Query Performance Optimization",
+    "description": "Analyzes slow queries and database access patterns, providing optimization strategies and index recommendations.",
+    "category": "backend",
+    "tags": [
+      "database",
+      "sql",
+      "performance",
+      "optimization"
+    ],
+    "template": "Optimize database queries for {{application_name}}.\n\n1. Analyze slow query logs:\n   - Query execution times\n   - Frequency of execution\n   - Tables and joins involved\n2. Identify performance issues:\n   - Missing indexes\n   - Inefficient joins\n   - N+1 query problems\n   - Full table scans\n   - Lock contention\n3. Review query patterns:\n   - ORM-generated queries\n   - Raw SQL efficiency\n   - Transaction boundaries\n4. Index strategy:\n   - Recommend new indexes\n   - Identify unused indexes\n   - Composite index opportunities\n   - Index maintenance overhead\n5. Query optimization:\n   - Rewrite suggestions\n   - Subquery to join conversions\n   - Pagination strategies\n   - Use of materialized views\n6. Connection pooling review\n7. Provide before/after performance metrics\n\nDatabase: {{database_type}}\nSlow queries: {{slow_query_log}}\nORM: {{orm}}\n\nOutput: Performance Analysis | Index Recommendations | Query Rewrites | Implementation Guide",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "database_type": {
+          "type": "string",
+          "enum": [
+            "postgresql",
+            "mysql",
+            "mongodb",
+            "oracle",
+            "mssql"
+          ],
+          "description": "Database system"
+        },
+        "slow_query_log": {
+          "type": "string",
+          "description": "Slow query log excerpt or summary"
+        },
+        "orm": {
+          "type": "string",
+          "description": "ORM in use (e.g., Hibernate, TypeORM, SQLAlchemy)",
+          "default": "none"
+        }
+      },
+      "required": [
+        "application_name",
+        "database_type"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "order-service",
+          "database_type": "postgresql",
+          "slow_query_log": "getUserOrders: 3.2s avg, 500 calls/min",
+          "orm": "Hibernate"
+        },
+        "output_outline": "Analysis: N+1 query loading order items (500 queries per request), missing index on orders.user_id, recommendations: add @BatchSize or JOIN FETCH, create index on user_id + created_at, implement cursor pagination, expected improvement: 3.2s → 180ms"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "microservice-decomposition",
+    "title": "Microservice Decomposition Strategy",
+    "description": "Analyzes monolithic application and designs microservice decomposition strategy based on domain boundaries and dependencies.",
+    "category": "backend",
+    "tags": [
+      "microservices",
+      "architecture",
+      "decomposition",
+      "ddd"
+    ],
+    "template": "Design microservice decomposition strategy for {{application_name}}.\n\n1. Analyze current monolith:\n   - Domain model and bounded contexts\n   - Module dependencies and coupling\n   - Database schema analysis\n   - Transaction boundaries\n2. Identify service boundaries:\n   - Apply domain-driven design\n   - Analyze business capabilities\n   - Consider team structure (Conway's Law)\n   - Database per service feasibility\n3. Define decomposition approach:\n   - Strangler fig pattern opportunities\n   - Service extraction priority\n   - Data migration strategy\n   - API gateway requirements\n4. Address challenges:\n   - Distributed transactions (Saga pattern)\n   - Data consistency\n   - Service discovery\n   - Inter-service communication\n5. Design service contracts:\n   - API definitions\n   - Event schemas\n   - Service dependencies\n6. Migration roadmap with phases\n7. Risk assessment and mitigation\n\nCurrent architecture: {{current_arch}}\nTeam size: {{team_size}}\n\nOutput: Service Boundary Map | Decomposition Roadmap | Technical Challenges | Migration Strategy",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the monolithic application"
+        },
+        "current_arch": {
+          "type": "string",
+          "description": "Brief description of current architecture"
+        },
+        "team_size": {
+          "type": "string",
+          "description": "Team size (e.g., '3 teams, 15 developers')",
+          "default": "unknown"
+        }
+      },
+      "required": [
+        "application_name",
+        "current_arch"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "ecommerce-monolith",
+          "current_arch": "Monolithic Spring Boot app, 150K LOC, shared PostgreSQL",
+          "team_size": "4 teams, 20 developers"
+        },
+        "output_outline": "Proposed services: product-catalog, inventory, order-management, payment, user-account, notification; extraction order: notification (least coupled) → user-account → product-catalog → order+payment (high coupling); use Saga for order+payment coordination, event-driven with Kafka, API gateway with Spring Cloud Gateway, 9-month migration"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "caching-strategy-design",
+    "title": "Application Caching Strategy Design",
+    "description": "Designs comprehensive caching strategy including cache layers, invalidation policies, and implementation recommendations.",
+    "category": "backend",
+    "tags": [
+      "caching",
+      "performance",
+      "redis",
+      "optimization"
+    ],
+    "template": "Design caching strategy for {{application_name}}.\n\n1. Identify cacheable data:\n   - Read-heavy endpoints\n   - Computation-expensive operations\n   - External API responses\n   - Session data\n2. Define cache layers:\n   - Application-level cache (in-memory)\n   - Distributed cache (Redis, Memcached)\n   - CDN/edge caching\n   - Database query cache\n3. Cache invalidation strategy:\n   - Time-based expiration (TTL)\n   - Event-based invalidation\n   - Write-through vs write-behind\n   - Cache-aside pattern\n4. Address consistency challenges:\n   - Stale data tolerance\n   - Cache stampede prevention\n   - Thundering herd mitigation\n5. Implementation details:\n   - Cache key design\n   - Serialization format\n   - Memory sizing\n   - Monitoring and observability\n6. Provide cache-hit ratio targets\n7. Estimate performance improvements\n\nCurrent performance: {{current_perf}}\nData volatility: {{data_volatility}}\nCache technology: {{cache_tech}}\n\nOutput: Caching Architecture | Implementation Plan | Invalidation Policies | Performance Projections",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "current_perf": {
+          "type": "string",
+          "description": "Current performance metrics (e.g., 'p95: 450ms, 1000 req/s')"
+        },
+        "data_volatility": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "default": "medium",
+          "description": "How frequently data changes"
+        },
+        "cache_tech": {
+          "type": "string",
+          "enum": [
+            "redis",
+            "memcached",
+            "hazelcast",
+            "none"
+          ],
+          "default": "redis"
+        }
+      },
+      "required": [
+        "application_name",
+        "current_perf"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "content-api",
+          "current_perf": "p95: 800ms, DB-bound",
+          "data_volatility": "low",
+          "cache_tech": "redis"
+        },
+        "output_outline": "Strategy: 3-tier caching (in-memory LRU for hot data, Redis for shared cache, CDN for static content), TTL: 5min for user data, 1hr for reference data, cache-aside pattern, use Redis pub/sub for invalidation, estimated improvement: p95 800ms → 50ms, cache hit ratio target: 85%"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "background-job-optimization",
+    "title": "Background Job Processing Optimization",
+    "description": "Reviews and optimizes background job processing systems for reliability, performance, and error handling.",
+    "category": "backend",
+    "tags": [
+      "background-jobs",
+      "queue",
+      "async",
+      "workers"
+    ],
+    "template": "Optimize background job processing for {{application_name}}.\n\n1. Audit current job processing:\n   - Job queue system ({{queue_system}})\n   - Job types and frequency\n   - Processing times\n   - Failure rates\n   - Retry strategies\n2. Identify bottlenecks:\n   - Queue backlog issues\n   - Worker capacity\n   - Resource contention\n   - Inefficient job implementations\n3. Reliability improvements:\n   - Idempotency guarantees\n   - Retry policies (exponential backoff)\n   - Dead letter queue handling\n   - Job timeouts\n4. Performance optimization:\n   - Worker scaling strategy\n   - Job batching opportunities\n   - Priority queues\n   - Parallel processing\n5. Monitoring and observability:\n   - Key metrics (throughput, latency, errors)\n   - Alerting thresholds\n   - Job tracing\n6. Error handling patterns\n7. Cost optimization (cloud queue services)\n\nQueue System: {{queue_system}}\nJob volume: {{job_volume}}\nCurrent issues: {{current_issues}}\n\nOutput: Performance Analysis | Optimization Recommendations | Reliability Improvements | Monitoring Strategy",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "queue_system": {
+          "type": "string",
+          "enum": [
+            "sidekiq",
+            "celery",
+            "bull",
+            "rabbitmq",
+            "sqs",
+            "kafka",
+            "custom"
+          ],
+          "description": "Job queue system"
+        },
+        "job_volume": {
+          "type": "string",
+          "description": "Job processing volume (e.g., '10K jobs/day')"
+        },
+        "current_issues": {
+          "type": "string",
+          "description": "Known issues or concerns"
+        }
+      },
+      "required": [
+        "application_name",
+        "queue_system",
+        "job_volume"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "email-service",
+          "queue_system": "sidekiq",
+          "job_volume": "50K jobs/day",
+          "current_issues": "Queue backlog during peak hours, 5% failure rate"
+        },
+        "output_outline": "Issues: insufficient workers (2 → recommend 8), no job prioritization, missing idempotency checks, recommendations: implement priority queues (urgent/normal/low), add Redis-based deduplication, exponential backoff with 3 retries, auto-scaling based on queue depth, expected: backlog eliminated, <1% failure rate"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "error-handling-standardization",
+    "title": "Error Handling & Exception Strategy",
+    "description": "Standardizes error handling patterns across backend services with consistent error responses and logging.",
+    "category": "backend",
+    "tags": [
+      "error-handling",
+      "exceptions",
+      "logging",
+      "observability"
+    ],
+    "template": "Standardize error handling for {{service_name}} ({{language}}).\n\n1. Audit current error handling:\n   - Exception types and hierarchy\n   - Error response formats\n   - HTTP status code usage\n   - Error logging practices\n2. Define error taxonomy:\n   - Client errors (4xx) vs server errors (5xx)\n   - Validation errors\n   - Business logic errors\n   - Infrastructure errors\n3. Standardize error responses:\n   - Response structure (code, message, details)\n   - Error codes catalog\n   - Localization support\n   - Stack trace exposure (dev vs prod)\n4. Exception handling patterns:\n   - Global exception handler\n   - Try-catch best practices\n   - Error propagation\n   - Circuit breaker integration\n5. Logging strategy:\n   - Error severity levels\n   - Context enrichment\n   - PII redaction\n   - Correlation IDs\n6. Monitoring and alerting:\n   - Error rate thresholds\n   - Alert routing\n   - Error tracking (Sentry, Rollbar)\n\nLanguage/Framework: {{language}}/{{framework}}\n\nOutput: Error Handling Guide | Response Standards | Implementation Examples | Monitoring Setup",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "service_name": {
+          "type": "string",
+          "description": "Name of the service"
+        },
+        "language": {
+          "type": "string",
+          "description": "Programming language"
+        },
+        "framework": {
+          "type": "string",
+          "description": "Framework (e.g., Express, Spring Boot, Django)"
+        }
+      },
+      "required": [
+        "service_name",
+        "language",
+        "framework"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "service_name": "payment-api",
+          "language": "Java",
+          "framework": "Spring Boot"
+        },
+        "output_outline": "Standards: RFC 7807 Problem Details format, custom @ControllerAdvice for global handling, error code format: PAY-1001, structured logging with MDC, integration with Sentry, examples: validation errors (400), business rule violations (422), payment failures (402), implementation: ErrorResponse DTO, ErrorCode enum, 2-day effort"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

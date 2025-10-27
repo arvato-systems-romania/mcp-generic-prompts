@@ -1,0 +1,75 @@
+{
+  "id": "spring-boot-performance-optimization",
+  "title": "Spring Boot Performance Optimization",
+  "description": "Analyzes Spring Boot applications for performance bottlenecks, JPA optimization, caching strategies, and production-ready configurations.",
+  "category": "backend-java",
+  "tags": [
+    "java",
+    "spring-boot",
+    "performance",
+    "jpa",
+    "caching",
+    "optimization"
+  ],
+  "template": "Analyze Spring Boot application for performance optimization opportunities.\n\n**Application Context:**\n- Project: {{project_name}}\n- Spring Boot Version: {{spring_version}}\n- Java Version: {{java_version}}\n- Current Performance Issue: {{performance_issue}}\n\n**Code to Analyze:**\n```java\n{{spring_code}}\n```\n\n**Performance Analysis Areas:**\n\n1. **JPA/Hibernate Optimization:**\n   - N+1 query problems\n   - Fetch strategies (LAZY vs EAGER)\n   - @EntityGraph usage\n   - Native queries vs JPQL\n   - Batch processing\n   - Second-level caching\n   - Connection pooling (HikariCP)\n   - Query result pagination\n   - Projection usage (DTO vs Entity)\n   - @Transactional boundaries\n\n2. **Caching Strategy:**\n   - Spring Cache abstraction\n   - Redis integration\n   - Caffeine cache configuration\n   - Cache eviction policies\n   - @Cacheable, @CacheEvict, @CachePut\n   - Cache key generation\n   - TTL configuration\n   - Distributed caching\n\n3. **REST Controller Optimization:**\n   - Response compression\n   - Async processing (@Async)\n   - CompletableFuture usage\n   - WebFlux reactive approach\n   - Pagination best practices\n   - DTO mapping efficiency (MapStruct)\n   - Request validation\n   - Exception handling performance\n\n4. **Database Configuration:**\n   - HikariCP optimal settings\n   - Connection pool size tuning\n   - Statement caching\n   - Batch size configuration\n   - JDBC fetch size\n   - Read/write separation\n   - Database indexes\n\n5. **Application Configuration:**\n   - Actuator metrics\n   - JVM tuning parameters\n   - Garbage collection optimization\n   - Thread pool sizing\n   - Tomcat/Undertow configuration\n   - Profile-specific settings\n   - Lazy initialization\n\n6. **Service Layer Patterns:**\n   - Transaction scope optimization\n   - Async method execution\n   - Parallel stream processing\n   - Bulk operations\n   - Event-driven architecture\n   - Circuit breaker patterns\n\n7. **Monitoring & Profiling:**\n   - Spring Boot Actuator endpoints\n   - Micrometer metrics\n   - APM integration (New Relic, Dynatrace)\n   - Slow query logging\n   - JVM memory analysis\n   - Thread dump analysis\n\n8. **Startup Time Optimization:**\n   - Component scanning optimization\n   - Lazy bean initialization\n   - Conditional configuration\n   - Spring AOT processing\n   - Native image compilation\n\n9. **API Response Optimization:**\n   - JSON serialization tuning\n   - GraphQL vs REST\n   - Field filtering\n   - Response compression\n   - ETag support\n   - Conditional requests\n\n10. **Microservices Patterns:**\n    - Service discovery optimization\n    - Circuit breaker configuration\n    - Load balancing strategies\n    - API gateway patterns\n    - Inter-service communication\n\n**Output Format:**\n- **Performance Bottlenecks:** Identified issues with measurements\n- **JPA Optimization:** Query improvements and fetch strategies\n- **Caching Recommendations:** What to cache and how\n- **Configuration Tuning:** JVM, connection pool, thread pool settings\n- **Code Refactoring:** Before/after examples with performance gains\n- **Monitoring Setup:** Metrics to track and alerts to configure\n- **Benchmarks:** Expected performance improvements\n- **Production Checklist:** Pre-deployment optimization items",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Spring Boot project"
+      },
+      "spring_code": {
+        "type": "string",
+        "description": "Spring Boot application code to analyze"
+      },
+      "spring_version": {
+        "type": "string",
+        "description": "Spring Boot version (e.g., '3.2.0')",
+        "default": "3.2.0"
+      },
+      "java_version": {
+        "type": "string",
+        "description": "Java version (e.g., '17', '21')",
+        "default": "17"
+      },
+      "performance_issue": {
+        "type": "string",
+        "description": "Specific performance concern",
+        "default": "Slow API response times"
+      },
+      "database": {
+        "type": "string",
+        "enum": [
+          "postgresql",
+          "mysql",
+          "oracle",
+          "sqlserver",
+          "mongodb"
+        ],
+        "default": "postgresql",
+        "description": "Database type"
+      }
+    },
+    "required": [
+      "project_name",
+      "spring_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "OrderService",
+        "spring_code": "@RestController\n@RequestMapping(\"/api/orders\")\npublic class OrderController {\n  @Autowired\n  private OrderRepository orderRepo;\n  \n  @GetMapping\n  public List<Order> getAllOrders() {\n    return orderRepo.findAll();\n  }\n  \n  @GetMapping(\"/{id}\")\n  public Order getOrder(@PathVariable Long id) {\n    Order order = orderRepo.findById(id).orElseThrow();\n    order.getItems().size(); // trigger lazy load\n    return order;\n  }\n}",
+        "spring_version": "3.2.0",
+        "java_version": "17",
+        "performance_issue": "Order API taking 2+ seconds with 1000+ orders",
+        "database": "postgresql"
+      },
+      "output_outline": "Issues: 1) N+1 query for order items (lazy loading), 2) No pagination in findAll(), 3) No caching, 4) Missing connection pool tuning, 5) No async processing. Solutions: Use @EntityGraph or JOIN FETCH for items, add Pageable parameter with Page return type, implement @Cacheable on getOrder(), configure HikariCP with proper pool size (10-20 connections), add @Async for heavy operations. Show refactored code with: @EntityGraph(attributePaths = {\"items\"}), Page<OrderDTO> with Pageable, @Cacheable(value=\"orders\", key=\"#id\"), MapStruct for DTO conversion, application.yml with HikariCP settings (max-pool-size: 20, connection-timeout: 30000). Add monitoring with Actuator metrics. Expected improvement: 2s → 200ms (90% faster)."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

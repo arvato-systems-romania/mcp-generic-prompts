@@ -1,0 +1,44 @@
+[
+  {
+    "id": "maven-dependency-convergence",
+    "title": "Maven Dependency Convergence & Conflict Resolution",
+    "description": "Analyzes Maven dependency tree for version conflicts and convergence issues, providing resolution strategies.",
+    "category": "dependency-maintenance",
+    "tags": [
+      "maven",
+      "java",
+      "dependencies",
+      "conflict-resolution"
+    ],
+    "template": "Resolve dependency conflicts in Maven project {{project_name}}.\n\n1. Run dependency:tree analysis\n2. Identify version conflicts:\n   - Same artifact, multiple versions\n   - Transitive dependency conflicts\n   - Version convergence failures\n3. Analyze dependency mediation:\n   - Which version Maven selects and why\n   - Impact of nearest definition rule\n4. Detect problematic patterns:\n   - Diamond dependencies\n   - Circular dependencies\n   - Conflicting transitive deps\n5. Provide resolution strategies:\n   - Dependency management section\n   - Explicit exclusions\n   - BOM (Bill of Materials) usage\n   - Version property centralization\n6. Recommend Maven Enforcer rules\n7. Test compatibility of resolved versions\n8. Document dependency management policy\n\nPOM file: {{pom_content}}\n\nOutput: Conflict Analysis | Resolution Plan | Updated POM Sections | Enforcer Configuration",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the Maven project"
+        },
+        "pom_content": {
+          "type": "string",
+          "description": "Content of pom.xml file(s)"
+        }
+      },
+      "required": [
+        "project_name",
+        "pom_content"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "enterprise-platform",
+          "pom_content": "<dependencies><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId></dependency></dependencies>"
+        },
+        "output_outline": "Conflicts: jackson-databind (2.13.1 vs 2.14.2), slf4j-api (1.7.36 vs 2.0.6), guava (30.1 vs 31.1), resolution: use Spring Boot BOM for version management, exclude transitive jackson from old deps, enforce convergence rule, centralize versions in properties, test compatibility: jackson 2.14.2 compatible, slf4j 2.0.6 requires logback 1.3+"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

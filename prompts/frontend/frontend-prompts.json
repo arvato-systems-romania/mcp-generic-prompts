@@ -1,0 +1,323 @@
+[
+  {
+    "id": "frontend-dependency-risk",
+    "title": "Frontend Dependency Risk Assessment",
+    "description": "Evaluates frontend dependencies for supply chain risks, including package compromise, maintenance status, and security posture.",
+    "category": "frontend",
+    "tags": [
+      "frontend",
+      "dependencies",
+      "security",
+      "supply-chain",
+      "npm"
+    ],
+    "template": "Assess dependency risk for frontend project {{project_name}}.\n\n1. Analyze package.json and lock file\n2. For each dependency, evaluate:\n   - Maintenance status (last update, GitHub activity)\n   - Security advisories and CVEs\n   - Package popularity and trust (downloads, stars)\n   - Dependency tree depth and bloat\n   - License compatibility\n   - Known supply chain attacks\n3. Check for:\n   - Typosquatting packages\n   - Abandoned dependencies\n   - Dependencies with single maintainer\n   - Packages with postinstall scripts\n4. Calculate risk score per package\n5. Identify alternatives for high-risk packages\n6. Recommend dependency policies\n7. Set up automated monitoring\n\nPackage Manager: {{package_manager}}\nFramework: {{framework}}\n\nOutput as: Risk Report | High-Risk Packages | Alternatives | Mitigation Strategy | Monitoring Setup",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the frontend project"
+        },
+        "package_manager": {
+          "type": "string",
+          "enum": [
+            "npm",
+            "yarn",
+            "pnpm"
+          ],
+          "default": "npm"
+        },
+        "framework": {
+          "type": "string",
+          "enum": [
+            "react",
+            "vue",
+            "angular",
+            "svelte",
+            "next",
+            "nuxt"
+          ]
+        }
+      },
+      "required": [
+        "project_name",
+        "framework"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "customer-dashboard",
+          "package_manager": "npm",
+          "framework": "react"
+        },
+        "output_outline": "Risk analysis: 287 total dependencies, HIGH risk packages identified, recommendations for replacement, monitoring setup with Snyk/Socket"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "react-performance-audit",
+    "title": "React Application Performance Audit",
+    "description": "Comprehensive performance analysis for React applications, identifying re-render issues, bundle size problems, and optimization opportunities.",
+    "category": "frontend",
+    "tags": [
+      "react",
+      "performance",
+      "optimization",
+      "profiling"
+    ],
+    "template": "Conduct performance audit for React application {{app_name}}.\n\n1. Analyze component re-render patterns:\n   - Unnecessary re-renders\n   - Missing React.memo opportunities\n   - useCallback/useMemo usage\n   - Context API performance issues\n2. Bundle size analysis:\n   - Large dependencies\n   - Code splitting opportunities\n   - Tree-shaking effectiveness\n   - Duplicate dependencies\n3. Runtime performance:\n   - Virtual DOM operations\n   - Event handler efficiency\n   - State management overhead\n4. Loading performance:\n   - Initial bundle size\n   - Lazy loading implementation\n   - Critical rendering path\n5. Provide optimization recommendations with code examples\n6. Estimate performance improvements\n\nCurrent metrics: {{current_metrics}}\nTarget: {{performance_target}}\n\nOutput: Performance Report | Optimization Priorities | Code Examples | Implementation Roadmap",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_name": {
+          "type": "string",
+          "description": "Name of the React application"
+        },
+        "current_metrics": {
+          "type": "string",
+          "description": "Current performance metrics (e.g., 'FCP: 2.5s, LCP: 4.1s, bundle: 1.2MB')"
+        },
+        "performance_target": {
+          "type": "string",
+          "description": "Target metrics",
+          "default": "FCP < 1.8s, LCP < 2.5s"
+        }
+      },
+      "required": [
+        "app_name",
+        "current_metrics"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "app_name": "ecommerce-shop",
+          "current_metrics": "FCP: 2.8s, LCP: 4.5s, bundle: 1.5MB",
+          "performance_target": "FCP < 1.5s, LCP < 2.5s"
+        },
+        "output_outline": "Report showing unnecessary re-renders in ProductList (40/s), large moment.js import (200KB), missing code splitting, recommendations: React.memo for product cards, replace moment with date-fns, implement route-based splitting, estimated improvements: 45% faster LCP"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "webpack-optimization",
+    "title": "Webpack Build Configuration Optimization",
+    "description": "Analyzes and optimizes Webpack configuration for faster builds, smaller bundles, and better caching strategies.",
+    "category": "frontend",
+    "tags": [
+      "webpack",
+      "build",
+      "optimization",
+      "bundling"
+    ],
+    "template": "Optimize Webpack configuration for {{project_name}}.\n\n1. Review current webpack.config.js:\n   - Plugin configuration\n   - Loader efficiency\n   - Source map strategy\n   - Cache configuration\n2. Analyze build performance:\n   - Compilation time bottlenecks\n   - Loader processing time\n   - Plugin overhead\n3. Bundle optimization:\n   - Code splitting strategy\n   - Chunk naming and hashing\n   - Tree-shaking configuration\n   - Minification settings\n4. Development experience:\n   - Hot Module Replacement\n   - Incremental builds\n   - Watch mode optimization\n5. Production optimizations:\n   - Asset optimization\n   - Runtime chunk extraction\n   - Vendor chunk strategy\n\nCurrent build time: {{build_time}}\nWebpack version: {{webpack_version}}\n\nOutput: Configuration Analysis | Optimization Recommendations | Updated Config | Performance Gains",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "build_time": {
+          "type": "string",
+          "description": "Current build time (e.g., '45s dev, 3m prod')"
+        },
+        "webpack_version": {
+          "type": "string",
+          "description": "Webpack version",
+          "default": "5"
+        }
+      },
+      "required": [
+        "project_name",
+        "build_time"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "admin-panel",
+          "build_time": "60s dev, 4m prod",
+          "webpack_version": "5"
+        },
+        "output_outline": "Analysis: thread-loader could parallelize babel (save 15s), persistent caching not enabled (save 40s dev), no chunk splitting (3MB bundle), recommendations: enable cache, split vendors, use esbuild-loader, expected: 20s dev, 2m prod builds"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "accessibility-audit",
+    "title": "Web Accessibility (WCAG) Compliance Audit",
+    "description": "Comprehensive accessibility audit against WCAG guidelines, identifying violations and providing remediation guidance.",
+    "category": "frontend",
+    "tags": [
+      "accessibility",
+      "a11y",
+      "wcag",
+      "compliance"
+    ],
+    "template": "Conduct accessibility audit for {{app_name}} targeting {{wcag_level}} compliance.\n\n1. Automated testing with tools (axe, Lighthouse, WAVE):\n   - Color contrast violations\n   - Missing alt text\n   - Form label issues\n   - ARIA attribute errors\n   - Keyboard navigation problems\n2. Manual testing requirements:\n   - Screen reader compatibility\n   - Keyboard-only navigation\n   - Focus management\n   - Skip links and landmarks\n3. Categorize issues by severity:\n   - Critical (blocks usage)\n   - Serious (major barriers)\n   - Moderate (inconvenient)\n   - Minor (best practice)\n4. Provide remediation guidance:\n   - Code fixes with examples\n   - Design changes needed\n   - Content updates required\n5. Create accessibility testing strategy\n6. Define ongoing compliance process\n\nWCAG Level: {{wcag_level}}\nFramework: {{framework}}\n\nOutput: Violation Report | Severity Matrix | Remediation Guide | Testing Strategy | Compliance Roadmap",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "wcag_level": {
+          "type": "string",
+          "enum": [
+            "A",
+            "AA",
+            "AAA"
+          ],
+          "default": "AA",
+          "description": "Target WCAG compliance level"
+        },
+        "framework": {
+          "type": "string",
+          "description": "Frontend framework used"
+        }
+      },
+      "required": [
+        "app_name",
+        "wcag_level"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "app_name": "banking-portal",
+          "wcag_level": "AA",
+          "framework": "React"
+        },
+        "output_outline": "Found 34 violations: 8 CRITICAL (missing form labels, insufficient contrast), 12 SERIOUS (no skip links, broken ARIA), 14 MODERATE, remediation: add aria-labels, increase contrast ratios, implement focus trap in modals, use semantic HTML, testing: integrate axe-core in CI, 3-week remediation timeline"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "css-architecture-review",
+    "title": "CSS Architecture & Maintenance Review",
+    "description": "Reviews CSS/SCSS architecture for scalability issues, specificity problems, and maintenance challenges.",
+    "category": "frontend",
+    "tags": [
+      "css",
+      "scss",
+      "architecture",
+      "maintainability"
+    ],
+    "template": "Review CSS architecture for {{project_name}}.\n\n1. Analyze current CSS structure:\n   - File organization and naming\n   - Specificity issues and !important usage\n   - Dead CSS and unused styles\n   - Duplicate declarations\n   - Color/spacing inconsistencies\n2. Evaluate methodology:\n   - BEM, SMACSS, or other conventions\n   - Component scoping strategy\n   - Utility class usage\n3. Performance analysis:\n   - CSS bundle size\n   - Unused CSS\n   - Critical CSS strategy\n4. Maintainability assessment:\n   - Magic numbers and hardcoded values\n   - Theme variable usage\n   - Responsive design patterns\n5. Recommend improvements:\n   - Architecture pattern (CSS Modules, Styled Components, Tailwind)\n   - Refactoring priorities\n   - Design token system\n\nCSS approach: {{css_approach}}\nBundle size: {{css_size}}\n\nOutput: Architecture Analysis | Issues Report | Refactoring Plan | Best Practices Guide",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "css_approach": {
+          "type": "string",
+          "enum": [
+            "plain-css",
+            "scss",
+            "css-modules",
+            "styled-components",
+            "emotion",
+            "tailwind",
+            "mixed"
+          ],
+          "description": "Current CSS approach"
+        },
+        "css_size": {
+          "type": "string",
+          "description": "Total CSS bundle size (e.g., '450KB')"
+        }
+      },
+      "required": [
+        "project_name",
+        "css_approach"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "legacy-app",
+          "css_approach": "scss",
+          "css_size": "680KB"
+        },
+        "output_outline": "Issues: 247 !important declarations, 35% unused CSS, no design tokens, 89 magic numbers, inconsistent spacing (12px, 15px, 16px), recommendations: implement CSS Modules, create design token system, remove unused styles (save 240KB), establish spacing scale, 6-week refactoring plan"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "state-management-optimization",
+    "title": "Frontend State Management Optimization",
+    "description": "Reviews and optimizes state management patterns, identifying over-fetching, unnecessary complexity, and performance issues.",
+    "category": "frontend",
+    "tags": [
+      "state-management",
+      "redux",
+      "context",
+      "performance"
+    ],
+    "template": "Optimize state management for {{app_name}} using {{state_library}}.\n\n1. Audit current state structure:\n   - State normalization\n   - Data duplication\n   - Derived state patterns\n   - Global vs local state decisions\n2. Identify anti-patterns:\n   - Prop drilling\n   - Over-normalized state\n   - Missing memoization\n   - Unnecessary global state\n3. Performance analysis:\n   - Re-render frequency\n   - Selector efficiency\n   - State update patterns\n4. Data fetching strategy:\n   - Cache management\n   - Optimistic updates\n   - Error handling\n   - Loading states\n5. Recommend improvements:\n   - State structure refactoring\n   - Selector optimization\n   - Consider alternatives (React Query, SWR, Zustand)\n\nState Library: {{state_library}}\nComplexity: {{complexity_description}}\n\nOutput: State Audit | Performance Issues | Refactoring Plan | Migration Strategy",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "state_library": {
+          "type": "string",
+          "enum": [
+            "redux",
+            "mobx",
+            "context-api",
+            "recoil",
+            "zustand",
+            "jotai",
+            "none"
+          ],
+          "description": "Current state management solution"
+        },
+        "complexity_description": {
+          "type": "string",
+          "description": "Brief description of state complexity"
+        }
+      },
+      "required": [
+        "app_name",
+        "state_library"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "app_name": "social-app",
+          "state_library": "redux",
+          "complexity_description": "300 actions, 50 reducers, API data mixed with UI state"
+        },
+        "output_outline": "Issues: over-fetching (same API calls multiple times), no selector memoization (20% unnecessary re-renders), mixing server/UI state, recommendations: migrate server state to React Query, keep Redux for UI-only state, implement reselect, normalize user data, estimated 40% render reduction"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

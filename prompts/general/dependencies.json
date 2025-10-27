@@ -1,0 +1,71 @@
+[
+  {
+    "id": "dependency-update-analysis",
+    "title": "Multi-Language Dependency Update Analysis",
+    "description": "Analyzes project dependencies across multiple languages and package managers, identifying outdated packages with security and compatibility risk assessment.",
+    "category": "dependency-maintenance",
+    "tags": [
+      "dependencies",
+      "security",
+      "maintenance",
+      "npm",
+      "maven",
+      "gradle",
+      "pip"
+    ],
+    "template": "Analyze the dependencies for {{project_name}} using {{package_manager}}. Review the current dependency manifest and:\n\n1. List all outdated dependencies with current and latest versions\n2. Categorize updates by severity: CRITICAL (security), HIGH (breaking changes), MEDIUM (minor versions), LOW (patches)\n3. Identify transitive dependency conflicts\n4. Assess compatibility risks for each major version bump\n5. Provide a prioritized update roadmap with justification\n6. Suggest version pinning strategies\n\nPackage Manager: {{package_manager}}\nLanguage: {{language}}\nCurrent manifest file content:\n{{manifest_content}}\n\nOutput as a structured table with columns: Package | Current | Latest | Severity | Risk Assessment | Recommendation",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project being analyzed"
+        },
+        "package_manager": {
+          "type": "string",
+          "description": "Package manager",
+          "enum": [
+            "npm",
+            "yarn",
+            "pnpm",
+            "maven",
+            "gradle",
+            "pip",
+            "pipenv",
+            "composer",
+            "bundler",
+            "nuget"
+          ]
+        },
+        "language": {
+          "type": "string",
+          "description": "Primary programming language"
+        },
+        "manifest_content": {
+          "type": "string",
+          "description": "Content of package.json, pom.xml, build.gradle, requirements.txt, etc."
+        }
+      },
+      "required": [
+        "project_name",
+        "package_manager",
+        "language",
+        "manifest_content"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "ecommerce-api",
+          "package_manager": "npm",
+          "language": "JavaScript",
+          "manifest_content": "{\"dependencies\": {\"express\": \"^4.17.1\", \"lodash\": \"^4.17.19\"}}"
+        },
+        "output_outline": "Table showing express 4.17.1→4.18.2 (MEDIUM, minor API changes), lodash 4.17.19→4.17.21 (CRITICAL, prototype pollution CVE), with risk assessments and update order recommendation"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

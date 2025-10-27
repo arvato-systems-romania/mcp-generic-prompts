@@ -1,0 +1,56 @@
+[
+  {
+    "id": "documentation-completeness",
+    "title": "Technical Documentation Completeness Review",
+    "description": "Audits existing documentation for gaps, outdated content, and missing sections, providing prioritized improvement plan.",
+    "category": "documentation",
+    "tags": [
+      "documentation",
+      "knowledge",
+      "onboarding",
+      "maintenance"
+    ],
+    "template": "Review documentation completeness for {{project_name}}.\n\n1. Audit existing documentation:\n   - README (setup, usage, architecture overview)\n   - API documentation (endpoints, schemas, examples)\n   - Architecture diagrams and design docs\n   - Deployment and operations guides\n   - Troubleshooting guides\n   - Contributing guidelines\n2. Identify gaps and outdated content\n3. Assess documentation quality:\n   - Clarity and completeness\n   - Code examples and accuracy\n   - Diagrams and visuals\n   - Searchability and organization\n4. Prioritize by audience (developers, operators, users)\n5. Create documentation improvement plan\n6. Suggest automation opportunities (API doc generation, ADRs)\n7. Define documentation standards\n\nCurrent docs location: {{docs_location}}\nTarget audience: {{target_audience}}\n\nOutput: Gap Analysis | Prioritized Improvement Plan | Doc Standards | Templates",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "docs_location": {
+          "type": "string",
+          "description": "Location of current documentation (e.g., /docs, wiki, confluence)"
+        },
+        "target_audience": {
+          "type": "string",
+          "description": "Primary documentation audience",
+          "enum": [
+            "developers",
+            "operators",
+            "end-users",
+            "all"
+          ],
+          "default": "developers"
+        }
+      },
+      "required": [
+        "project_name",
+        "docs_location"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "data-pipeline",
+          "docs_location": "/docs",
+          "target_audience": "developers"
+        },
+        "output_outline": "Gaps: missing architecture diagrams, outdated API examples (v1 vs v3), no troubleshooting guide, deployment guide incomplete, no ADRs, priorities: HIGH-update API docs, HIGH-add architecture overview, MEDIUM-create runbooks, LOW-style guide, recommendations: use OpenAPI for API docs, Mermaid for diagrams, ADR template, 60-hour effort"
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-01-15T10:00:00Z",
+    "last_modified_utc": "2025-01-15T10:00:00Z"
+  }
+]

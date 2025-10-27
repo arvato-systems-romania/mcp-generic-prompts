@@ -1,0 +1,81 @@
+{
+  "id": "express-security-hardening",
+  "title": "Express.js Security Hardening",
+  "description": "Comprehensive security audit for Express.js applications covering authentication, authorization, input validation, and common vulnerabilities.",
+  "category": "backend-nodejs",
+  "tags": [
+    "nodejs",
+    "express",
+    "security",
+    "authentication",
+    "validation",
+    "owasp"
+  ],
+  "template": "Perform a security audit on Express.js application and provide hardening recommendations.\n\n**Application Context:**\n- Project: {{project_name}}\n- Environment: {{environment}}\n- Authentication Method: {{auth_method}}\n\n**Code to Audit:**\n```javascript\n{{express_code}}\n```\n\n**Security Analysis Areas:**\n\n1. **OWASP Top 10:**\n   - Injection vulnerabilities (SQL, NoSQL, Command)\n   - Broken authentication\n   - Sensitive data exposure\n   - XML external entities (XXE)\n   - Broken access control\n   - Security misconfiguration\n   - Cross-site scripting (XSS)\n   - Insecure deserialization\n   - Using components with known vulnerabilities\n   - Insufficient logging and monitoring\n\n2. **Authentication & Authorization:**\n   - Password hashing (bcrypt/argon2)\n   - JWT implementation (secret management, expiration)\n   - Session management\n   - OAuth2/OpenID Connect\n   - Multi-factor authentication\n   - Password reset flow security\n   - Role-based access control (RBAC)\n   - Permission checks on routes\n\n3. **Input Validation:**\n   - Request body validation (express-validator, joi, zod)\n   - Query parameter sanitization\n   - File upload validation\n   - Content-Type verification\n   - Size limits\n   - Type coercion issues\n\n4. **HTTP Security Headers:**\n   - helmet.js configuration\n   - Content-Security-Policy\n   - X-Frame-Options\n   - X-Content-Type-Options\n   - Strict-Transport-Security\n   - X-XSS-Protection\n\n5. **CORS Configuration:**\n   - Origin whitelist\n   - Credentials handling\n   - Methods and headers\n   - Preflight requests\n\n6. **Rate Limiting:**\n   - express-rate-limit setup\n   - Per-endpoint limits\n   - Redis-based distributed limiting\n   - DDoS protection\n\n7. **Error Handling:**\n   - Information disclosure in errors\n   - Stack trace exposure\n   - Custom error pages\n   - Proper logging without sensitive data\n\n8. **Dependencies:**\n   - npm audit findings\n   - Outdated packages\n   - Known vulnerabilities\n   - License compliance\n\n9. **Database Security:**\n   - Parameterized queries\n   - ORM security (Sequelize, TypeORM, Prisma)\n   - Connection string protection\n   - Least privilege principle\n\n10. **API Security:**\n    - API key management\n    - Request signing\n    - Encryption in transit (HTTPS)\n    - Encryption at rest\n    - Secure cookie flags\n\n11. **File Operations:**\n    - Path traversal prevention\n    - File upload restrictions\n    - Temporary file cleanup\n    - Secure file serving\n\n12. **Environment Security:**\n    - Secrets management (.env, vaults)\n    - NODE_ENV configuration\n    - Debug mode disabled in production\n    - Process isolation\n\n**Output Format:**\n- **Critical Vulnerabilities:** High-risk issues requiring immediate fix\n- **Security Misconfigurations:** Headers, CORS, rate limiting gaps\n- **Authentication Issues:** Weak password policies, JWT problems\n- **Input Validation Gaps:** Missing or weak validation\n- **Code Examples:** Secure implementations for each issue\n- **Dependency Report:** Vulnerable packages to update\n- **Compliance Checklist:** OWASP, GDPR, PCI-DSS considerations\n- **Monitoring Recommendations:** Security logging and alerting",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Express.js project"
+      },
+      "express_code": {
+        "type": "string",
+        "description": "Express.js application code to audit"
+      },
+      "environment": {
+        "type": "string",
+        "enum": [
+          "development",
+          "staging",
+          "production"
+        ],
+        "default": "production",
+        "description": "Target deployment environment"
+      },
+      "auth_method": {
+        "type": "string",
+        "enum": [
+          "jwt",
+          "session",
+          "oauth2",
+          "api-key",
+          "none"
+        ],
+        "default": "jwt",
+        "description": "Authentication method used"
+      },
+      "database": {
+        "type": "string",
+        "enum": [
+          "mongodb",
+          "postgresql",
+          "mysql",
+          "redis",
+          "none"
+        ],
+        "description": "Database type",
+        "default": "mongodb"
+      }
+    },
+    "required": [
+      "project_name",
+      "express_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "PaymentAPI",
+        "express_code": "app.post('/api/users', (req, res) => {\n  const { email, password } = req.body;\n  db.query(`INSERT INTO users (email, password) VALUES ('${email}', '${password}')`, (err) => {\n    if (err) return res.status(500).send(err.message);\n    res.send('User created');\n  });\n});",
+        "environment": "production",
+        "auth_method": "jwt",
+        "database": "postgresql"
+      },
+      "output_outline": "CRITICAL: SQL Injection vulnerability (using string interpolation). Plaintext password storage. Stack trace exposure in error. No input validation. No rate limiting. No HTTPS enforcement. Missing security headers. Recommendations: Use parameterized queries (pg library), hash passwords with bcrypt (12+ rounds), validate input with express-validator, add helmet.js, implement express-rate-limit, create custom error handler, add HTTPS redirect middleware. Show complete secure implementation with joi validation schema, bcrypt hashing, prepared statements, error middleware, and security headers configuration."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}
