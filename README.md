@@ -76,13 +76,13 @@ await client.callTool({
 
 ### Categories
 
-- **General** (19 prompts): Code review, documentation, POCs, testing, performance, refactoring
-- **Frontend** (10 prompts): React, Angular, Vue, plus general frontend optimization
-- **Backend** (13 prompts): Python (FastAPI), Node.js (Express), Java (Spring Boot)
-- **Database** (1 prompt): SQL query optimization
-- **DevOps** (7 prompts): CI/CD, Docker, Kubernetes, monitoring
-- **Security** (7 prompts): Vulnerability scanning, compliance, penetration testing
-- **AI/ML** (5 prompts): MCP servers, RAG systems, LangChain agents
+- **General**: Code review, documentation, POCs, testing, performance, refactoring
+- **Frontend**: React, Angular, Vue, plus general frontend optimization
+- **Backend**: Python (FastAPI), Node.js (Express), Java (Spring Boot)
+- **Database**: SQL query optimization
+- **DevOps**: CI/CD, Docker, Kubernetes, monitoring
+- **Security**: Vulnerability scanning, compliance, penetration testing
+- **AI/ML**: MCP servers, RAG systems, LangChain agents
 
 ### Featured Prompts
 
@@ -221,7 +221,6 @@ Each prompt follows a comprehensive JSON schema:
     "output_outline": "Expected output description"
   }],
   "version": "1.0.0",
-  "author": "DevOps AI Assistant",
   "created_utc": "2025-01-15T10:00:00Z",
   "last_modified_utc": "2025-01-15T10:00:00Z"
 }

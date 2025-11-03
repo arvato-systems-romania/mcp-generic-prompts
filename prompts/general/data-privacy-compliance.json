@@ -1,0 +1,41 @@
+{
+  "id": "data_privacy_compliance_audit",
+  "title": "Data Privacy Compliance Audit",
+  "description": "Audit systems and processes for compliance with data privacy regulations (GDPR, CCPA, etc.), identifying gaps and recommending remediation steps.",
+  "category": "compliance-privacy",
+  "tags": [
+    "data-privacy",
+    "compliance",
+    "audit",
+    "gdpr",
+    "ccpa"
+  ],
+  "template": "Audit the following system for data privacy compliance and regulatory gaps.\n\n**System Details:**\n{{system_details}}\n\n**Audit Focus Areas:**\n1. Data collection and processing practices\n2. Consent management and user rights\n3. Data retention and deletion policies\n4. Secure data storage and transfer\n5. Compliance gaps and action plan\n\n**Output Format:**\n- Compliance summary\n- Identified gaps\n- Remediation recommendations",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "system_details": {
+        "type": "string",
+        "description": "Description of the system and its data privacy context"
+      },
+      "context": {
+        "type": "string",
+        "description": "Optional context about regulatory requirements",
+        "default": ""
+      }
+    },
+    "required": ["system_details"]
+  },
+  "examples": [
+    {
+      "input": {
+        "system_details": "CRM platform storing EU customer data",
+        "context": "Audit for GDPR and CCPA compliance"
+      },
+      "output_outline": "Summary: Data retention policy missing. Gaps: No user data deletion workflow. Remediation: Implement automated deletion, update privacy policy."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-10-30T07:34:05Z",
+  "last_modified_utc": "2025-10-30T07:35:24Z"
+}

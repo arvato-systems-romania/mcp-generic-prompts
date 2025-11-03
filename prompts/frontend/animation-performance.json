@@ -1,0 +1,54 @@
+{
+  "id": "animation_performance_review",
+  "title": "Frontend Animation Performance Review",
+  "description": "Analyze frontend animation implementations for performance bottlenecks, jank, and best practices. Identify areas for optimization and provide actionable recommendations.",
+  "category": "frontend-performance",
+  "tags": [
+    "animation",
+    "performance",
+    "frontend",
+    "optimization"
+  ],
+  "template": "Perform a performance review for the following frontend animation code.\n\n**Animation Code:**\n```{{language}}\n{{code}}\n```\n\n**Review Focus Areas:**\n1. Frame rate and smoothness\n2. Layout thrashing and forced reflows\n3. Hardware acceleration usage\n4. Asset and code optimization\n5. Best practices for CSS/JS animations\n\n**Output Format:**\n- Summary of findings\n- Critical performance issues\n- Optimization suggestions\n- Code examples for improvements",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "description": "The animation code to review"
+      },
+      "language": {
+        "type": "string",
+        "description": "Programming language or framework",
+        "default": "javascript",
+        "enum": [
+          "javascript",
+          "typescript",
+          "css",
+          "react",
+          "vue",
+          "svelte"
+        ]
+      },
+      "context": {
+        "type": "string",
+        "description": "Optional context about the animation's purpose",
+        "default": ""
+      }
+    },
+    "required": ["code"]
+  },
+  "examples": [
+    {
+      "input": {
+        "code": ".box { transition: transform 0.2s linear; }",
+        "language": "css",
+        "context": "Simple hover animation for a UI element"
+      },
+      "output_outline": "Summary: Animation is smooth but could use will-change for hardware acceleration. Critical Issues: None. Optimization: Add 'will-change: transform' for better performance. Code Example: .box { will-change: transform; }"
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-10-30T07:33:37Z",
+  "last_modified_utc": "2025-10-30T07:34:44Z"
+}

@@ -1,5 +1,87 @@
 [
   {
+    "id": "api_rate_limiting_strategy",
+    "title": "API Rate Limiting Strategy Design",
+    "description": "Design a robust API rate limiting strategy to protect backend services from abuse, ensure fair usage, and maintain performance under load.",
+    "category": "backend-architecture",
+    "tags": [
+      "api",
+      "rate-limiting",
+      "backend",
+      "security",
+      "scalability"
+    ],
+    "template": "Design a rate limiting strategy for the following API scenario.\n\n**API Details:**\n{{api_details}}\n\n**Design Focus Areas:**\n1. Traffic patterns and abuse prevention\n2. Algorithm selection (token bucket, leaky bucket, etc.)\n3. Limit definitions (per user, IP, API key)\n4. Middleware/gateway implementation\n5. Monitoring and dynamic adjustment\n\n**Output Format:**\n- Strategy summary\n- Algorithm and limit rationale\n- Implementation recommendations\n- Monitoring and adjustment plan",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "api_details": {
+          "type": "string",
+          "description": "Description of the API and usage scenario"
+        },
+        "context": {
+          "type": "string",
+          "description": "Optional context about the API's business purpose",
+          "default": ""
+        }
+      },
+      "required": ["api_details"]
+    },
+    "examples": [
+      {
+        "input": {
+          "api_details": "User authentication API with high burst traffic",
+          "context": "Protect login endpoint from brute force attacks"
+        },
+        "output_outline": "Summary: Recommend token bucket algorithm with per-IP limits. Critical Issues: High risk of brute force. Implementation: Use Redis-backed middleware. Monitoring: Track failed attempts and adjust limits dynamically."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-10-30T07:33:43Z",
+    "last_modified_utc": "2025-10-30T07:34:53Z"
+  },
+  {
+    "id": "serverless_architecture_optimization",
+    "title": "Serverless Architecture Optimization",
+    "description": "Review and optimize serverless architectures for scalability, cost efficiency, cold start reduction, and best practices.",
+    "category": "backend-architecture",
+    "tags": [
+      "serverless",
+      "optimization",
+      "backend",
+      "performance",
+      "cost"
+    ],
+    "template": "Optimize the following serverless architecture for scalability and efficiency.\n\n**Architecture Details:**\n{{architecture_details}}\n\n**Optimization Focus Areas:**\n1. Function invocation patterns and resource usage\n2. Cold start mitigation\n3. Deployment packaging and dependencies\n4. Monitoring and logging setup\n5. Cost and performance improvements\n\n**Output Format:**\n- Optimization summary\n- Identified issues\n- Recommendations and code examples",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "architecture_details": {
+          "type": "string",
+          "description": "Description of the serverless architecture and context"
+        },
+        "context": {
+          "type": "string",
+          "description": "Optional context about business requirements or platform",
+          "default": ""
+        }
+      },
+      "required": ["architecture_details"]
+    },
+    "examples": [
+      {
+        "input": {
+          "architecture_details": "AWS Lambda functions for image processing pipeline",
+          "context": "Optimize for high throughput and minimal cold starts"
+        },
+        "output_outline": "Summary: Cold starts impact latency. Issues: Large deployment package. Recommendations: Reduce dependencies, enable provisioned concurrency, improve monitoring."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-10-30T07:34:10Z",
+    "last_modified_utc": "2025-10-30T07:35:31Z"
+  },
+  {
     "id": "api-design-review",
     "title": "RESTful API Design Review & Best Practices",
     "description": "Comprehensive review of API design against REST principles, consistency, and industry best practices.",

@@ -1,0 +1,41 @@
+{
+  "id": "mobile_accessibility_audit",
+  "title": "Mobile App Accessibility Audit",
+  "description": "Conduct a comprehensive accessibility audit for mobile applications, ensuring compliance with WCAG and platform-specific guidelines. Identify barriers and recommend improvements.",
+  "category": "frontend-accessibility",
+  "tags": [
+    "accessibility",
+    "mobile",
+    "audit",
+    "frontend",
+    "wcag"
+  ],
+  "template": "Audit the following mobile app for accessibility compliance and usability barriers.\n\n**App Details:**\n{{app_details}}\n\n**Audit Focus Areas:**\n1. UI component accessibility\n2. Screen reader and assistive tech support\n3. Color contrast and font sizes\n4. Navigation and touch targets\n5. Documentation of issues and remediation\n\n**Output Format:**\n- Summary of findings\n- Accessibility issues\n- Remediation recommendations",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "app_details": {
+        "type": "string",
+        "description": "Description of the mobile app and its accessibility context"
+      },
+      "context": {
+        "type": "string",
+        "description": "Optional context about the app's audience or platform",
+        "default": ""
+      }
+    },
+    "required": ["app_details"]
+  },
+  "examples": [
+    {
+      "input": {
+        "app_details": "iOS shopping app with custom navigation and product cards",
+        "context": "Audit for visually impaired users"
+      },
+      "output_outline": "Summary: Navigation is not accessible via VoiceOver. Issues: Custom cards lack accessibility labels. Remediation: Add accessibilityLabel to product cards, ensure navigation is reachable via screen reader."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-10-30T07:33:53Z",
+  "last_modified_utc": "2025-10-30T07:35:08Z"
+}

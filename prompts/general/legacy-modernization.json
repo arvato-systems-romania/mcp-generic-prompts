@@ -1,0 +1,41 @@
+{
+  "id": "legacy_system_modernization",
+  "title": "Legacy System Modernization Plan",
+  "description": "Develop a modernization plan for legacy systems, addressing technical debt, migration strategies, and integration with modern platforms.",
+  "category": "architecture-modernization",
+  "tags": [
+    "legacy",
+    "modernization",
+    "migration",
+    "architecture",
+    "integration"
+  ],
+  "template": "Create a modernization plan for the following legacy system.\n\n**System Details:**\n{{system_details}}\n\n**Plan Focus Areas:**\n1. Architecture assessment\n2. Technical debt identification\n3. Modernization approaches (refactor, rewrite, replace)\n4. Migration and integration steps\n5. Cost and risk estimation\n\n**Output Format:**\n- Modernization strategy\n- Migration steps\n- Risk and cost analysis",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "system_details": {
+        "type": "string",
+        "description": "Description of the legacy system and modernization context"
+      },
+      "context": {
+        "type": "string",
+        "description": "Optional context about business goals or constraints",
+        "default": ""
+      }
+    },
+    "required": ["system_details"]
+  },
+  "examples": [
+    {
+      "input": {
+        "system_details": "Mainframe-based payroll system with COBOL backend",
+        "context": "Modernize for cloud deployment and API integration"
+      },
+      "output_outline": "Strategy: Migrate to microservices on AWS. Steps: Extract business logic, rewrite in Java, deploy as containers. Risks: Data migration complexity, staff retraining. Costs: Initial migration, ongoing cloud fees."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-10-30T07:33:59Z",
+  "last_modified_utc": "2025-10-30T07:35:15Z"
+}

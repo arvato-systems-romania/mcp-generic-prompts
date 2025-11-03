@@ -1,0 +1,41 @@
+{
+  "id": "infrastructure_cost_estimation",
+  "title": "Infrastructure Cost Estimation",
+  "description": "Estimate infrastructure costs for cloud and on-prem deployments, considering compute, storage, networking, and licensing. Provide recommendations for cost optimization.",
+  "category": "devops-infrastructure",
+  "tags": [
+    "cost-estimation",
+    "cloud",
+    "on-prem",
+    "devops",
+    "optimization"
+  ],
+  "template": "Estimate the infrastructure costs for the following deployment scenario.\n\n**Deployment Details:**\n{{deployment_details}}\n\n**Estimation Focus Areas:**\n1. Inventory of components\n2. Pricing data for resources\n3. Monthly and annual cost calculations\n4. Cost-saving opportunities\n5. Documentation of assumptions\n\n**Output Format:**\n- Cost breakdown\n- Optimization recommendations\n- Assumptions and methodology",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "deployment_details": {
+        "type": "string",
+        "description": "Description of the infrastructure deployment scenario"
+      },
+      "context": {
+        "type": "string",
+        "description": "Optional context about business requirements",
+        "default": ""
+      }
+    },
+    "required": ["deployment_details"]
+  },
+  "examples": [
+    {
+      "input": {
+        "deployment_details": "Web application hosted on AWS with EC2, S3, and RDS",
+        "context": "Estimate monthly costs for a startup MVP"
+      },
+      "output_outline": "Summary: EC2 costs dominate, S3 and RDS moderate. Optimization: Use reserved instances, enable S3 lifecycle policies. Cost Breakdown: EC2 $120/mo, S3 $10/mo, RDS $40/mo."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-10-30T07:33:48Z",
+  "last_modified_utc": "2025-10-30T07:35:01Z"
+}
