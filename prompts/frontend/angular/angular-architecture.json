@@ -1,0 +1,76 @@
+{
+  "id": "angular-architecture-patterns",
+  "title": "Angular Architecture & Best Practices",
+  "description": "Analyzes Angular applications for architectural patterns, module organization, dependency injection, lazy loading, and enterprise best practices.",
+  "category": "frontend-angular",
+  "tags": [
+    "angular",
+    "architecture",
+    "modules",
+    "dependency-injection",
+    "lazy-loading",
+    "best-practices"
+  ],
+  "template": "Analyze Angular application architecture and recommend improvements.\n\n**Application Context:**\n- Project: {{project_name}}\n- Angular Version: {{angular_version}}\n- Application Type: {{app_type}}\n- Current Challenge: {{challenge}}\n\n**Code to Analyze:**\n```typescript\n{{angular_code}}\n```\n\n**Architecture Analysis Areas:**\n\n1. **Module Organization:**\n   - Feature modules structure\n   - Core module pattern\n   - Shared module design\n   - Lazy-loaded modules\n   - Module dependencies\n   - Circular dependency detection\n   - Barrel exports usage\n\n2. **Component Architecture:**\n   - Smart vs Presentational components\n   - Component communication patterns\n   - Input/Output optimization\n   - ChangeDetection strategies\n   - Component inheritance vs composition\n   - Standalone components (Angular 14+)\n   - Component lifecycle best practices\n\n3. **Dependency Injection:**\n   - Service scope (root, module, component)\n   - providedIn optimization\n   - Injectable decorators\n   - InjectionToken usage\n   - Multi-providers patterns\n   - forRoot/forChild patterns\n   - Tree-shakeable providers\n\n4. **State Management:**\n   - Local vs global state\n   - Service-based state\n   - NgRx/NGRX Store patterns\n   - Component Store usage\n   - Akita patterns\n   - State immutability\n   - Selector optimization\n\n5. **Routing Architecture:**\n   - Route organization\n   - Lazy loading strategy\n   - Route guards implementation\n   - Resolvers usage\n   - Route data and params\n   - Child routes design\n   - Preloading strategies\n\n6. **Form Management:**\n   - Reactive forms vs Template-driven\n   - Form validation patterns\n   - Custom validators\n   - Dynamic form generation\n   - Form state management\n   - Error handling\n   - FormArray and FormGroup optimization\n\n7. **HTTP & API Integration:**\n   - HttpClient best practices\n   - Interceptor patterns\n   - Error handling strategies\n   - Retry and timeout logic\n   - Caching strategies\n   - API service organization\n   - Type-safe API responses\n\n8. **Performance Optimization:**\n   - Change Detection optimization\n   - OnPush strategy usage\n   - TrackBy functions\n   - Pipe vs method calls\n   - Virtual scrolling\n   - Lazy loading images\n   - Bundle size optimization\n\n9. **Testing Strategy:**\n   - Unit test structure\n   - Component testing\n   - Service testing\n   - Integration testing\n   - TestBed configuration\n   - Mocking strategies\n   - Test coverage goals\n\n10. **Build & Bundle:**\n    - Lazy loading configuration\n    - Bundle budgets\n    - Tree shaking\n    - Production optimizations\n    - Source maps configuration\n    - Environment variables\n    - Ahead-of-Time (AOT) compilation\n\n11. **Type Safety:**\n    - Strict mode configuration\n    - Type guards usage\n    - Generic components\n    - Interface design\n    - Type-safe routing\n    - Enum vs const usage\n\n12. **Error Handling:**\n    - Global error handler\n    - HTTP error interceptor\n    - Error logging service\n    - User-friendly error messages\n    - Retry mechanisms\n    - Fallback UI patterns\n\n13. **Security:**\n    - XSS prevention\n    - CSRF protection\n    - Sanitization\n    - Authentication patterns\n    - Authorization guards\n    - Secure storage\n    - Content Security Policy\n\n14. **Accessibility:**\n    - ARIA attributes\n    - Keyboard navigation\n    - Focus management\n    - Screen reader support\n    - Semantic HTML\n    - Color contrast\n\n**Output Format:**\n- **Architecture Assessment:** Current state vs best practices\n- **Module Structure:** Recommended organization\n- **Performance Issues:** Change detection and bundle size problems\n- **Refactoring Roadmap:** Step-by-step improvements\n- **Code Examples:** Before/after implementations\n- **Testing Strategy:** How to test each layer\n- **Migration Path:** From current to target architecture",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Angular project"
+      },
+      "angular_code": {
+        "type": "string",
+        "description": "Angular application code to analyze"
+      },
+      "angular_version": {
+        "type": "string",
+        "enum": [
+          "14.x",
+          "15.x",
+          "16.x",
+          "17.x",
+          "18.x"
+        ],
+        "default": "17.x",
+        "description": "Angular version"
+      },
+      "app_type": {
+        "type": "string",
+        "enum": [
+          "spa",
+          "enterprise-app",
+          "admin-panel",
+          "ecommerce",
+          "dashboard"
+        ],
+        "default": "spa",
+        "description": "Application type"
+      },
+      "challenge": {
+        "type": "string",
+        "description": "Current architectural challenge",
+        "default": "Scalability and performance issues"
+      }
+    },
+    "required": [
+      "project_name",
+      "angular_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "CRM Platform",
+        "angular_code": "@Component({\n  selector: 'app-users',\n  template: `\n    <div *ngFor=\"let user of users\">\n      <h3>{{ user.name }}</h3>\n      <button (click)=\"loadDetails(user.id)\">Details</button>\n    </div>\n  `\n})\nexport class UsersComponent implements OnInit {\n  users: User[] = [];\n  \n  constructor(private http: HttpClient) {}\n  \n  ngOnInit() {\n    this.http.get<User[]>('/api/users').subscribe(users => {\n      this.users = users;\n    });\n  }\n  \n  loadDetails(id: number) {\n    this.http.get(`/api/users/${id}`).subscribe(details => {\n      console.log(details);\n    });\n  }\n}",
+        "angular_version": "17.x",
+        "app_type": "enterprise-app",
+        "challenge": "Components too large, no separation of concerns, performance issues with large lists"
+      },
+      "output_outline": "Issues: 1) Component violates SRP - doing HTTP calls directly (move to service), 2) No change detection strategy (use OnPush), 3) Missing trackBy in *ngFor (causes full re-render), 4) No unsubscribe on HTTP calls (memory leak risk), 5) No error handling, 6) Console.log in production code, 7) Template inline (hard to maintain). Refactored architecture: Create UserService with methods getUsers() and getUserDetails(), use async pipe in template to auto-unsubscribe, add OnPush change detection, implement trackBy function (trackByUserId), move template to separate file, add error handling with catchError and retry, create smart/dumb component split (UsersContainerComponent + UserListComponent). Module structure: Feature module UsersModule with lazy loading, shared UserService provided in root, standalone components for Angular 17. Expected improvements: 70% reduction in change detection cycles, proper memory management, better testability, cleaner code organization. Add NgRx for state if app grows beyond 10 features."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

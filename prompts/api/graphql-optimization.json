@@ -1,0 +1,75 @@
+{
+  "id": "graphql-api-optimization",
+  "title": "GraphQL API Performance Optimization & Best Practices",
+  "description": "Analyzes GraphQL APIs for performance bottlenecks, N+1 queries, schema design, caching strategies, and security best practices.",
+  "category": "api-graphql",
+  "tags": [
+    "graphql",
+    "api",
+    "apollo",
+    "performance",
+    "schema-design",
+    "optimization"
+  ],
+  "template": "Analyze GraphQL API for performance optimization and best practices.\n\n**API Context:**\n- Project: {{project_name}}\n- GraphQL Server: {{server_type}}\n- Current Performance Issue: {{performance_issue}}\n\n**Code to Analyze:**\n```javascript\n{{graphql_code}}\n```\n\n**Performance Analysis Areas:**\n\n1. **N+1 Query Problem:**\n   - DataLoader implementation\n   - Batch loading patterns\n   - Caching strategies\n   - Field-level batching\n   - Request deduplication\n   - Loader context management\n   - Loader error handling\n\n2. **Schema Design:**\n   - Type design best practices\n   - Connection patterns (Relay spec)\n   - Pagination (cursor vs offset)\n   - Input type design\n   - Interface vs Union types\n   - Schema stitching vs Federation\n   - Nullable vs Non-nullable fields\n   - Deprecation patterns\n\n3. **Query Complexity:**\n   - Query depth limiting\n   - Complexity analysis\n   - Query cost calculation\n   - Timeout configuration\n   - Query whitelisting\n   - Persisted queries\n   - Automatic persisted queries (APQ)\n\n4. **Resolver Optimization:**\n   - Resolver composition\n   - Field resolver efficiency\n   - Async/await patterns\n   - Error handling in resolvers\n   - Context usage\n   - Resolver caching\n   - Conditional resolvers\n\n5. **Caching Strategies:**\n   - Response caching\n   - Field-level caching\n   - Cache Control directives\n   - Redis integration\n   - Cache invalidation\n   - CDN caching\n   - Client-side cache (Apollo Client)\n\n6. **Data Fetching:**\n   - Database query optimization\n   - JOIN vs separate queries\n   - Projection optimization\n   - Index usage\n   - Read replicas\n   - Database connection pooling\n   - Query planning\n\n7. **Apollo Server (if applicable):**\n   - Plugin architecture\n   - Context creation performance\n   - Introspection in production\n   - Schema building optimization\n   - Error formatting\n   - Request pipeline\n   - Metrics collection\n\n8. **Security:**\n   - Query depth/complexity limits\n   - Rate limiting\n   - Authentication patterns\n   - Authorization (field-level)\n   - Input validation\n   - SQL injection prevention\n   - CSRF protection\n   - Introspection security\n\n9. **Subscriptions:**\n   - WebSocket optimization\n   - Subscription filtering\n   - Connection management\n   - Pub/Sub patterns (Redis)\n   - Event batching\n   - Subscription cleanup\n   - Scaling subscriptions\n\n10. **Federation (if applicable):**\n    - Service composition\n    - Entity resolution\n    - Reference resolver optimization\n    - Gateway caching\n    - Distributed tracing\n    - Schema composition\n\n11. **Error Handling:**\n    - Error extensions\n    - Error codes\n    - Partial responses\n    - Field errors vs query errors\n    - Error logging\n    - User-friendly messages\n    - Error monitoring\n\n12. **Monitoring & Observability:**\n    - Apollo Studio integration\n    - Query tracing\n    - Performance metrics\n    - Error tracking\n    - Field-level metrics\n    - Resolver timing\n    - Custom metrics\n\n13. **Client Optimization:**\n    - Apollo Client configuration\n    - Cache normalization\n    - Optimistic updates\n    - Query batching\n    - Fragment usage\n    - Cache policies\n    - Local state management\n\n14. **Testing:**\n    - Schema testing\n    - Resolver testing\n    - Integration testing\n    - Load testing\n    - Schema validation\n    - Breaking change detection\n\n15. **Production Practices:**\n    - Schema versioning\n    - Deprecation workflow\n    - Documentation generation\n    - Playground configuration\n    - CORS setup\n    - Compression (gzip)\n    - Production mode settings\n\n**Output Format:**\n- **Performance Bottlenecks:** N+1 queries and slow resolvers\n- **DataLoader Implementation:** Batching and caching patterns\n- **Schema Improvements:** Design recommendations\n- **Query Complexity:** Limits and cost analysis setup\n- **Caching Strategy:** What to cache and how\n- **Security Issues:** Authentication, authorization, rate limiting\n- **Code Refactoring:** Before/after resolver examples\n- **Monitoring Setup:** Metrics and tracing configuration\n- **Production Checklist:** Security, performance, and reliability items",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the GraphQL API project"
+      },
+      "graphql_code": {
+        "type": "string",
+        "description": "GraphQL schema and resolver code to analyze"
+      },
+      "server_type": {
+        "type": "string",
+        "enum": [
+          "apollo-server",
+          "express-graphql",
+          "graphql-yoga",
+          "mercurius",
+          "hasura",
+          "postgraphile"
+        ],
+        "default": "apollo-server",
+        "description": "GraphQL server implementation"
+      },
+      "performance_issue": {
+        "type": "string",
+        "description": "Specific performance concern",
+        "default": "Slow query responses"
+      },
+      "database": {
+        "type": "string",
+        "enum": [
+          "postgresql",
+          "mysql",
+          "mongodb",
+          "dynamodb"
+        ],
+        "default": "postgresql"
+      }
+    },
+    "required": [
+      "project_name",
+      "graphql_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "SocialAPI",
+        "graphql_code": "type Query {\n  users: [User!]!\n  user(id: ID!): User\n}\n\ntype User {\n  id: ID!\n  name: String!\n  posts: [Post!]!\n  followers: [User!]!\n}\n\ntype Post {\n  id: ID!\n  title: String!\n  author: User!\n  comments: [Comment!]!\n}\n\nconst resolvers = {\n  Query: {\n    users: async () => {\n      return await db.query('SELECT * FROM users');\n    },\n    user: async (_, { id }) => {\n      return await db.query('SELECT * FROM users WHERE id = $1', [id]);\n    }\n  },\n  User: {\n    posts: async (user) => {\n      return await db.query('SELECT * FROM posts WHERE author_id = $1', [user.id]);\n    },\n    followers: async (user) => {\n      return await db.query('SELECT u.* FROM users u JOIN follows f ON u.id = f.follower_id WHERE f.user_id = $1', [user.id]);\n    }\n  },\n  Post: {\n    author: async (post) => {\n      return await db.query('SELECT * FROM users WHERE id = $1', [post.author_id]);\n    },\n    comments: async (post) => {\n      return await db.query('SELECT * FROM comments WHERE post_id = $1', [post.id]);\n    }\n  }\n};",
+        "server_type": "apollo-server",
+        "performance_issue": "Query for user list with posts takes 5+ seconds with 100 users",
+        "database": "postgresql"
+      },
+      "output_outline": "Critical N+1 Issues: 1) posts resolver called 100 times (1 per user) = 101 queries, 2) followers resolver = 100 more queries, 3) Post.author resolver = N queries for each post, 4) comments resolver = N queries. Total: 400+ database queries for single GraphQL query! Solutions: Implement DataLoader for all associations. Create UserLoader, PostLoader, CommentLoader with batching. Refactored: const userLoader = new DataLoader(ids => db.query('SELECT * FROM users WHERE id = ANY($1)', [ids])), use loader.load(id) in all User resolvers, batch posts with IN query, batch comments similarly. Add query complexity limits: max depth 5, complexity cost calculation. Implement response caching with @cacheControl directives. Add pagination (Connection pattern) for lists. Configure Apollo Server plugins for tracing. Expected improvement: 5000ms → 150ms (97% faster), queries reduced from 400+ to ~10. Add Redis caching for user profiles (TTL 5min). Implement field-level authorization. Add query depth limit (max 7 levels). Set up Apollo Studio for monitoring. Production config: disable introspection, enable APQ, add rate limiting (100 req/min per IP)."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

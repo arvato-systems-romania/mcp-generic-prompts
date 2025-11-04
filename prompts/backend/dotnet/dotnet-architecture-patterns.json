@@ -1,0 +1,75 @@
+{
+  "id": "dotnet-architecture-patterns",
+  "title": ".NET Clean Architecture & Design Patterns",
+  "description": "Analyzes .NET applications for architectural patterns including Clean Architecture, CQRS, Domain-Driven Design, and microservices patterns.",
+  "category": "backend-dotnet",
+  "tags": [
+    "csharp",
+    "dotnet",
+    "architecture",
+    "clean-architecture",
+    "cqrs",
+    "ddd",
+    "design-patterns"
+  ],
+  "template": "Review .NET application architecture and recommend improvements based on modern architectural patterns.\n\n**Project Context:**\n- Project: {{project_name}}\n- Architecture Type: {{architecture_type}}\n- Current Challenges: {{challenges}}\n\n**Code to Review:**\n```csharp\n{{dotnet_code}}\n```\n\n**Architecture Analysis Areas:**\n\n1. **Clean Architecture Layers:**\n   - Domain layer (entities, value objects, domain events)\n   - Application layer (use cases, interfaces)\n   - Infrastructure layer (data access, external services)\n   - Presentation layer (API, UI)\n   - Dependency inversion compliance\n   - Cross-cutting concerns\n\n2. **Domain-Driven Design:**\n   - Aggregate roots and boundaries\n   - Value objects vs entities\n   - Domain events\n   - Repository patterns\n   - Specification pattern\n   - Domain services\n   - Anti-corruption layer\n   - Ubiquitous language\n\n3. **CQRS Pattern:**\n   - Command/query separation\n   - MediatR implementation\n   - Command handlers\n   - Query handlers\n   - Event sourcing integration\n   - Read/write model separation\n   - Eventual consistency handling\n\n4. **Repository & Unit of Work:**\n   - Generic repository pattern\n   - Repository vs DbContext directly\n   - Unit of Work implementation\n   - Transaction management\n   - Specification pattern\n   - Query object pattern\n\n5. **Dependency Injection Patterns:**\n   - Interface segregation\n   - Constructor injection\n   - Property injection avoidance\n   - Factory patterns\n   - Decorator pattern\n   - Strategy pattern\n   - Service lifetimes\n\n6. **API Design Patterns:**\n   - RESTful resource design\n   - API versioning (URL, header, query)\n   - HATEOAS implementation\n   - Request/response DTOs\n   - AutoMapper usage\n   - API gateway pattern\n   - BFF (Backend for Frontend)\n\n7. **Error Handling Patterns:**\n   - Result pattern\n   - Railway-oriented programming\n   - Custom exceptions\n   - Problem details (RFC 7807)\n   - Global exception handling\n   - Validation with FluentValidation\n\n8. **Microservices Patterns:**\n   - Service discovery\n   - API Gateway (Ocelot, YARP)\n   - Circuit breaker (Polly)\n   - Saga pattern\n   - Event-driven communication\n   - Message broker integration (RabbitMQ, Azure Service Bus)\n   - Distributed tracing\n\n9. **Testing Architecture:**\n   - Unit test structure\n   - Integration test patterns\n   - Test doubles (mocks, stubs, fakes)\n   - AAA pattern (Arrange, Act, Assert)\n   - xUnit/NUnit/MSTest best practices\n   - Test data builders\n   - In-memory database testing\n\n10. **Security Patterns:**\n    - Authentication middleware\n    - Authorization policies\n    - JWT token handling\n    - OAuth2/OIDC integration\n    - API key management\n    - CORS configuration\n    - Rate limiting\n\n11. **Resilience Patterns:**\n    - Retry policies\n    - Circuit breaker\n    - Bulkhead isolation\n    - Timeout handling\n    - Fallback mechanisms\n    - Health checks\n\n12. **Observability:**\n    - Structured logging\n    - Distributed tracing (OpenTelemetry)\n    - Metrics collection\n    - Correlation IDs\n    - Request/response logging\n    - Performance monitoring\n\n**Output Format:**\n- **Architecture Assessment:** Current state vs best practices\n- **Layer Violations:** Dependencies pointing the wrong way\n- **Pattern Recommendations:** Which patterns to apply and why\n- **Refactoring Roadmap:** Step-by-step improvement plan\n- **Code Examples:** Before/after implementations\n- **Project Structure:** Recommended folder organization\n- **Testing Strategy:** How to test each layer\n- **Migration Path:** From current to target architecture",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the .NET project"
+      },
+      "dotnet_code": {
+        "type": "string",
+        "description": ".NET application code to review"
+      },
+      "architecture_type": {
+        "type": "string",
+        "enum": [
+          "monolith",
+          "modular-monolith",
+          "microservices",
+          "serverless",
+          "n-tier"
+        ],
+        "default": "monolith",
+        "description": "Current or target architecture"
+      },
+      "challenges": {
+        "type": "string",
+        "description": "Current architectural challenges",
+        "default": "None specified"
+      },
+      "dotnet_version": {
+        "type": "string",
+        "enum": [
+          "6.0",
+          "7.0",
+          "8.0",
+          "9.0"
+        ],
+        "default": "8.0"
+      }
+    },
+    "required": [
+      "project_name",
+      "dotnet_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "OrderManagement",
+        "dotnet_code": "public class OrderController : ControllerBase\n{\n    private readonly AppDbContext _db;\n    \n    [HttpPost]\n    public async Task<IActionResult> CreateOrder(Order order)\n    {\n        if (order.Items.Count == 0)\n            return BadRequest();\n            \n        order.TotalPrice = order.Items.Sum(i => i.Price * i.Quantity);\n        order.Status = \"Pending\";\n        \n        _db.Orders.Add(order);\n        await _db.SaveChangesAsync();\n        \n        // Send email\n        var emailService = new EmailService();\n        await emailService.SendOrderConfirmation(order);\n        \n        return Ok(order);\n    }\n}",
+        "architecture_type": "monolith",
+        "challenges": "Controllers have too much business logic, hard to test, direct database access",
+        "dotnet_version": "8.0"
+      },
+      "output_outline": "Issues: 1) Business logic in controller (SRP violation), 2) Direct DbContext access (no abstraction), 3) New keyword for EmailService (tight coupling), 4) No validation framework, 5) No error handling, 6) Missing DTOs, 7) No transaction management, 8) Hard to unit test. Recommended Clean Architecture: Create Domain (Order aggregate, OrderItem value object, IOrderRepository), Application (CreateOrderCommand, CreateOrderCommandHandler with MediatR, IEmailService interface), Infrastructure (OrderRepository, EmailService implementation), API (thin controller). Show complete refactoring: Order.Create() factory method with domain validation, MediatR command pipeline with FluentValidation, repository pattern, dependency injection, Result<T> return type, DTOs with AutoMapper, unit tests with mocks. Project structure: src/Domain/, src/Application/, src/Infrastructure/, src/API/. Add GlobalExceptionHandler, validation pipeline behavior, integration tests with WebApplicationFactory."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

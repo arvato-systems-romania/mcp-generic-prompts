@@ -1,0 +1,75 @@
+{
+  "id": "react-architecture-patterns",
+  "title": "React Architecture & Design Patterns",
+  "description": "Analyzes React applications for architectural patterns, component design, state management, code organization, and scalability best practices.",
+  "category": "frontend-react",
+  "tags": [
+    "react",
+    "architecture",
+    "design-patterns",
+    "component-design",
+    "state-management",
+    "best-practices"
+  ],
+  "template": "Analyze React application architecture and recommend improvements.\n\n**Application Context:**\n- Project: {{project_name}}\n- React Version: {{react_version}}\n- State Management: {{state_management}}\n- Current Challenge: {{challenge}}\n\n**Code to Analyze:**\n```jsx\n{{react_code}}\n```\n\n**Architecture Analysis Areas:**\n\n1. **Component Architecture:**\n   - Container vs Presentational pattern\n   - Compound components\n   - Render props pattern\n   - Higher-Order Components (HOCs)\n   - Custom hooks composition\n   - Component composition vs inheritance\n   - Props drilling prevention\n   - Component responsibility (SRP)\n\n2. **State Management Patterns:**\n   - Local vs global state\n   - Context API usage\n   - Redux/Redux Toolkit patterns\n   - Zustand implementation\n   - Jotai atoms\n   - Recoil selectors\n   - Server state (React Query, SWR)\n   - Form state management\n\n3. **Custom Hooks Design:**\n   - Hook extraction opportunities\n   - Hook composition patterns\n   - useReducer for complex state\n   - Custom async hooks\n   - Hook testing strategies\n   - Hook dependencies\n   - Hook naming conventions\n\n4. **Code Organization:**\n   - Feature-based vs type-based structure\n   - Component folder organization\n   - Barrel exports (index.ts)\n   - Shared utilities location\n   - Constants and types organization\n   - Test file placement\n   - Assets organization\n\n5. **Performance Patterns:**\n   - React.memo usage\n   - useMemo optimization\n   - useCallback optimization\n   - Code splitting strategies\n   - Lazy loading components\n   - Virtual lists for large data\n   - Image optimization\n   - Bundle analysis\n\n6. **Data Fetching:**\n   - React Query patterns\n   - SWR implementation\n   - useEffect for fetching\n   - Suspense for data fetching\n   - Error boundaries\n   - Loading states\n   - Optimistic updates\n   - Cache invalidation\n\n7. **Routing Architecture:**\n   - React Router patterns\n   - Route organization\n   - Protected routes\n   - Lazy route loading\n   - Route parameters\n   - Nested routing\n   - Route guards\n   - Navigation state\n\n8. **Form Management:**\n   - Controlled vs uncontrolled\n   - React Hook Form\n   - Formik patterns\n   - Form validation\n   - Field arrays\n   - Multi-step forms\n   - Form state persistence\n   - Error handling\n\n9. **Type Safety:**\n   - TypeScript integration\n   - Props type definitions\n   - Generic components\n   - Type guards\n   - Utility types\n   - Strict mode\n   - Type inference\n\n10. **Error Handling:**\n    - Error boundaries\n    - Try-catch in async code\n    - Error logging\n    - User feedback\n    - Recovery strategies\n    - Error retry logic\n    - Fallback UI\n\n11. **Testing Strategy:**\n    - Component testing\n    - Hook testing\n    - Integration testing\n    - E2E testing\n    - Testing Library best practices\n    - Mock strategies\n    - Test coverage\n\n12. **Build & Tooling:**\n    - Vite vs Create React App vs Next.js\n    - ESLint configuration\n    - Prettier setup\n    - Husky pre-commit hooks\n    - Bundle size optimization\n    - Environment variables\n    - Build optimization\n\n13. **Accessibility:**\n    - Semantic HTML\n    - ARIA attributes\n    - Keyboard navigation\n    - Focus management\n    - Screen reader support\n    - Color contrast\n    - Motion preferences\n\n14. **Security:**\n    - XSS prevention\n    - Sanitization\n    - Authentication patterns\n    - Authorization\n    - Secure storage\n    - HTTPS enforcement\n    - Content Security Policy\n\n**Output Format:**\n- **Architecture Assessment:** Current state analysis\n- **Component Refactoring:** Better component design\n- **State Management:** Optimal patterns for your needs\n- **Performance Issues:** Re-renders and bundle size\n- **Code Organization:** Recommended structure\n- **Best Practices:** Do's and don'ts\n- **Migration Path:** Step-by-step improvements\n- **Testing Strategy:** How to test the architecture",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the React project"
+      },
+      "react_code": {
+        "type": "string",
+        "description": "React application code to analyze"
+      },
+      "react_version": {
+        "type": "string",
+        "enum": [
+          "16.x",
+          "17.x",
+          "18.x",
+          "19.x"
+        ],
+        "default": "18.x"
+      },
+      "state_management": {
+        "type": "string",
+        "enum": [
+          "context-api",
+          "redux",
+          "redux-toolkit",
+          "zustand",
+          "jotai",
+          "recoil",
+          "none"
+        ],
+        "default": "context-api"
+      },
+      "challenge": {
+        "type": "string",
+        "description": "Current challenge",
+        "default": "Complex state management and performance"
+      }
+    },
+    "required": [
+      "project_name",
+      "react_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "Dashboard",
+        "react_code": "function Dashboard() {\n  const [users, setUsers] = useState([]);\n  const [loading, setLoading] = useState(false);\n  const [filter, setFilter] = useState('');\n  \n  useEffect(() => {\n    setLoading(true);\n    fetch('/api/users')\n      .then(res => res.json())\n      .then(data => {\n        setUsers(data);\n        setLoading(false);\n      });\n  }, []);\n  \n  const filteredUsers = users.filter(u => \n    u.name.toLowerCase().includes(filter.toLowerCase())\n  );\n  \n  return (\n    <div>\n      <input value={filter} onChange={e => setFilter(e.target.value)} />\n      {loading ? <div>Loading...</div> : (\n        <div>\n          {filteredUsers.map(user => (\n            <div key={user.id}>\n              <h3>{user.name}</h3>\n              <p>{user.email}</p>\n            </div>\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}",
+        "react_version": "18.x",
+        "state_management": "none",
+        "challenge": "Component too complex, no error handling, performance issues with large lists"
+      },
+      "output_outline": "Issues: 1) Component does too much (fetch, filter, render) - violates SRP, 2) No error handling on fetch, 3) No loading error state, 4) Filter computation runs on every render (use useMemo), 5) No cleanup on unmount (AbortController), 6) Missing key optimization (React.memo), 7) Inline filter logic (extract to custom hook). Refactored architecture: Split into 3 components - DashboardContainer (data fetching), UserFilter (filter UI), UserList (presentation). Custom hook: useUsers() handles fetching with React Query or useSWR for caching/refetch/error handling. useMemo for filtered users. Implement error boundary for graceful errors. Add loading skeleton instead of text. Extract UserCard component with React.memo. File structure: features/dashboard/hooks/useUsers.ts, components/UserList/UserList.tsx, UserCard/UserCard.tsx. Performance: React Query eliminates redundant fetches, useMemo prevents filter recalculation, React.memo prevents UserCard re-renders, virtualization with react-window for 1000+ users. Testing: Test useUsers hook independently, test UserList with mock data, test filtering logic, E2E test for full flow. Expected improvements: 80% fewer re-renders, proper error handling, better code organization, easier testing."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

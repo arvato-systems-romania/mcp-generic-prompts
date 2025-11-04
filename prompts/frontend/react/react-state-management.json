@@ -1,0 +1,78 @@
+{
+  "id": "react-state-management-patterns",
+  "title": "React State Management Patterns & Best Practices",
+  "description": "Comprehensive guide to state management in React applications covering Context API, Redux, Zustand, Jotai, React Query, and choosing the right solution.",
+  "category": "frontend-react",
+  "tags": [
+    "react",
+    "state-management",
+    "redux",
+    "context-api",
+    "zustand",
+    "react-query",
+    "patterns"
+  ],
+  "template": "Analyze React state management and recommend optimal patterns.\n\n**Application Context:**\n- Project: {{project_name}}\n- Current State Solution: {{current_solution}}\n- Application Size: {{app_size}}\n- Performance Issues: {{perf_issues}}\n\n**Code to Analyze:**\n```jsx\n{{react_code}}\n```\n\n**State Management Analysis Areas:**\n\n1. **State Categorization:**\n   - Server state (API data)\n   - Client state (UI state)\n   - URL state (routing)\n   - Form state\n   - Global vs local state\n   - Derived state\n   - Transient state\n\n2. **Context API Patterns:**\n   - Provider composition\n   - Context splitting\n   - Performance optimization\n   - useContext best practices\n   - Provider value memoization\n   - Context vs props\n   - When to use Context\n\n3. **Redux/Redux Toolkit:**\n   - Store structure\n   - Slice patterns\n   - Async thunks\n   - RTK Query integration\n   - Middleware usage\n   - Selector optimization\n   - DevTools integration\n   - Immer for immutability\n\n4. **Zustand Patterns:**\n   - Store creation\n   - Multiple stores\n   - Middleware (persist, devtools)\n   - Computed values\n   - Async actions\n   - Store slicing\n   - Performance optimization\n\n5. **Jotai Atoms:**\n   - Atom definition\n   - Atom composition\n   - Derived atoms\n   - Async atoms\n   - Atom families\n   - Atom dependencies\n   - DevTools\n\n6. **Recoil:**\n   - Atom vs selector\n   - Atom families\n   - Async selectors\n   - Snapshot testing\n   - Persistence\n   - Performance\n\n7. **React Query (Server State):**\n   - Query keys strategy\n   - Caching configuration\n   - Mutations\n   - Optimistic updates\n   - Infinite queries\n   - Query invalidation\n   - Prefetching\n   - Polling and refetching\n\n8. **Form State:**\n   - React Hook Form\n   - Formik patterns\n   - Field registration\n   - Validation strategies\n   - Error handling\n   - Form submission\n   - Multi-step forms\n\n9. **State Normalization:**\n   - Entity structure\n   - Relationships handling\n   - Update patterns\n   - Denormalization\n   - ID-based lookups\n   - Redux Entity Adapter\n\n10. **Performance Optimization:**\n    - Selector memoization\n    - Component memoization\n    - Subscription optimization\n    - State updates batching\n    - Avoiding unnecessary renders\n    - Code splitting state\n\n11. **State Persistence:**\n    - localStorage integration\n    - sessionStorage usage\n    - IndexedDB for large data\n    - State rehydration\n    - Serialization strategies\n    - Migration handling\n\n12. **State Debugging:**\n    - Redux DevTools\n    - Time-travel debugging\n    - State snapshots\n    - Action logging\n    - State diff visualization\n    - Performance profiling\n\n13. **Testing Strategies:**\n    - Provider wrappers\n    - Store mocking\n    - Action testing\n    - Selector testing\n    - Integration tests\n    - Async state testing\n\n14. **Migration Strategies:**\n    - From Context to Zustand\n    - From Redux to RTK\n    - Incremental adoption\n    - Coexistence patterns\n    - Migration timeline\n\n15. **Decision Framework:**\n    - When to use Context\n    - When to use Redux\n    - When to use Zustand\n    - When to use React Query\n    - Combining solutions\n    - Team size considerations\n\n**Output Format:**\n- **Current State Analysis:** Problems and bottlenecks\n- **Recommended Solution:** Best fit for your needs\n- **Migration Plan:** If changing solutions\n- **Code Examples:** Implementation patterns\n- **Performance Impact:** Expected improvements\n- **Testing Strategy:** How to test state\n- **Best Practices:** Do's and don'ts\n- **Decision Matrix:** When to use what",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the React project"
+      },
+      "react_code": {
+        "type": "string",
+        "description": "Current state management code"
+      },
+      "current_solution": {
+        "type": "string",
+        "enum": [
+          "context-api",
+          "redux",
+          "redux-toolkit",
+          "zustand",
+          "jotai",
+          "recoil",
+          "mobx",
+          "mixed",
+          "none"
+        ],
+        "default": "context-api"
+      },
+      "app_size": {
+        "type": "string",
+        "enum": [
+          "small",
+          "medium",
+          "large",
+          "enterprise"
+        ],
+        "default": "medium"
+      },
+      "perf_issues": {
+        "type": "string",
+        "description": "Current performance issues",
+        "default": "Excessive re-renders"
+      }
+    },
+    "required": [
+      "project_name",
+      "react_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "EcommerceApp",
+        "react_code": "const UserContext = createContext();\n\nfunction App() {\n  const [user, setUser] = useState(null);\n  const [cart, setCart] = useState([]);\n  const [products, setProducts] = useState([]);\n  \n  useEffect(() => {\n    fetch('/api/user').then(r => r.json()).then(setUser);\n    fetch('/api/cart').then(r => r.json()).then(setCart);\n    fetch('/api/products').then(r => r.json()).then(setProducts);\n  }, []);\n  \n  return (\n    <UserContext.Provider value={{user, setUser, cart, setCart, products}}>\n      <Router>\n        <Routes>\n          <Route path=\"/\" element={<ProductList />} />\n          <Route path=\"/cart\" element={<Cart />} />\n        </Routes>\n      </Router>\n    </UserContext.Provider>\n  );\n}",
+        "current_solution": "context-api",
+        "app_size": "medium",
+        "perf_issues": "All components re-render when any state changes, slow page navigation"
+      },
+      "output_outline": "Critical Issues: 1) Single massive context causes all consumers to re-render on any state change (cart update re-renders ProductList unnecessarily), 2) Server state (user, products, cart) mixed with client state, 3) Manual fetch logic without caching/error handling/loading states, 4) Provider value not memoized (new object every render). Recommended solution: React Query for server state + Zustand for client UI state. Migration plan: Phase 1 - Move server state to React Query (useQuery for user/products/cart, useMutation for cart updates), benefits: automatic caching, refetching, error handling, no manual loading states. Phase 2 - Move client UI state to Zustand store (theme, sidebar open, filters). Refactored: const {data: user} = useQuery({queryKey: ['user'], queryFn: fetchUser}); const {data: cart} = useQuery({queryKey: ['cart'], queryFn: fetchCart}); const {data: products} = useQuery({queryKey: ['products'], queryFn: fetchProducts}); const addToCart = useMutation({mutationFn: addItem, onSuccess: () => queryClient.invalidateQueries(['cart'])}). Split contexts: UserContext, CartContext, ProductsContext or use Zustand: create((set) => ({theme: 'light', toggleTheme: () => set(state => ({theme: state.theme === 'light' ? 'dark' : 'light'}))}))). Performance: 95% reduction in unnecessary re-renders, ProductList only updates when products change, Cart only updates on cart changes. Testing: Mock React Query with QueryClientProvider wrapper, test Zustand stores independently. Expected timeline: 1 week migration, immediate perf improvements."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

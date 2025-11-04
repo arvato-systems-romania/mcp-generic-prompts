@@ -1,0 +1,67 @@
+{
+  "id": "java-microservices-architecture",
+  "title": "Java Microservices Architecture & Patterns",
+  "description": "Analyzes Java microservices for architectural patterns, Spring Boot/Cloud best practices, service communication, resilience, and production-ready practices.",
+  "category": "backend-java",
+  "tags": [
+    "java",
+    "microservices",
+    "spring-boot",
+    "spring-cloud",
+    "architecture",
+    "distributed-systems"
+  ],
+  "template": "Analyze Java microservices architecture and recommend improvements.\n\n**Application Context:**\n- Project: {{project_name}}\n- Framework: {{framework}}\n- Number of Services: {{service_count}}\n- Current Challenges: {{challenges}}\n\n**Code/Architecture to Analyze:**\n```java\n{{java_code}}\n```\n\n**Microservices Analysis Areas:**\n\n1. **Service Design:**\n   - Domain-Driven Design boundaries\n   - Service granularity\n   - Single Responsibility Principle\n   - API contract design\n   - Versioning strategy\n   - Backward compatibility\n   - Service dependencies\n\n2. **Spring Boot Best Practices:**\n   - Auto-configuration usage\n   - Externalized configuration\n   - Profiles management\n   - Actuator endpoints\n   - Logging configuration\n   - Embedded server tuning\n   - Starter dependencies\n\n3. **Service Communication:**\n   - REST vs gRPC vs messaging\n   - Synchronous vs asynchronous\n   - RestTemplate vs WebClient\n   - Feign client configuration\n   - Message broker (Kafka, RabbitMQ)\n   - Event-driven architecture\n   - API Gateway patterns\n\n4. **Service Discovery:**\n   - Eureka configuration\n   - Consul integration\n   - Client-side load balancing\n   - Service registration\n   - Health checks\n   - Instance metadata\n   - DNS vs registry\n\n5. **API Gateway:**\n   - Spring Cloud Gateway\n   - Zuul migration\n   - Routing rules\n   - Rate limiting\n   - Authentication/Authorization\n   - Request transformation\n   - Circuit breaker integration\n\n6. **Resilience Patterns:**\n   - Circuit breaker (Resilience4j)\n   - Retry mechanisms\n   - Bulkhead isolation\n   - Timeout configuration\n   - Fallback strategies\n   - Rate limiting\n   - Load shedding\n\n7. **Configuration Management:**\n   - Spring Cloud Config\n   - Centralized configuration\n   - Environment-specific configs\n   - Secret management (Vault)\n   - Dynamic configuration refresh\n   - Configuration encryption\n   - Property sources\n\n8. **Distributed Tracing:**\n   - Spring Cloud Sleuth\n   - Zipkin integration\n   - Jaeger setup\n   - Trace context propagation\n   - Sampling strategies\n   - Log correlation\n   - Performance monitoring\n\n9. **Security:**\n   - OAuth2 with Spring Security\n   - JWT token handling\n   - API key management\n   - Service-to-service auth\n   - mTLS for internal services\n   - Secret rotation\n   - RBAC implementation\n\n10. **Data Management:**\n    - Database per service\n    - Saga pattern\n    - Event sourcing\n    - CQRS implementation\n    - Eventual consistency\n    - Distributed transactions\n    - Data replication\n\n11. **Monitoring & Observability:**\n    - Prometheus metrics\n    - Grafana dashboards\n    - Custom metrics (Micrometer)\n    - Log aggregation (ELK)\n    - Alerting rules\n    - SLI/SLO monitoring\n    - Distributed profiling\n\n12. **Deployment & Scaling:**\n    - Docker containerization\n    - Kubernetes deployment\n    - Horizontal pod autoscaling\n    - Resource limits\n    - Rolling updates\n    - Blue-green deployment\n    - Canary releases\n\n13. **Testing Strategy:**\n    - Unit tests\n    - Integration tests\n    - Contract testing (Pact)\n    - Consumer-driven contracts\n    - End-to-end tests\n    - Chaos engineering\n    - Performance testing\n\n14. **API Documentation:**\n    - OpenAPI/Swagger\n    - API versioning\n    - Documentation generation\n    - Interactive API docs\n    - Schema validation\n    - Example requests/responses\n\n15. **Performance Optimization:**\n    - Connection pooling\n    - Caching strategies\n    - Async processing\n    - Batch operations\n    - Database optimization\n    - JVM tuning\n    - Network optimization\n\n**Output Format:**\n- **Architecture Assessment:** Current state and issues\n- **Service Boundaries:** DDD and service design\n- **Communication Patterns:** Sync vs async recommendations\n- **Resilience Strategy:** Circuit breakers and fallbacks\n- **Security Improvements:** Authentication and authorization\n- **Observability Setup:** Monitoring and tracing\n- **Deployment Strategy:** K8s and CI/CD\n- **Best Practices Guide:** Do's and don'ts",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the microservices project"
+      },
+      "java_code": {
+        "type": "string",
+        "description": "Java/Spring Boot code or architecture description"
+      },
+      "framework": {
+        "type": "string",
+        "enum": [
+          "spring-boot",
+          "micronaut",
+          "quarkus",
+          "helidon"
+        ],
+        "default": "spring-boot"
+      },
+      "service_count": {
+        "type": "string",
+        "description": "Number of microservices (e.g., '5', '20', '50+')"
+      },
+      "challenges": {
+        "type": "string",
+        "description": "Current challenges",
+        "default": "Service communication reliability and observability"
+      }
+    },
+    "required": [
+      "project_name",
+      "java_code",
+      "service_count"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "EcommercePlatform",
+        "java_code": "@RestController\n@RequestMapping(\"/api/orders\")\npublic class OrderController {\n    @Autowired\n    private RestTemplate restTemplate;\n    \n    @Autowired\n    private OrderRepository orderRepo;\n    \n    @PostMapping\n    public Order createOrder(@RequestBody OrderRequest request) {\n        // Call inventory service\n        String inventoryUrl = \"http://localhost:8081/api/inventory/check\";\n        Boolean available = restTemplate.postForObject(inventoryUrl, request, Boolean.class);\n        \n        if (!available) {\n            throw new RuntimeException(\"Out of stock\");\n        }\n        \n        // Call payment service\n        String paymentUrl = \"http://localhost:8082/api/payment/process\";\n        PaymentResponse payment = restTemplate.postForObject(paymentUrl, request, PaymentResponse.class);\n        \n        // Save order\n        Order order = new Order();\n        order.setPaymentId(payment.getId());\n        order.setStatus(\"CONFIRMED\");\n        return orderRepo.save(order);\n    }\n}",
+        "framework": "spring-boot",
+        "service_count": "3",
+        "challenges": "Hardcoded URLs, no error handling, tight coupling, no resilience"
+      },
+      "output_outline": "Critical Issues: 1) Hardcoded service URLs (use service discovery with Eureka/Consul), 2) No circuit breaker (one service down breaks entire flow), 3) No retry logic, 4) RestTemplate is blocking (use WebClient for reactive), 5) No distributed tracing, 6) Tight coupling with synchronous calls, 7) No timeout configuration, 8) Poor error handling, 9) No compensation logic if payment succeeds but order save fails. Recommended architecture: Implement Spring Cloud Gateway for API gateway, use Eureka for service discovery, add Resilience4j circuit breakers. Refactored code: @Autowired private WebClient.Builder webClientBuilder; @Autowired private CircuitBreakerFactory circuitBreakerFactory; @PostMapping public Mono<Order> createOrder(@RequestBody OrderRequest request) { CircuitBreaker cb = circuitBreakerFactory.create(\"inventory\"); return cb.run(webClientBuilder.build().post().uri(\"http://inventory-service/api/inventory/check\").bodyValue(request).retrieve().bodyToMono(Boolean.class), throwable -> Mono.just(false)).flatMap(available -> { if (!available) return Mono.error(new OutOfStockException()); return webClientBuilder.build().post().uri(\"http://payment-service/api/payment/process\").bodyValue(request).retrieve().bodyToMono(PaymentResponse.class); }).map(payment -> { Order order = new Order(); order.setPaymentId(payment.getId()); order.setStatus(\"CONFIRMED\"); return orderRepo.save(order); }); }. Add distributed tracing with Sleuth: automatically adds trace/span IDs to logs. Saga pattern for distributed transaction: if payment succeeds but order fails, compensate with payment refund. Event-driven alternative: Publish OrderCreated event to Kafka, inventory and payment services consume asynchronously, eventual consistency. Monitoring: Add Micrometer metrics, custom counters for order success/failure, Prometheus scraping, Grafana dashboards. K8s deployment: HorizontalPodAutoscaler based on CPU/memory, readiness/liveness probes, ConfigMap for configs, Secret for credentials. Expected improvements: 99.9% availability with circuit breakers, 50% faster with reactive WebClient, proper error handling, scalable architecture."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

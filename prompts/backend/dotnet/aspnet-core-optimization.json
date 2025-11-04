@@ -1,0 +1,76 @@
+{
+  "id": "aspnet-core-performance-optimization",
+  "title": "ASP.NET Core Performance Optimization",
+  "description": "Analyzes ASP.NET Core applications for performance bottlenecks, Entity Framework optimization, caching strategies, and production-ready configurations.",
+  "category": "backend-dotnet",
+  "tags": [
+    "csharp",
+    "dotnet",
+    "aspnet-core",
+    "performance",
+    "entity-framework",
+    "caching",
+    "optimization"
+  ],
+  "template": "Analyze ASP.NET Core application for performance optimization opportunities.\n\n**Application Context:**\n- Project: {{project_name}}\n- .NET Version: {{dotnet_version}}\n- Current Performance Issue: {{performance_issue}}\n\n**Code to Analyze:**\n```csharp\n{{aspnet_code}}\n```\n\n**Performance Analysis Areas:**\n\n1. **Entity Framework Core Optimization:**\n   - N+1 query problems\n   - Include() vs ThenInclude() usage\n   - AsNoTracking() for read-only queries\n   - Compiled queries\n   - Batch operations with ExecuteUpdate/ExecuteDelete\n   - Split queries vs single query\n   - Projection with Select() to DTOs\n   - Query filters and global query optimization\n   - Connection pooling\n   - DbContext lifetime management\n\n2. **Caching Strategy:**\n   - IMemoryCache usage\n   - IDistributedCache (Redis, SQL Server)\n   - Response caching middleware\n   - Output caching (.NET 7+)\n   - Cache-aside pattern\n   - Cache invalidation strategies\n   - Sliding vs absolute expiration\n   - Cache key design\n\n3. **API Controller Optimization:**\n   - ActionResult<T> return types\n   - Async/await best practices\n   - Cancellation token support\n   - Stream response for large data\n   - Minimal APIs vs controllers\n   - Response compression\n   - Content negotiation optimization\n   - API versioning strategies\n\n4. **Middleware & Pipeline:**\n   - Middleware ordering\n   - Custom middleware performance\n   - UseRouting/UseEndpoints optimization\n   - Static file handling\n   - Request/response buffering\n   - Exception handling middleware\n   - CORS configuration\n\n5. **Dependency Injection:**\n   - Service lifetime (Singleton, Scoped, Transient)\n   - Constructor injection patterns\n   - Service registration optimization\n   - Avoiding service locator anti-pattern\n   - Generic host configuration\n   - Options pattern usage\n\n6. **Database Configuration:**\n   - Connection string optimization\n   - Connection pooling settings\n   - Command timeout configuration\n   - Retry policies\n   - Database migration strategies\n   - Read/write splitting\n   - Database health checks\n\n7. **Background Services:**\n   - IHostedService implementation\n   - BackgroundService patterns\n   - Hangfire/Quartz integration\n   - Queue-based processing\n   - Scoped service consumption\n   - Graceful shutdown handling\n\n8. **Memory Management:**\n   - ArrayPool<T> usage\n   - Span<T> and Memory<T>\n   - StringBuilder optimization\n   - Avoiding boxing/unboxing\n   - Stream vs byte array\n   - IDisposable implementation\n   - Memory leak detection\n\n9. **HTTP Client Usage:**\n   - IHttpClientFactory patterns\n   - Named vs typed clients\n   - Polly retry policies\n   - Circuit breaker implementation\n   - Connection pooling\n   - Timeout configuration\n   - Response buffering\n\n10. **JSON Serialization:**\n    - System.Text.Json optimization\n    - Custom converters\n    - JsonSerializerOptions configuration\n    - Source generators (.NET 6+)\n    - Newtonsoft.Json migration\n    - Large payload handling\n\n11. **Logging & Monitoring:**\n    - Structured logging with Serilog\n    - Log level configuration\n    - Application Insights integration\n    - Health checks setup\n    - Metrics collection\n    - Performance counters\n    - Diagnostic middleware\n\n12. **Configuration:**\n    - appsettings.json optimization\n    - Environment-specific settings\n    - Secret management (User Secrets, Azure Key Vault)\n    - Options pattern validation\n    - Configuration binding performance\n\n**Output Format:**\n- **Performance Bottlenecks:** Identified issues with measurements\n- **EF Core Optimization:** Query improvements and tracking strategies\n- **Caching Recommendations:** What to cache and implementation\n- **Middleware Improvements:** Pipeline optimization\n- **Code Refactoring:** Before/after examples with performance gains\n- **Configuration Tuning:** Production settings\n- **Monitoring Setup:** Metrics and health checks\n- **Production Checklist:** Pre-deployment optimization items",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the ASP.NET Core project"
+      },
+      "aspnet_code": {
+        "type": "string",
+        "description": "ASP.NET Core application code to analyze"
+      },
+      "dotnet_version": {
+        "type": "string",
+        "enum": [
+          "6.0",
+          "7.0",
+          "8.0",
+          "9.0"
+        ],
+        "default": "8.0",
+        "description": ".NET version"
+      },
+      "performance_issue": {
+        "type": "string",
+        "description": "Specific performance concern",
+        "default": "Slow API response times"
+      },
+      "database": {
+        "type": "string",
+        "enum": [
+          "sqlserver",
+          "postgresql",
+          "mysql",
+          "sqlite",
+          "cosmos"
+        ],
+        "default": "sqlserver",
+        "description": "Database type"
+      }
+    },
+    "required": [
+      "project_name",
+      "aspnet_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "ProductCatalog",
+        "aspnet_code": "[ApiController]\n[Route(\"api/[controller]\")]\npublic class ProductsController : ControllerBase\n{\n    private readonly AppDbContext _context;\n    \n    public ProductsController(AppDbContext context)\n    {\n        _context = context;\n    }\n    \n    [HttpGet]\n    public async Task<ActionResult<List<Product>>> GetProducts()\n    {\n        var products = await _context.Products\n            .Include(p => p.Category)\n            .ToListAsync();\n        return products;\n    }\n    \n    [HttpGet(\"{id}\")]\n    public async Task<ActionResult<Product>> GetProduct(int id)\n    {\n        var product = await _context.Products\n            .Include(p => p.Category)\n            .Include(p => p.Reviews)\n            .FirstOrDefaultAsync(p => p.Id == id);\n        \n        if (product == null)\n            return NotFound();\n            \n        return product;\n    }\n}",
+        "dotnet_version": "8.0",
+        "performance_issue": "Product API slow with large catalog (10000+ products)",
+        "database": "sqlserver"
+      },
+      "output_outline": "Issues: 1) No pagination in GetProducts() returns all 10000+ products, 2) Missing AsNoTracking() for read-only queries, 3) Include() loads unnecessary data, 4) No caching, 5) No response compression, 6) Missing CancellationToken support, 7) Tracking enabled wastes memory. Solutions: Add pagination with PagedList<T> helper, use AsNoTracking() for GET endpoints, project to ProductDto with Select(), implement response caching with [ResponseCache], add output caching for .NET 8, configure Gzip compression, add CancellationToken parameters. Refactored code: ActionResult<PagedResult<ProductDto>> with IQueryable.ProjectTo<ProductDto>(), AsNoTracking(), pagination logic, [ResponseCache(Duration=60)], [OutputCache(Duration=60)] for .NET 8+. Add IMemoryCache for frequently accessed products, configure connection pooling in appsettings.json. Expected improvement: 3s → 150ms (95% faster), memory usage reduced by 70%."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

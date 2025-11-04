@@ -1,0 +1,73 @@
+{
+  "id": "mongodb-optimization",
+  "title": "MongoDB Performance Optimization & Best Practices",
+  "description": "Analyzes MongoDB databases and queries for performance bottlenecks, indexing strategies, schema design, and production-ready practices.",
+  "category": "database-nosql",
+  "tags": [
+    "mongodb",
+    "nosql",
+    "database",
+    "performance",
+    "indexing",
+    "aggregation"
+  ],
+  "template": "Analyze MongoDB database and application code for performance optimization.\n\n**Database Context:**\n- Project: {{project_name}}\n- MongoDB Version: {{mongodb_version}}\n- Current Performance Issue: {{performance_issue}}\n\n**Code/Schema to Analyze:**\n```javascript\n{{mongodb_code}}\n```\n\n**Performance Analysis Areas:**\n\n1. **Indexing Strategy:**\n   - Single field indexes\n   - Compound indexes (field order importance)\n   - Multikey indexes for arrays\n   - Text indexes for full-text search\n   - Geospatial indexes\n   - Wildcard indexes\n   - Partial indexes with filter expressions\n   - TTL indexes for auto-expiration\n   - Index intersection vs compound\n   - Index size and memory usage\n   - Covered queries\n   - Index selectivity\n\n2. **Query Optimization:**\n   - Query explain() analysis\n   - Query planning and execution stats\n   - Projection to limit returned fields\n   - Query hints to force index usage\n   - Cursor behavior and iteration\n   - Sorting without indexes\n   - Limit and skip optimization\n   - Query patterns (equality, range, regex)\n   - $lookup performance\n   - $graphLookup optimization\n\n3. **Aggregation Pipeline:**\n   - Pipeline stage ordering\n   - $match early in pipeline\n   - $project to reduce document size\n   - $limit after $match\n   - Index usage in aggregation\n   - $lookup optimization\n   - $unwind alternatives\n   - Memory limits (100MB per stage)\n   - allowDiskUse option\n   - Pipeline explain output\n\n4. **Schema Design:**\n   - Embedding vs referencing\n   - One-to-one relationships\n   - One-to-many relationships\n   - Many-to-many relationships\n   - Polymorphic patterns\n   - Bucket pattern\n   - Extended reference pattern\n   - Computed pattern\n   - Subset pattern\n   - Schema validation\n\n5. **Document Structure:**\n   - Document size limits (16MB)\n   - Field naming conventions\n   - Array size considerations\n   - Nested document depth\n   - Duplicate data strategy\n   - Atomic operations\n   - Document growth patterns\n\n6. **Write Operations:**\n   - Insert performance (insertMany vs loop)\n   - Update operators efficiency\n   - Bulk operations\n   - Write concern configuration\n   - Writeback pattern\n   - Upsert vs insert/update\n   - Array update operators\n   - Transaction performance\n\n7. **Read Performance:**\n   - Read preference (primary, secondary)\n   - Read concern levels\n   - Cursor batching\n   - Tailable cursors\n   - Change streams optimization\n   - Connection pooling\n   - Query result caching\n\n8. **Transactions:**\n   - Multi-document ACID transactions\n   - Transaction performance impact\n   - Transaction timeout\n   - Transaction retry logic\n   - Avoiding transactions when possible\n   - Session management\n\n9. **Sharding:**\n   - Shard key selection\n   - Shard key cardinality\n   - Chunk distribution\n   - Targeted vs scatter-gather queries\n   - Balancer configuration\n   - Zone sharding\n   - Resharding considerations\n\n10. **Replication:**\n    - Replica set configuration\n    - Read preference strategies\n    - Write concern levels\n    - Oplog sizing\n    - Secondary lag monitoring\n    - Priority and voting configuration\n    - Hidden members usage\n\n11. **Connection Management:**\n    - Connection pooling settings\n    - maxPoolSize configuration\n    - Connection timeout\n    - Connection URI optimization\n    - Connection string options\n    - Driver configuration\n\n12. **Monitoring & Profiling:**\n    - Database profiler usage\n    - Slow query logging\n    - mongostat metrics\n    - mongotop analysis\n    - Explain plan analysis\n    - Index usage statistics\n    - Performance advisor\n\n13. **Memory Management:**\n    - WiredTiger cache sizing\n    - Index in memory\n    - Working set analysis\n    - Memory pressure detection\n    - NUMA considerations\n    - Cache eviction patterns\n\n14. **Application Patterns:**\n    - Mongoose ODM optimization\n    - Schema-less design pitfalls\n    - Pagination strategies\n    - Search implementation\n    - Caching layer (Redis)\n    - Data denormalization\n    - Event sourcing patterns\n\n15. **Production Practices:**\n    - Backup strategies\n    - Index building strategies\n    - Upgrade procedures\n    - Capacity planning\n    - Disaster recovery\n    - Security configuration\n    - Auditing setup\n\n**Output Format:**\n- **Performance Bottlenecks:** Slow queries and missing indexes\n- **Index Recommendations:** What indexes to add/remove\n- **Schema Improvements:** Embedding vs referencing decisions\n- **Query Refactoring:** Before/after with explain() results\n- **Aggregation Optimization:** Pipeline reordering and efficiency\n- **Configuration Tuning:** WiredTiger, connection pool, etc.\n- **Monitoring Setup:** Profiler and alerting configuration\n- **Production Checklist:** Security, backups, and scaling items",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the project using MongoDB"
+      },
+      "mongodb_code": {
+        "type": "string",
+        "description": "MongoDB schema, queries, or aggregation pipelines to analyze"
+      },
+      "mongodb_version": {
+        "type": "string",
+        "enum": [
+          "5.0",
+          "6.0",
+          "7.0",
+          "8.0"
+        ],
+        "default": "7.0",
+        "description": "MongoDB version"
+      },
+      "performance_issue": {
+        "type": "string",
+        "description": "Specific performance concern",
+        "default": "Slow queries"
+      },
+      "deployment": {
+        "type": "string",
+        "enum": [
+          "standalone",
+          "replica-set",
+          "sharded-cluster",
+          "atlas"
+        ],
+        "default": "replica-set"
+      }
+    },
+    "required": [
+      "project_name",
+      "mongodb_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "BlogPlatform",
+        "mongodb_code": "// Schema\nconst PostSchema = {\n  _id: ObjectId,\n  title: String,\n  content: String,\n  author: ObjectId, // reference to User\n  comments: [{\n    text: String,\n    author: ObjectId, // reference to User\n    createdAt: Date\n  }],\n  tags: [String],\n  createdAt: Date\n};\n\n// Query\nconst posts = await db.collection('posts')\n  .find({ tags: 'javascript' })\n  .toArray();\n\n// Populate authors and comment authors\nfor (let post of posts) {\n  post.author = await db.collection('users')\n    .findOne({ _id: post.author });\n  \n  for (let comment of post.comments) {\n    comment.author = await db.collection('users')\n      .findOne({ _id: comment.author });\n  }\n}",
+        "mongodb_version": "7.0",
+        "performance_issue": "Finding posts by tag and populating authors takes 3+ seconds with 1000 posts",
+        "deployment": "replica-set"
+      },
+      "output_outline": "Critical Issues: 1) N+1 query pattern - finding 1000 posts, then 1000+ user queries (1 per post + N per comment) = 2000+ queries!, 2) No index on tags array, 3) Loading entire documents when only some fields needed, 4) Comments embedded but author references cause lookups, 5) No pagination. Solutions: Create compound index db.posts.createIndex({tags: 1, createdAt: -1}), use $lookup aggregation to join in single query, add projection to limit fields, implement pagination with skip/limit, consider denormalizing author name into posts/comments for read-heavy workload. Refactored aggregation pipeline: db.posts.aggregate([{$match: {tags: 'javascript'}}, {$sort: {createdAt: -1}}, {$limit: 20}, {$lookup: {from: 'users', localField: 'author', foreignField: '_id', as: 'authorData'}}, {$unwind: '$authorData'}, {$lookup: {from: 'users', localField: 'comments.author', foreignField: '_id', as: 'commentAuthors'}}, {$project: {title: 1, 'authorData.name': 1, comments: 1, createdAt: 1}}]). Expected improvement: 3000ms → 80ms (97% faster), queries reduced from 2000+ to 1. Add index on posts.createdAt for sorting. Consider partial index for active posts only. For comments with many authors, denormalize author name. Configure connection pool: maxPoolSize: 50. Enable profiler for queries >100ms. Add caching layer for popular posts."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

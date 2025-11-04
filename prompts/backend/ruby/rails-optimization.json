@@ -1,0 +1,85 @@
+{
+  "id": "rails-performance-optimization",
+  "title": "Ruby on Rails Performance Optimization",
+  "description": "Analyzes Ruby on Rails applications for performance bottlenecks, N+1 queries, caching strategies, and production-ready configurations.",
+  "category": "backend-ruby",
+  "tags": [
+    "ruby",
+    "rails",
+    "performance",
+    "active-record",
+    "caching",
+    "optimization"
+  ],
+  "template": "Analyze Ruby on Rails application for performance optimization opportunities.\n\n**Application Context:**\n- Project: {{project_name}}\n- Rails Version: {{rails_version}}\n- Ruby Version: {{ruby_version}}\n- Current Performance Issue: {{performance_issue}}\n\n**Code to Analyze:**\n```ruby\n{{rails_code}}\n```\n\n**Performance Analysis Areas:**\n\n1. **ActiveRecord Query Optimization:**\n   - N+1 query detection with Bullet gem\n   - includes() vs joins() vs eager_load() vs preload()\n   - select() for specific columns\n   - pluck() vs map() for attribute arrays\n   - find_each() and find_in_batches() for large datasets\n   - where.not vs SQL NOT IN\n   - exists? vs any? vs present?\n   - Counter cache columns\n   - Database indexes\n   - Composite indexes\n\n2. **Caching Strategies:**\n   - Russian Doll caching\n   - Fragment caching\n   - Action caching\n   - Page caching\n   - Low-level caching (Rails.cache)\n   - Cache key versioning\n   - Cache stores (Redis, Memcached)\n   - Cache invalidation strategies\n   - HTTP caching headers\n   - CDN integration\n\n3. **Background Jobs:**\n   - Sidekiq vs Delayed Job vs Resque\n   - Job queue optimization\n   - Idempotent jobs\n   - Job retry strategies\n   - Job batching\n   - Job prioritization\n   - Scheduled jobs with cron\n   - Job monitoring\n\n4. **Database Optimization:**\n   - Connection pool configuration\n   - Database connection management\n   - Read replica setup\n   - Query timeout configuration\n   - Database indexes (add_index)\n   - Foreign key constraints\n   - Migration performance\n   - Database-specific optimizations (PostgreSQL, MySQL)\n\n5. **View Optimization:**\n   - Partial caching\n   - Collection rendering\n   - Turbo Frames and Turbo Streams\n   - Lazy loading\n   - Asset pipeline optimization\n   - JavaScript bundling (Webpack, esbuild)\n   - CSS optimization\n   - Image optimization\n\n6. **Controller Optimization:**\n   - Strong parameters\n   - before_action callbacks\n   - Respond_to formats\n   - Streaming responses\n   - API-only mode\n   - JSON serialization (jbuilder, fast_jsonapi, blueprinter)\n   - Pagination (kaminari, pagy)\n\n7. **Model Optimization:**\n   - Validations efficiency\n   - Callbacks order\n   - Virtual attributes vs database columns\n   - STI (Single Table Inheritance) vs polymorphic\n   - Concerns and module organization\n   - Scopes optimization\n   - Custom SQL methods\n\n8. **Memory Management:**\n   - Memory bloat detection\n   - Object allocation reduction\n   - String freezing\n   - Symbol vs string usage\n   - GC tuning\n   - Memory profiler usage\n   - Derailed gem for benchmarking\n\n9. **API Optimization:**\n   - API versioning\n   - GraphQL integration\n   - Rate limiting (rack-attack)\n   - CORS configuration\n   - JWT authentication\n   - API documentation (Swagger/OpenAPI)\n   - Serialization performance\n\n10. **Testing Performance:**\n    - Factory optimization (factory_bot)\n    - Test database setup\n    - Parallel testing\n    - Test profiling\n    - VCR for HTTP mocking\n    - Database cleaner strategies\n    - SimpleCov configuration\n\n11. **Monitoring & Profiling:**\n    - rack-mini-profiler\n    - New Relic / DataDog integration\n    - Application logging\n    - Error tracking (Sentry, Rollbar)\n    - Performance metrics\n    - APM tools\n    - Query analysis\n\n12. **Production Configuration:**\n    - Puma web server tuning\n    - Worker and thread configuration\n    - Asset compilation\n    - Database connection pooling\n    - Redis configuration\n    - Log rotation\n    - Secret management\n    - Environment variables\n\n**Output Format:**\n- **Performance Bottlenecks:** Identified N+1 queries and slow operations\n- **Query Optimization:** ActiveRecord improvements with eager loading\n- **Caching Strategy:** What to cache and cache key design\n- **Background Job Recommendations:** What to move to async processing\n- **Code Refactoring:** Before/after examples with performance gains\n- **Database Index Recommendations:** Missing indexes to add\n- **Configuration Tuning:** Production settings for Puma, database, Redis\n- **Monitoring Setup:** Gems and tools to integrate\n- **Production Checklist:** Pre-deployment optimization items",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Rails project"
+      },
+      "rails_code": {
+        "type": "string",
+        "description": "Rails application code to analyze"
+      },
+      "rails_version": {
+        "type": "string",
+        "enum": [
+          "6.1",
+          "7.0",
+          "7.1",
+          "7.2"
+        ],
+        "default": "7.1",
+        "description": "Rails version"
+      },
+      "ruby_version": {
+        "type": "string",
+        "enum": [
+          "3.0",
+          "3.1",
+          "3.2",
+          "3.3"
+        ],
+        "default": "3.2",
+        "description": "Ruby version"
+      },
+      "performance_issue": {
+        "type": "string",
+        "description": "Specific performance concern",
+        "default": "Slow page loads"
+      },
+      "database": {
+        "type": "string",
+        "enum": [
+          "postgresql",
+          "mysql",
+          "sqlite"
+        ],
+        "default": "postgresql",
+        "description": "Database type"
+      }
+    },
+    "required": [
+      "project_name",
+      "rails_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "BlogPlatform",
+        "rails_code": "class PostsController < ApplicationController\n  def index\n    @posts = Post.all\n  end\n  \n  def show\n    @post = Post.find(params[:id])\n    @comments = @post.comments\n    @author = @post.user\n  end\nend\n\n# View: posts/index.html.erb\n<% @posts.each do |post| %>\n  <div>\n    <h2><%= post.title %></h2>\n    <p>By <%= post.user.name %></p>\n    <p><%= post.comments.count %> comments</p>\n  </div>\n<% end %>",
+        "rails_version": "7.1",
+        "ruby_version": "3.2",
+        "performance_issue": "Posts index page takes 3+ seconds with 1000+ posts",
+        "database": "postgresql"
+      },
+      "output_outline": "Critical Issues: 1) N+1 query loading users for each post (1001 queries), 2) N+1 query counting comments for each post (1001 queries), 3) No pagination (loading all 1000+ posts), 4) No caching, 5) Missing includes() for associations. Solutions: Add includes(:user) to eager load users, add counter_cache :comments_count to posts table, implement pagination with pagy gem (25 per page), add fragment caching around post partial, use select() to load only needed columns. Refactored controller: @posts = Post.includes(:user).select(:id, :title, :user_id, :comments_count).page(params[:page]).per(25). Add fragment caching: <% cache post do %>. Add database indexes: add_index :posts, :user_id and add_index :comments, :post_id. Configure Bullet gem to detect N+1 queries in development. Expected improvement: 3000ms → 150ms (95% faster), queries reduced from 2002 to 3. Add Russian Doll caching for nested comments."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

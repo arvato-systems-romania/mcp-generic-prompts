@@ -1,0 +1,72 @@
+{
+  "id": "nextjs-performance-optimization",
+  "title": "Next.js Performance Optimization & Best Practices",
+  "description": "Analyzes Next.js applications for performance bottlenecks, rendering strategies, caching, and production-ready practices for App Router and Pages Router.",
+  "category": "frontend-nextjs",
+  "tags": [
+    "nextjs",
+    "react",
+    "ssr",
+    "app-router",
+    "performance",
+    "optimization"
+  ],
+  "template": "Analyze Next.js application for performance optimization and best practices.\n\n**Application Context:**\n- Project: {{project_name}}\n- Next.js Version: {{nextjs_version}}\n- Router: {{router_type}}\n- Current Performance Issue: {{performance_issue}}\n\n**Code to Analyze:**\n```tsx\n{{nextjs_code}}\n```\n\n**Performance Analysis Areas:**\n\n1. **Rendering Strategies (App Router):**\n   - Server Components vs Client Components\n   - Streaming and Suspense boundaries\n   - Parallel routes and intercepting routes\n   - Route groups organization\n   - Dynamic vs static rendering\n   - Partial prerendering (PPR)\n   - generateStaticParams usage\n   - Force-static/force-dynamic configuration\n\n2. **Data Fetching Patterns:**\n   - Fetch caching strategies\n   - fetch with revalidate options\n   - Parallel data fetching\n   - Sequential vs parallel fetching\n   - Data streaming with Suspense\n   - Server Actions patterns\n   - useOptimistic for optimistic updates\n   - Database query optimization\n\n3. **Caching Strategy:**\n   - Request Memoization\n   - Data Cache (fetch cache)\n   - Full Route Cache\n   - Router Cache\n   - Cache invalidation (revalidatePath, revalidateTag)\n   - On-demand revalidation\n   - Time-based revalidation\n   - Cache headers configuration\n\n4. **Image Optimization:**\n   - next/image component usage\n   - Image sizing and formats\n   - Priority loading\n   - Placeholder options (blur, empty)\n   - Responsive images\n   - Remote image patterns\n   - Image loader configuration\n   - AVIF/WebP support\n\n5. **Code Splitting:**\n   - Dynamic imports\n   - Lazy loading components\n   - Route-based splitting\n   - Shared chunk optimization\n   - Bundle analysis\n   - Tree shaking\n   - Module federation\n\n6. **Font Optimization:**\n   - next/font usage\n   - Font subsetting\n   - Font display strategies\n   - Variable fonts\n   - Font loading performance\n   - Self-hosted vs Google Fonts\n\n7. **Metadata & SEO:**\n   - Metadata API usage\n   - Dynamic metadata\n   - OpenGraph images\n   - generateMetadata function\n   - Sitemap generation\n   - robots.txt configuration\n   - JSON-LD structured data\n\n8. **API Routes / Route Handlers:**\n   - Route handler optimization\n   - Response caching\n   - Streaming responses\n   - Edge runtime usage\n   - Middleware patterns\n   - API rate limiting\n   - Request validation\n\n9. **Client-Side Performance:**\n   - Hydration optimization\n   - JavaScript bundle size\n   - CSS optimization\n   - Third-party scripts (next/script)\n   - Web Vitals monitoring\n   - Client-side caching\n   - State management patterns\n\n10. **Build Configuration:**\n    - next.config.js optimization\n    - Output configuration\n    - Webpack customization\n    - SWC compiler settings\n    - Experimental features\n    - Environment variables\n    - Middleware configuration\n\n11. **Pages Router (Legacy):**\n    - getStaticProps optimization\n    - getServerSideProps patterns\n    - Incremental Static Regeneration (ISR)\n    - getStaticPaths with fallback\n    - API routes caching\n    - Middleware usage\n\n12. **Database & Backend:**\n    - Connection pooling\n    - Query optimization\n    - ORM usage (Prisma, Drizzle)\n    - Edge-compatible databases\n    - Caching layers\n    - Background jobs\n\n13. **Authentication & Security:**\n    - NextAuth.js patterns\n    - Session management\n    - CSRF protection\n    - API security\n    - Environment variables security\n    - Content Security Policy\n\n14. **Deployment Optimization:**\n    - Vercel deployment settings\n    - Self-hosted optimization\n    - Docker configuration\n    - CDN configuration\n    - Edge functions usage\n    - Region selection\n\n15. **Monitoring & Analytics:**\n    - Web Vitals tracking\n    - Error tracking (Sentry)\n    - Performance monitoring\n    - Analytics integration\n    - Real User Monitoring (RUM)\n    - Synthetic monitoring\n\n**Output Format:**\n- **Performance Bottlenecks:** Identified issues with Core Web Vitals\n- **Rendering Strategy:** Server vs Client Component recommendations\n- **Caching Improvements:** What and how to cache\n- **Data Fetching:** Parallel fetching and streaming opportunities\n- **Code Refactoring:** Before/after examples with metrics\n- **Build Optimization:** Configuration improvements\n- **Production Checklist:** Pre-deployment items\n- **Monitoring Setup:** Tracking and alerting configuration",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Next.js project"
+      },
+      "nextjs_code": {
+        "type": "string",
+        "description": "Next.js application code to analyze"
+      },
+      "nextjs_version": {
+        "type": "string",
+        "enum": [
+          "13.x",
+          "14.x",
+          "15.x"
+        ],
+        "default": "14.x",
+        "description": "Next.js version"
+      },
+      "router_type": {
+        "type": "string",
+        "enum": [
+          "app-router",
+          "pages-router",
+          "mixed"
+        ],
+        "default": "app-router",
+        "description": "Router type being used"
+      },
+      "performance_issue": {
+        "type": "string",
+        "description": "Specific performance concern",
+        "default": "Slow page loads and poor LCP"
+      }
+    },
+    "required": [
+      "project_name",
+      "nextjs_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "EcommerceSite",
+        "nextjs_code": "// app/products/page.tsx\n'use client';\n\nimport { useEffect, useState } from 'react';\nimport Image from 'next/image';\n\nexport default function ProductsPage() {\n  const [products, setProducts] = useState([]);\n  \n  useEffect(() => {\n    fetch('/api/products')\n      .then(res => res.json())\n      .then(setProducts);\n  }, []);\n  \n  return (\n    <div>\n      <h1>Products</h1>\n      {products.map(product => (\n        <div key={product.id}>\n          <Image src={product.image} alt={product.name} width={300} height={300} />\n          <h2>{product.name}</h2>\n          <p>${product.price}</p>\n        </div>\n      ))}\n    </div>\n  );\n}",
+        "nextjs_version": "14.x",
+        "router_type": "app-router",
+        "performance_issue": "Products page loads slowly, poor LCP score, excessive client-side fetching"
+      },
+      "output_outline": "Critical Issues: 1) Entire page is Client Component unnecessarily (convert to Server Component), 2) Client-side data fetching causes waterfall and poor UX (move to server), 3) No loading state or streaming, 4) Images not prioritized for above-fold content, 5) No caching strategy, 6) No error handling, 7) Products fetched on every render. Solutions: Convert to Server Component, use async/await to fetch directly, add Suspense boundaries for streaming, implement parallel data fetching if needed, add revalidate option to fetch, use priority prop on above-fold images, add generateMetadata for SEO. Refactored code: Remove 'use client', make component async, fetch data directly with revalidate: 3600, wrap product list in Suspense with loading.tsx, add priority to first 4 images, implement proper error.tsx. Expected improvements: LCP 3.5s → 0.8s (77% faster), TBT reduced by 90%, FCP improved to <1s. Add fetch caching with tags for revalidation, use Server Actions for mutations, implement Partial Prerendering when stable. Configure next.config.js with image domains, output: 'standalone' for Docker. Add Web Vitals monitoring."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

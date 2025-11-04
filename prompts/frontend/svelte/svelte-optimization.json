@@ -1,0 +1,71 @@
+{
+  "id": "svelte-performance-optimization",
+  "title": "Svelte Performance Optimization & Best Practices",
+  "description": "Analyzes Svelte applications for performance bottlenecks, reactivity patterns, store management, and production-ready practices.",
+  "category": "frontend-svelte",
+  "tags": [
+    "svelte",
+    "sveltekit",
+    "performance",
+    "reactivity",
+    "stores",
+    "optimization"
+  ],
+  "template": "Analyze Svelte application for performance optimization and best practices.\n\n**Application Context:**\n- Project: {{project_name}}\n- Svelte Version: {{svelte_version}}\n- Framework: {{framework}}\n- Current Performance Issue: {{performance_issue}}\n\n**Code to Analyze:**\n```svelte\n{{svelte_code}}\n```\n\n**Performance Analysis Areas:**\n\n1. **Reactivity Patterns:**\n   - $: reactive statements optimization\n   - Reactive dependencies tracking\n   - Unnecessary reactivity\n   - $: statement ordering\n   - Derived values vs manual updates\n   - Component reactivity\n   - Props reactivity\n   - Two-way binding performance\n\n2. **Store Management:**\n   - Writable stores optimization\n   - Readable stores patterns\n   - Derived stores efficiency\n   - Custom store creation\n   - Store subscription cleanup\n   - Context API vs stores\n   - Store composition\n   - Async store patterns\n\n3. **Component Optimization:**\n   - Component splitting strategies\n   - Lazy component loading\n   - Dynamic imports\n   - Slot usage optimization\n   - Component lifecycle\n   - onMount/onDestroy patterns\n   - beforeUpdate/afterUpdate usage\n   - Component context\n\n4. **DOM Manipulation:**\n   - Keyed each blocks\n   - Conditional rendering (if vs show)\n   - Each block optimization\n   - Transition performance\n   - Animation efficiency\n   - Action directive usage\n   - use:action patterns\n\n5. **Event Handling:**\n   - Event modifiers (preventDefault, stopPropagation)\n   - Event forwarding\n   - Custom events\n   - Event delegation patterns\n   - Passive event listeners\n   - Debouncing and throttling\n   - Component events\n\n6. **Data Fetching:**\n   - Load functions (SvelteKit)\n   - Server-side data fetching\n   - Client-side fetching\n   - Data caching strategies\n   - Prefetching\n   - Streaming data\n   - Error handling\n   - Loading states\n\n7. **SvelteKit Specific:**\n   - Page load optimization\n   - Layout patterns\n   - Server routes\n   - API endpoints\n   - Form actions\n   - Prerendering strategy\n   - Adapter configuration\n   - Error pages\n\n8. **Build & Bundle:**\n   - Vite configuration\n   - Code splitting\n   - Tree shaking\n   - Bundle size analysis\n   - CSS optimization\n   - Asset optimization\n   - Production build settings\n\n9. **Styling Performance:**\n   - Component styles scoping\n   - CSS custom properties\n   - Global styles management\n   - CSS-in-JS patterns\n   - Tailwind integration\n   - Style preprocessing\n   - Critical CSS\n\n10. **State Management:**\n    - Local vs global state\n    - State immutability\n    - State updates batching\n    - Complex state patterns\n    - State persistence\n    - URL state synchronization\n    - Form state management\n\n11. **TypeScript Integration:**\n    - Type safety patterns\n    - Generic components\n    - Store typing\n    - Props typing\n    - Event typing\n    - SvelteKit types\n    - Type generation\n\n12. **Testing:**\n    - Component testing (Testing Library)\n    - Unit testing\n    - Integration testing\n    - E2E testing (Playwright)\n    - Mocking strategies\n    - Test coverage\n    - Snapshot testing\n\n13. **Accessibility:**\n    - ARIA attributes\n    - Keyboard navigation\n    - Focus management\n    - Screen reader support\n    - Semantic HTML\n    - Color contrast\n    - Motion preferences\n\n14. **SEO & Meta:**\n    - Meta tags optimization\n    - OpenGraph tags\n    - Structured data\n    - Sitemap generation\n    - robots.txt\n    - Dynamic meta tags\n\n**Output Format:**\n- **Performance Bottlenecks:** Identified issues with measurements\n- **Reactivity Issues:** Unnecessary updates and optimization\n- **Store Optimization:** Better store patterns\n- **Component Refactoring:** Before/after examples\n- **SvelteKit Best Practices:** SSR, routing, data loading\n- **Build Configuration:** Production optimizations\n- **Monitoring Setup:** Performance tracking\n- **Production Checklist:** Pre-deployment items",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Svelte project"
+      },
+      "svelte_code": {
+        "type": "string",
+        "description": "Svelte component code to analyze"
+      },
+      "svelte_version": {
+        "type": "string",
+        "enum": [
+          "3.x",
+          "4.x",
+          "5.x"
+        ],
+        "default": "4.x",
+        "description": "Svelte version"
+      },
+      "framework": {
+        "type": "string",
+        "enum": [
+          "svelte",
+          "sveltekit"
+        ],
+        "default": "sveltekit",
+        "description": "Framework type"
+      },
+      "performance_issue": {
+        "type": "string",
+        "description": "Specific performance concern",
+        "default": "Slow reactivity updates"
+      }
+    },
+    "required": [
+      "project_name",
+      "svelte_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "TaskManager",
+        "svelte_code": "<script>\n  import { onMount } from 'svelte';\n  \n  let tasks = [];\n  let filter = '';\n  \n  onMount(async () => {\n    const res = await fetch('/api/tasks');\n    tasks = await res.json();\n  });\n  \n  $: filteredTasks = tasks.filter(t => \n    t.title.toLowerCase().includes(filter.toLowerCase())\n  );\n  \n  $: console.log('Filtered:', filteredTasks);\n</script>\n\n<input bind:value={filter} placeholder=\"Filter tasks\" />\n\n{#each filteredTasks as task}\n  <div>\n    <h3>{task.title}</h3>\n    <p>{task.description}</p>\n    <button on:click={() => deleteTask(task.id)}>Delete</button>\n  </div>\n{/each}",
+        "svelte_version": "4.x",
+        "framework": "sveltekit",
+        "performance_issue": "Filter input causes excessive re-renders with 1000+ tasks"
+      },
+      "output_outline": "Issues: 1) filter() runs on every keystroke with large array (use debouncing), 2) Console.log in reactive statement causes extra work, 3) No key in each block (add key={task.id}), 4) Inline function in on:click creates new function each render, 5) No loading state, 6) Missing error handling, 7) Filter is case-insensitive but computed every time. Solutions: Add debounce to filter input with use:action, remove console.log from reactive statement (or guard it), add key to each block, move deleteTask handler outside, implement loading and error states, consider derived store for filtered tasks. Refactored code: Create debounce action, use {#each filteredTasks as task (task.id)}, extract handler function, add {#await} blocks for loading/error states. For large lists, implement virtual scrolling with svelte-virtual-list. Add pagination or infinite scroll for 1000+ items. Use writable store for tasks with derived store for filtering. Expected improvement: 300ms lag → 50ms, smooth typing experience. Add SvelteKit load function for SSR data fetching. Configure Vite for optimal chunking."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

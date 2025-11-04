@@ -1,0 +1,73 @@
+{
+  "id": "java-concurrency-patterns",
+  "title": "Java Concurrency & Multithreading Best Practices",
+  "description": "Analyzes Java applications for concurrency patterns, thread safety, parallel processing, and modern concurrent utilities for optimal performance and correctness.",
+  "category": "backend-java",
+  "tags": [
+    "java",
+    "concurrency",
+    "multithreading",
+    "parallelism",
+    "thread-safety",
+    "performance"
+  ],
+  "template": "Analyze Java code for concurrency patterns and thread safety.\n\n**Application Context:**\n- Project: {{project_name}}\n- Java Version: {{java_version}}\n- Concurrency Framework: {{framework}}\n- Current Issues: {{issues}}\n\n**Code to Analyze:**\n```java\n{{java_code}}\n```\n\n**Concurrency Analysis Areas:**\n\n1. **Thread Safety:**\n   - Shared mutable state\n   - Race conditions\n   - Synchronized blocks\n   - Volatile variables\n   - Atomic classes\n   - Immutability patterns\n   - Thread-local variables\n   - Safe publication\n\n2. **Concurrent Collections:**\n   - ConcurrentHashMap usage\n   - CopyOnWriteArrayList\n   - BlockingQueue implementations\n   - ConcurrentLinkedQueue\n   - ConcurrentSkipListMap\n   - Collection synchronization\n   - Custom concurrent structures\n\n3. **Executor Framework:**\n   - ThreadPoolExecutor configuration\n   - Fixed vs cached vs scheduled pools\n   - Custom thread factories\n   - Rejection policies\n   - Thread pool sizing\n   - Work queue selection\n   - Shutdown procedures\n\n4. **CompletableFuture:**\n   - Async method chaining\n   - thenApply vs thenCompose\n   - Exception handling\n   - Combining futures (allOf, anyOf)\n   - Custom executors\n   - Timeout handling\n   - Best practices\n\n5. **Synchronization:**\n   - synchronized keyword usage\n   - ReentrantLock patterns\n   - ReadWriteLock optimization\n   - StampedLock usage\n   - Lock ordering\n   - Deadlock prevention\n   - Lock-free algorithms\n\n6. **Parallel Streams:**\n   - When to use parallel\n   - ForkJoinPool configuration\n   - Performance considerations\n   - Stateless operations\n   - Side effects avoidance\n   - Combining results\n   - Custom spliterators\n\n7. **Atomic Operations:**\n   - AtomicInteger/Long/Reference\n   - Compare-and-swap patterns\n   - LongAdder for counters\n   - Atomic field updaters\n   - Non-blocking algorithms\n   - Memory ordering\n\n8. **CountDownLatch & Barriers:**\n   - CountDownLatch patterns\n   - CyclicBarrier usage\n   - Phaser for phases\n   - Semaphore for permits\n   - Exchanger for data exchange\n   - Coordination patterns\n\n9. **Fork/Join Framework:**\n   - RecursiveTask vs RecursiveAction\n   - Work stealing\n   - Task granularity\n   - Optimal thresholds\n   - ForkJoinPool tuning\n   - Parallel algorithms\n\n10. **Producer-Consumer:**\n    - BlockingQueue patterns\n    - Buffer sizing\n    - Backpressure handling\n    - Multiple producers/consumers\n    - Poison pill pattern\n    - Graceful shutdown\n\n11. **Thread Interruption:**\n    - Interrupt handling\n    - InterruptedException\n    - Cancellation patterns\n    - Thread.interrupt() usage\n    - Interruptible blocking\n    - Clean shutdown\n\n12. **Memory Consistency:**\n    - Happens-before relationships\n    - Visibility guarantees\n    - volatile semantics\n    - Memory barriers\n    - Safe publication\n    - Double-checked locking\n\n13. **Virtual Threads (Java 21+):**\n    - Virtual thread creation\n    - Structured concurrency\n    - Scoped values\n    - Thread-per-request model\n    - Performance benefits\n    - Migration from platform threads\n\n14. **Reactive Programming:**\n    - Project Reactor patterns\n    - RxJava usage\n    - Backpressure strategies\n    - Schedulers selection\n    - Error handling\n    - Hot vs cold publishers\n\n15. **Performance & Debugging:**\n    - Thread dumps analysis\n    - Profiling concurrent code\n    - Contention detection\n    - JVM monitoring\n    - ThreadMXBean usage\n    - Performance testing\n\n**Output Format:**\n- **Thread Safety Analysis:** Race conditions and fixes\n- **Synchronization Issues:** Deadlocks and bottlenecks\n- **Concurrency Patterns:** Better alternatives\n- **Performance Optimization:** Parallelism opportunities\n- **Code Refactoring:** Before/after with thread-safe versions\n- **Testing Strategy:** Concurrent code testing\n- **Best Practices:** Do's and don'ts\n- **Migration Path:** Modern concurrency utilities",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Java project"
+      },
+      "java_code": {
+        "type": "string",
+        "description": "Java code to analyze for concurrency"
+      },
+      "java_version": {
+        "type": "string",
+        "enum": [
+          "8",
+          "11",
+          "17",
+          "21"
+        ],
+        "default": "17"
+      },
+      "framework": {
+        "type": "string",
+        "enum": [
+          "standard-java",
+          "spring",
+          "reactor",
+          "rxjava",
+          "akka"
+        ],
+        "default": "standard-java"
+      },
+      "issues": {
+        "type": "string",
+        "description": "Current concurrency issues",
+        "default": "Thread safety concerns and performance bottlenecks"
+      }
+    },
+    "required": [
+      "project_name",
+      "java_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "OrderProcessor",
+        "java_code": "public class OrderProcessor {\n    private List<Order> orders = new ArrayList<>();\n    private int processedCount = 0;\n    \n    public void addOrder(Order order) {\n        orders.add(order);\n    }\n    \n    public void processOrders() {\n        for (Order order : orders) {\n            processOrder(order);\n            processedCount++;\n        }\n    }\n    \n    private void processOrder(Order order) {\n        // Heavy processing\n        try {\n            Thread.sleep(100);\n        } catch (InterruptedException e) {\n            e.printStackTrace();\n        }\n    }\n    \n    public int getProcessedCount() {\n        return processedCount;\n    }\n}",
+        "java_version": "17",
+        "framework": "standard-java",
+        "issues": "Multiple threads adding orders, race conditions on processedCount, ConcurrentModificationException"
+      },
+      "output_outline": "Critical Thread Safety Issues: 1) ArrayList is not thread-safe - use ConcurrentLinkedQueue or CopyOnWriteArrayList, 2) processedCount has race condition - use AtomicInteger, 3) Iterator in processOrders() can throw ConcurrentModificationException if list modified during iteration, 4) No synchronization on shared state. Performance Issues: Sequential processing is slow - use parallel streams or ExecutorService. Refactored thread-safe version: private final Queue<Order> orders = new ConcurrentLinkedQueue<>(); private final AtomicInteger processedCount = new AtomicInteger(0); public void addOrder(Order order) { orders.offer(order); } public void processOrdersParallel() { ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()); List<CompletableFuture<Void>> futures = new ArrayList<>(); Order order; while ((order = orders.poll()) != null) { final Order o = order; futures.add(CompletableFuture.runAsync(() -> { processOrder(o); processedCount.incrementAndGet(); }, executor)); } CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join(); executor.shutdown(); }. Alternative with parallel streams: orders.parallelStream().forEach(order -> { processOrder(order); processedCount.incrementAndGet(); }). For Java 21 with virtual threads: try (var executor = Executors.newVirtualThreadPerTaskExecutor()) { orders.forEach(order -> executor.submit(() -> { processOrder(order); processedCount.incrementAndGet(); })); }. Expected improvement: 8x faster with 8 cores, thread-safe operations, no race conditions. Add monitoring: ThreadMXBean for thread stats. Testing: Use ExecutorService with multiple threads in tests, verify processedCount matches orders size, test concurrent modifications."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

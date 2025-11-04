@@ -1,0 +1,73 @@
+{
+  "id": "angular-testing-strategy",
+  "title": "Angular Testing Strategy & Best Practices",
+  "description": "Comprehensive testing strategy for Angular applications including unit tests, integration tests, E2E tests, and testing best practices with Jasmine, Karma, and Testing Library.",
+  "category": "frontend-angular",
+  "tags": [
+    "angular",
+    "testing",
+    "jasmine",
+    "karma",
+    "jest",
+    "testing-library",
+    "e2e"
+  ],
+  "template": "Design comprehensive testing strategy for Angular application.\n\n**Application Context:**\n- Project: {{project_name}}\n- Angular Version: {{angular_version}}\n- Testing Framework: {{testing_framework}}\n- Current Coverage: {{current_coverage}}\n\n**Code to Test:**\n```typescript\n{{angular_code}}\n```\n\n**Testing Strategy Areas:**\n\n1. **Unit Testing Components:**\n   - Component initialization testing\n   - Input/Output testing\n   - Event handling verification\n   - Template testing\n   - Change detection testing\n   - OnPush strategy testing\n   - Component lifecycle hooks\n   - Error boundary testing\n\n2. **Service Testing:**\n   - Injectable service tests\n   - HTTP service mocking\n   - Dependency injection testing\n   - Async operations testing\n   - RxJS operator testing\n   - Error handling verification\n   - State management testing\n\n3. **Testing Library Setup:**\n   - Jasmine vs Jest comparison\n   - Karma configuration\n   - Testing module setup\n   - Mock providers\n   - TestBed configuration\n   - Angular Testing Library\n   - Component harnesses\n\n4. **Mocking Strategies:**\n   - HttpTestingController\n   - Service mocks\n   - Router mocks\n   - ActivatedRoute mocks\n   - Store mocks (NgRx)\n   - Component mocks\n   - Directive mocks\n\n5. **Async Testing:**\n   - fakeAsync and tick\n   - async and whenStable\n   - flush and flushMicrotasks\n   - Observable testing\n   - Promise testing\n   - setTimeout testing\n   - Debounce testing\n\n6. **Form Testing:**\n   - Reactive forms testing\n   - Form validation testing\n   - Custom validators testing\n   - Form submission testing\n   - FormArray testing\n   - Dynamic forms testing\n   - Error message display\n\n7. **Directive Testing:**\n   - Structural directives\n   - Attribute directives\n   - Directive inputs\n   - Host bindings\n   - Host listeners\n   - Directive lifecycle\n\n8. **Pipe Testing:**\n   - Pure pipe testing\n   - Impure pipe testing\n   - Async pipe testing\n   - Custom pipe testing\n   - Pipe parameters\n   - Error handling\n\n9. **Router Testing:**\n   - Navigation testing\n   - Route guards testing\n   - Resolver testing\n   - RouterLink testing\n   - Route parameters\n   - Query parameters\n   - Child routes\n\n10. **NgRx/State Testing:**\n    - Action testing\n    - Reducer testing\n    - Effect testing\n    - Selector testing\n    - Store integration testing\n    - Mock store setup\n    - State transitions\n\n11. **Integration Testing:**\n    - Multi-component testing\n    - Feature module testing\n    - Service integration\n    - HTTP integration\n    - Router integration\n    - Form integration\n    - Real dependencies\n\n12. **E2E Testing:**\n    - Protractor vs Cypress vs Playwright\n    - Page Object pattern\n    - User journey testing\n    - Cross-browser testing\n    - Visual regression testing\n    - Performance testing\n    - Accessibility testing\n\n13. **Test Organization:**\n    - Test file structure\n    - Naming conventions\n    - AAA pattern (Arrange, Act, Assert)\n    - describe and it blocks\n    - beforeEach and afterEach\n    - Test suites organization\n    - Shared test utilities\n\n14. **Code Coverage:**\n    - Coverage thresholds\n    - Branch coverage\n    - Line coverage\n    - Statement coverage\n    - Uncovered code analysis\n    - Coverage reports\n    - CI/CD integration\n\n15. **Testing Best Practices:**\n    - Test isolation\n    - Test independence\n    - Test readability\n    - Test maintainability\n    - Test performance\n    - Flaky test prevention\n    - Test documentation\n\n**Output Format:**\n- **Testing Strategy:** Comprehensive approach\n- **Unit Test Examples:** Component, service, pipe tests\n- **Integration Test Plan:** Multi-component scenarios\n- **E2E Test Suite:** Critical user journeys\n- **Mocking Patterns:** How to mock dependencies\n- **Coverage Goals:** Target percentages and priorities\n- **CI/CD Integration:** Automated testing pipeline\n- **Best Practices Guide:** Do's and don'ts",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Angular project"
+      },
+      "angular_code": {
+        "type": "string",
+        "description": "Angular code to create tests for"
+      },
+      "angular_version": {
+        "type": "string",
+        "enum": [
+          "14.x",
+          "15.x",
+          "16.x",
+          "17.x",
+          "18.x"
+        ],
+        "default": "17.x"
+      },
+      "testing_framework": {
+        "type": "string",
+        "enum": [
+          "jasmine-karma",
+          "jest",
+          "jasmine-standalone"
+        ],
+        "default": "jasmine-karma"
+      },
+      "current_coverage": {
+        "type": "string",
+        "description": "Current test coverage percentage",
+        "default": "Not measured"
+      }
+    },
+    "required": [
+      "project_name",
+      "angular_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "TaskManager",
+        "angular_code": "@Component({\n  selector: 'app-task-list',\n  template: `\n    <div *ngFor=\"let task of tasks$ | async\">\n      <span>{{ task.title }}</span>\n      <button (click)=\"complete(task.id)\">Complete</button>\n    </div>\n  `,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class TaskListComponent {\n  tasks$ = this.taskService.getTasks();\n  \n  constructor(private taskService: TaskService) {}\n  \n  complete(id: string) {\n    this.taskService.completeTask(id).subscribe();\n  }\n}",
+        "angular_version": "17.x",
+        "testing_framework": "jasmine-karma",
+        "current_coverage": "45%"
+      },
+      "output_outline": "Testing Strategy: Unit tests for component logic, integration tests for service interaction, E2E for user flows. Unit test example: describe('TaskListComponent', () => { let component, fixture, taskService; beforeEach(() => { taskService = jasmine.createSpyObj('TaskService', ['getTasks', 'completeTask']); taskService.getTasks.and.returnValue(of([{id:'1', title:'Test'}])); TestBed.configureTestingModule({ declarations: [TaskListComponent], providers: [{provide: TaskService, useValue: taskService}] }); fixture = TestBed.createComponent(TaskListComponent); component = fixture.componentInstance; }); it('should display tasks', fakeAsync(() => { fixture.detectChanges(); tick(); const compiled = fixture.nativeElement; expect(compiled.querySelector('span').textContent).toContain('Test'); })); it('should complete task on button click', () => { taskService.completeTask.and.returnValue(of(null)); component.complete('1'); expect(taskService.completeTask).toHaveBeenCalledWith('1'); }); }). Service test: mock HttpClient with HttpTestingController, verify HTTP calls. E2E test: navigate to task list, verify tasks displayed, click complete button, verify task marked complete. Coverage goals: 80% statements, 75% branches, 80% functions. Mock patterns: use jasmine.createSpyObj for services, HttpTestingController for HTTP, of() for observables. Best practices: test behavior not implementation, use async pipe in tests, leverage OnPush with fixture.detectChanges(), isolate tests with beforeEach, use descriptive test names."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

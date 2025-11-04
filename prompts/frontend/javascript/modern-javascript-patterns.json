@@ -1,0 +1,67 @@
+{
+  "id": "modern-javascript-patterns",
+  "title": "Modern JavaScript Patterns & Best Practices",
+  "description": "Analyzes JavaScript code for modern ES6+ patterns, async/await best practices, functional programming, performance optimization, and TypeScript adoption.",
+  "category": "frontend-javascript",
+  "tags": [
+    "javascript",
+    "es6",
+    "async-await",
+    "functional-programming",
+    "performance",
+    "typescript"
+  ],
+  "template": "Analyze JavaScript code for modern patterns and best practices.\n\n**Code Context:**\n- Project: {{project_name}}\n- JavaScript Version: {{js_version}}\n- TypeScript: {{typescript_enabled}}\n- Current Issues: {{current_issues}}\n\n**Code to Analyze:**\n```javascript\n{{js_code}}\n```\n\n**Analysis Areas:**\n\n1. **Modern Syntax:**\n   - Arrow functions vs function expressions\n   - Destructuring (objects, arrays)\n   - Spread and rest operators\n   - Template literals\n   - Optional chaining (?.)\n   - Nullish coalescing (??)\n   - Default parameters\n   - Shorthand properties\n\n2. **Async Programming:**\n   - Promises vs async/await\n   - Error handling (try/catch vs .catch())\n   - Promise.all vs Promise.allSettled\n   - Promise.race and Promise.any\n   - Async iteration\n   - AbortController for cancellation\n   - Parallel vs sequential execution\n\n3. **Functional Programming:**\n   - Pure functions\n   - Immutability patterns\n   - Higher-order functions\n   - Function composition\n   - Currying and partial application\n   - Array methods (map, filter, reduce)\n   - Avoiding side effects\n\n4. **Array & Object Manipulation:**\n   - Array methods (map, filter, reduce, find, some, every)\n   - Object.entries, Object.keys, Object.values\n   - Array.from and Array.of\n   - Set and Map usage\n   - WeakMap and WeakSet\n   - Immutable updates\n   - Deep cloning strategies\n\n5. **Classes & Modules:**\n   - Class syntax\n   - Private fields (#)\n   - Static methods and properties\n   - Getters and setters\n   - ES modules (import/export)\n   - Dynamic imports\n   - Module patterns\n\n6. **Error Handling:**\n   - Try/catch best practices\n   - Custom error classes\n   - Error boundaries\n   - Async error handling\n   - Promise rejection handling\n   - Global error handlers\n   - Error logging\n\n7. **Performance Patterns:**\n   - Debouncing and throttling\n   - Memoization\n   - Lazy evaluation\n   - Generator functions\n   - Web Workers\n   - RequestIdleCallback\n   - Performance monitoring\n\n8. **Memory Management:**\n   - Closures and memory leaks\n   - Event listener cleanup\n   - Timer cleanup\n   - Weak references\n   - Garbage collection awareness\n   - Large data handling\n\n9. **Type Safety:**\n   - JSDoc for type hints\n   - TypeScript migration path\n   - Type guards\n   - Generic functions\n   - Utility types\n   - Strict null checks\n\n10. **Code Organization:**\n    - Single Responsibility Principle\n    - Separation of concerns\n    - DRY principle\n    - SOLID principles\n    - Module organization\n    - Naming conventions\n\n11. **Browser APIs:**\n    - Fetch API\n    - localStorage/sessionStorage\n    - IndexedDB\n    - Web Sockets\n    - Service Workers\n    - Intersection Observer\n    - Resize Observer\n\n12. **Testing Patterns:**\n    - Unit test structure\n    - Mocking strategies\n    - Async testing\n    - Test coverage\n    - Integration tests\n    - E2E tests\n\n13. **Build & Tooling:**\n    - Bundler configuration\n    - Tree shaking\n    - Code splitting\n    - Source maps\n    - Linting (ESLint)\n    - Formatting (Prettier)\n\n14. **Security:**\n    - XSS prevention\n    - CSRF protection\n    - Input sanitization\n    - Secure data storage\n    - Content Security Policy\n    - Dependency security\n\n**Output Format:**\n- **Code Quality Assessment:** Current state\n- **Modern Pattern Recommendations:** ES6+ upgrades\n- **Async/Await Refactoring:** Better async code\n- **Performance Improvements:** Optimization opportunities\n- **Type Safety:** JSDoc or TypeScript\n- **Code Examples:** Before/after comparisons\n- **Migration Plan:** Incremental improvements\n- **Best Practices Guide:** Do's and don'ts",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the project"
+      },
+      "js_code": {
+        "type": "string",
+        "description": "JavaScript code to analyze"
+      },
+      "js_version": {
+        "type": "string",
+        "enum": [
+          "ES5",
+          "ES6/ES2015",
+          "ES2016-ES2020",
+          "ES2021+",
+          "Latest"
+        ],
+        "default": "Latest"
+      },
+      "typescript_enabled": {
+        "type": "boolean",
+        "default": false
+      },
+      "current_issues": {
+        "type": "string",
+        "description": "Current problems with the code",
+        "default": "Legacy patterns and callback hell"
+      }
+    },
+    "required": [
+      "project_name",
+      "js_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "APIClient",
+        "js_code": "function getUserData(userId, callback) {\n  var xhr = new XMLHttpRequest();\n  xhr.open('GET', '/api/users/' + userId);\n  xhr.onload = function() {\n    if (xhr.status === 200) {\n      var user = JSON.parse(xhr.responseText);\n      getOrders(user.id, function(orders) {\n        var orderIds = [];\n        for (var i = 0; i < orders.length; i++) {\n          orderIds.push(orders[i].id);\n        }\n        callback(null, {user: user, orderIds: orderIds});\n      });\n    } else {\n      callback(new Error('Failed to fetch user'));\n    }\n  };\n  xhr.send();\n}",
+        "js_version": "ES5",
+        "typescript_enabled": false,
+        "current_issues": "Callback hell, no error handling, uses XHR instead of fetch"
+      },
+      "output_outline": "Critical Issues: 1) Callback hell (nested callbacks), 2) XMLHttpRequest is deprecated (use fetch), 3) var instead of const/let, 4) String concatenation instead of template literals, 5) for loop instead of map, 6) No error handling for getOrders, 7) Inconsistent error handling pattern. Modern refactoring: async function getUserData(userId) { try { const userRes = await fetch(`/api/users/${userId}`); if (!userRes.ok) throw new Error('Failed to fetch user'); const user = await userRes.json(); const ordersRes = await fetch(`/api/users/${user.id}/orders`); if (!ordersRes.ok) throw new Error('Failed to fetch orders'); const orders = await ordersRes.json(); const orderIds = orders.map(order => order.id); return {user, orderIds}; } catch (error) { console.error('Error fetching user data:', error); throw error; } }. Further improvements: Add AbortController for request cancellation, use optional chaining user?.id, destructure response {id, name}, add retry logic, implement caching, add TypeScript types. Performance: Use Promise.all for parallel requests if independent. Testing: Mock fetch with jest, test error cases, test successful flow. Expected benefits: 80% more readable, proper error handling, modern syntax, easier testing, better performance with parallel requests."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

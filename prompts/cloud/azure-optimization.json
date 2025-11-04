@@ -1,0 +1,62 @@
+{
+  "id": "azure-cloud-optimization",
+  "title": "Azure Cloud Architecture Optimization & Best Practices",
+  "description": "Analyzes Microsoft Azure infrastructure for cost optimization, performance, security, reliability, and Well-Architected Framework compliance.",
+  "category": "cloud-azure",
+  "tags": [
+    "azure",
+    "microsoft-cloud",
+    "cloud",
+    "infrastructure",
+    "cost-optimization",
+    "security"
+  ],
+  "template": "Analyze Azure cloud infrastructure for optimization opportunities across the five pillars of the Well-Architected Framework.\n\n**Infrastructure Context:**\n- Project: {{project_name}}\n- Azure Services Used: {{azure_services}}\n- Current Challenge: {{challenge}}\n\n**Infrastructure Code/Configuration:**\n```yaml\n{{azure_config}}\n```\n\n**Analysis Areas:**\n\n1. **Cost Optimization:**\n   - VM right-sizing\n   - Reserved Instances (1-year, 3-year)\n   - Azure Hybrid Benefit\n   - Spot VMs opportunities\n   - Storage tier optimization\n   - Managed disk optimization\n   - SQL Database pricing tiers\n   - Azure Functions consumption plan\n   - Bandwidth costs\n   - Azure Advisor recommendations\n   - Cost Management + Billing insights\n   - Unused resources cleanup\n\n2. **Compute Optimization:**\n   - VM series selection (B, D, E, F series)\n   - Virtual Machine Scale Sets (VMSS)\n   - Azure Kubernetes Service (AKS)\n   - Azure Container Instances\n   - App Service plans\n   - Azure Functions premium vs consumption\n   - Azure Batch for parallel workloads\n   - Dedicated hosts usage\n\n3. **Storage Optimization:**\n   - Blob storage access tiers (Hot, Cool, Archive)\n   - Lifecycle management policies\n   - Azure Files vs Blob storage\n   - Managed disks (Standard HDD, Standard SSD, Premium SSD, Ultra Disk)\n   - Storage redundancy (LRS, ZRS, GRS, RA-GRS)\n   - Azure NetApp Files\n   - Blob versioning and soft delete\n   - Data Lake Storage Gen2\n\n4. **Database Optimization:**\n   - Azure SQL Database tiers\n   - Elastic pools vs single databases\n   - Azure SQL Managed Instance\n   - Cosmos DB request units (RU/s)\n   - Cosmos DB consistency levels\n   - Azure Database for PostgreSQL/MySQL\n   - Azure Cache for Redis\n   - Database scaling strategies\n\n5. **Networking:**\n   - Virtual Network design\n   - Network Security Groups (NSG)\n   - Application Security Groups\n   - Azure Firewall vs NSG\n   - VPN Gateway vs ExpressRoute\n   - Azure Front Door\n   - Application Gateway\n   - Load Balancer (Basic vs Standard)\n   - Private Link and Private Endpoints\n\n6. **Security:**\n   - Azure Active Directory (Entra ID)\n   - Managed identities\n   - Role-Based Access Control (RBAC)\n   - Azure Key Vault\n   - Network security (NSG, Azure Firewall)\n   - Microsoft Defender for Cloud\n   - Azure Policy enforcement\n   - Just-In-Time (JIT) access\n   - Azure Sentinel\n   - Disk encryption\n\n7. **Monitoring & Logging:**\n   - Azure Monitor\n   - Log Analytics workspace\n   - Application Insights\n   - Azure Alerts\n   - Diagnostic settings\n   - Metrics and logs retention\n   - Action groups\n   - Workbooks and dashboards\n\n8. **High Availability:**\n   - Availability Zones deployment\n   - Availability Sets\n   - Region pairs\n   - Azure Site Recovery\n   - Traffic Manager\n   - Front Door for global routing\n   - SQL Database geo-replication\n   - Cosmos DB multi-region writes\n\n9. **Performance:**\n   - Azure CDN\n   - Application Gateway caching\n   - Azure Cache for Redis\n   - Premium SSD vs Ultra Disk\n   - Accelerated networking\n   - Proximity placement groups\n   - Azure Front Door\n   - ExpressRoute for on-premises\n\n10. **Serverless Patterns:**\n    - Azure Functions optimization\n    - Logic Apps workflows\n    - Event Grid event routing\n    - Service Bus messaging\n    - Event Hubs streaming\n    - Durable Functions\n    - API Management\n    - Static Web Apps\n\n11. **Container Orchestration:**\n    - AKS cluster configuration\n    - Node pool optimization\n    - Horizontal Pod Autoscaler\n    - Cluster autoscaler\n    - Azure Container Registry\n    - Container Instances for bursting\n    - Service mesh (Istio, Linkerd)\n    - AKS cost optimization\n\n12. **CI/CD:**\n    - Azure DevOps pipelines\n    - Azure Pipelines agents\n    - Artifact storage optimization\n    - Deployment slots (App Service)\n    - Blue-green deployments\n    - Canary releases\n    - ARM templates vs Bicep\n    - GitHub Actions integration\n\n13. **Infrastructure as Code:**\n    - ARM templates\n    - Bicep language\n    - Terraform Azure provider\n    - Azure CLI scripting\n    - PowerShell automation\n    - Template specs\n    - Deployment stacks\n    - Policy as code\n\n14. **Data Analytics:**\n    - Azure Synapse Analytics\n    - Data Factory pipelines\n    - Databricks cluster sizing\n    - HDInsight optimization\n    - Stream Analytics\n    - Purview data governance\n    - Data Lake storage optimization\n\n15. **Compliance & Governance:**\n    - Management groups\n    - Azure Policy\n    - Blueprints\n    - Resource locks\n    - Tags for organization\n    - Microsoft Purview\n    - Compliance Manager\n    - Regulatory compliance dashboards\n\n**Output Format:**\n- **Cost Savings Opportunities:** Specific recommendations with estimated savings\n- **Performance Bottlenecks:** Identified issues and solutions\n- **Security Risks:** High/medium/low priority findings\n- **Architecture Improvements:** Design patterns to adopt\n- **Right-sizing Recommendations:** VM/resource sizing\n- **Configuration Changes:** Specific Azure service configurations\n- **Migration Paths:** From current to optimized state\n- **Action Plan:** Prioritized implementation roadmap\n- **Estimated Impact:** Cost, performance, and reliability improvements",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Azure project/workload"
+      },
+      "azure_config": {
+        "type": "string",
+        "description": "Azure infrastructure configuration (ARM, Bicep, Terraform, or architecture description)"
+      },
+      "azure_services": {
+        "type": "string",
+        "description": "List of Azure services being used",
+        "default": "Virtual Machines, SQL Database, Storage Account, App Service"
+      },
+      "challenge": {
+        "type": "string",
+        "description": "Current challenge or optimization goal",
+        "default": "High costs and reliability concerns"
+      },
+      "monthly_spend": {
+        "type": "string",
+        "description": "Approximate monthly Azure spend",
+        "default": "Not specified"
+      }
+    },
+    "required": [
+      "project_name",
+      "azure_config"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "EnterpriseAPI",
+        "azure_config": "resources:\n- name: api-vm\n  type: Microsoft.Compute/virtualMachines\n  location: eastus\n  properties:\n    hardwareProfile:\n      vmSize: Standard_D16s_v3\n    storageProfile:\n      osDisk:\n        diskSizeGB: 128\n        managedDisk:\n          storageAccountType: Premium_LRS\n\n- name: sql-server\n  type: Microsoft.Sql/servers/databases\n  properties:\n    sku:\n      name: P6\n      tier: Premium\n    maxSizeBytes: 500GB\n    zoneRedundant: false\n\n- name: storage-account\n  type: Microsoft.Storage/storageAccounts\n  properties:\n    sku:\n      name: Standard_GRS\n    accessTier: Hot",
+        "azure_services": "Virtual Machines, SQL Database, Storage Account, Application Gateway",
+        "challenge": "Monthly costs $9500, poor performance during peak hours, single region deployment",
+        "monthly_spend": "$9500"
+      },
+      "output_outline": "Major Issues: 1) Standard_D16s_v3 VM oversized - CPU <25% → downsize to Standard_D4s_v3 (save $380/mo), 2) SQL Database P6 Premium tier overkill → move to S3 Standard tier or serverless (save $1200/mo), 3) Zone redundancy disabled = no HA → enable zoneRedundant for SQL (cost +$150/mo but critical), 4) No Reserved Instances → 3-year RI saves 62% on compute (~$4800/yr), 5) Standard_GRS storage for temporary files → switch to Standard_LRS (save $200/mo), 6) Hot tier for archival blobs → 70% can move to Cool tier (save $300/mo), 7) Single VM = SPOF → use VMSS with 3 instances across availability zones, 8) No Azure Front Door or CDN → add for global routing and caching (reduce latency 50%, save bandwidth $150/mo), 9) Premium_LRS disk oversized → right-size to 64GB or use Standard SSD (save $40/mo), 10) No Azure Hybrid Benefit → if Windows Server licenses available, save 40% on VM costs (~$1500/yr). Cost Optimization: Potential savings ~$3200/mo (34% reduction). Performance: Add Azure Cache for Redis (reduce DB queries 65%), SQL Database read replicas for reporting, Application Gateway with autoscaling, CDN for static content. High Availability: Enable SQL zone redundancy, VMSS across 3 availability zones, Application Gateway in 2+ zones, Front Door for multi-region failover. Security: Enable managed identity for VM → SQL auth, Azure Key Vault for secrets, NSG rules review, Microsoft Defender for Cloud, enable SQL Advanced Threat Protection. Monitoring: Application Insights for APM, Log Analytics workspace, alerts for CPU/memory/DTU, action groups for incidents, workbooks for dashboards. Implementation priority: 1) Enable SQL zone redundancy (critical HA), 2) Right-size VM and SQL Database (quick wins), 3) Implement VMSS across AZs (HA), 4) Purchase Reserved Instances (long-term savings), 5) Add Azure Cache for Redis (performance), 6) Configure storage lifecycle policies (cost), 7) Implement Front Door + CDN (global performance), 8) Enable Hybrid Benefit if applicable (cost)."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

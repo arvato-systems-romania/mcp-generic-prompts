@@ -1,0 +1,62 @@
+{
+  "id": "aws-cloud-optimization",
+  "title": "AWS Cloud Architecture Optimization & Best Practices",
+  "description": "Analyzes AWS infrastructure for cost optimization, performance, security, reliability, and well-architected framework compliance.",
+  "category": "cloud-aws",
+  "tags": [
+    "aws",
+    "cloud",
+    "infrastructure",
+    "cost-optimization",
+    "security",
+    "well-architected"
+  ],
+  "template": "Analyze AWS cloud infrastructure for optimization opportunities across the six pillars of the Well-Architected Framework.\n\n**Infrastructure Context:**\n- Project: {{project_name}}\n- AWS Services Used: {{aws_services}}\n- Current Challenge: {{challenge}}\n\n**Infrastructure Code/Configuration:**\n```yaml\n{{aws_config}}\n```\n\n**Analysis Areas:**\n\n1. **Cost Optimization:**\n   - EC2 instance right-sizing\n   - Reserved Instances vs Savings Plans\n   - Spot Instances opportunities\n   - S3 storage class optimization\n   - EBS volume optimization\n   - RDS instance sizing\n   - Lambda memory allocation\n   - Data transfer costs\n   - CloudFront caching\n   - Unused resources detection\n   - Cost allocation tags\n   - AWS Cost Explorer insights\n\n2. **Compute Optimization:**\n   - EC2 instance types selection\n   - Auto Scaling configuration\n   - ECS/EKS cluster optimization\n   - Lambda cold start mitigation\n   - Lambda concurrency limits\n   - Fargate vs EC2 for containers\n   - Graviton processors migration\n   - Placement groups usage\n\n3. **Storage Optimization:**\n   - S3 lifecycle policies\n   - S3 Intelligent-Tiering\n   - S3 bucket policies\n   - EFS vs EBS vs S3\n   - Glacier for archival\n   - Storage Gateway patterns\n   - EBS snapshot management\n   - Multi-part upload for large files\n\n4. **Database Optimization:**\n   - RDS instance sizing\n   - Read replicas configuration\n   - Aurora vs RDS\n   - DynamoDB capacity modes\n   - DynamoDB GSI/LSI design\n   - ElastiCache implementation\n   - Database migration strategies\n   - Backup and restore optimization\n\n5. **Networking:**\n   - VPC design patterns\n   - Subnet segmentation\n   - NAT Gateway vs NAT Instance\n   - VPC endpoints for AWS services\n   - Transit Gateway architecture\n   - Direct Connect vs VPN\n   - Route 53 routing policies\n   - CloudFront distribution\n\n6. **Security:**\n   - IAM policies (least privilege)\n   - IAM roles vs users\n   - Security groups configuration\n   - Network ACLs\n   - KMS encryption\n   - Secrets Manager usage\n   - GuardDuty findings\n   - Security Hub compliance\n   - WAF rules configuration\n   - Shield protection\n\n7. **Monitoring & Logging:**\n   - CloudWatch metrics\n   - CloudWatch Logs retention\n   - CloudWatch alarms\n   - CloudTrail logging\n   - X-Ray tracing\n   - EventBridge rules\n   - SNS notification patterns\n   - Cost anomaly detection\n\n8. **High Availability:**\n   - Multi-AZ deployment\n   - Multi-region architecture\n   - Auto Scaling policies\n   - Load Balancer configuration\n   - Route 53 health checks\n   - RDS Multi-AZ\n   - S3 cross-region replication\n   - Disaster recovery strategy\n\n9. **Performance:**\n   - CloudFront edge caching\n   - API Gateway caching\n   - ElastiCache strategies\n   - DynamoDB DAX\n   - EBS volume types (gp3, io2)\n   - Enhanced networking\n   - Lambda@Edge usage\n   - Global Accelerator\n\n10. **Serverless Patterns:**\n    - Lambda function optimization\n    - API Gateway design\n    - Step Functions workflows\n    - EventBridge event patterns\n    - SQS queue configuration\n    - SNS topic design\n    - DynamoDB Streams\n    - AppSync GraphQL\n\n11. **Container Orchestration:**\n    - ECS task definitions\n    - ECS service auto-scaling\n    - EKS cluster configuration\n    - Fargate task sizing\n    - ECR repository policies\n    - Service mesh (App Mesh)\n    - Container insights\n\n12. **CI/CD:**\n    - CodePipeline optimization\n    - CodeBuild project setup\n    - CodeDeploy strategies\n    - Artifact storage (S3)\n    - Blue/green deployments\n    - Canary deployments\n    - CloudFormation/CDK usage\n\n13. **Infrastructure as Code:**\n    - CloudFormation templates\n    - CDK constructs\n    - Terraform AWS provider\n    - Stack organization\n    - Cross-stack references\n    - StackSets for multi-account\n    - Change sets before deployment\n\n14. **Compliance & Governance:**\n    - AWS Config rules\n    - AWS Organizations setup\n    - Service Control Policies\n    - Resource tagging strategy\n    - AWS Systems Manager\n    - Audit logging\n    - Compliance frameworks\n\n15. **Well-Architected Review:**\n    - Operational Excellence\n    - Security pillar\n    - Reliability pillar\n    - Performance Efficiency\n    - Cost Optimization\n    - Sustainability pillar\n\n**Output Format:**\n- **Cost Savings Opportunities:** Specific recommendations with estimated savings\n- **Performance Bottlenecks:** Identified issues and solutions\n- **Security Risks:** High/medium/low priority findings\n- **Architecture Improvements:** Design patterns to adopt\n- **Right-sizing Recommendations:** Instance/resource sizing\n- **Configuration Changes:** Specific AWS service configurations\n- **Migration Paths:** From current to optimized state\n- **Action Plan:** Prioritized implementation roadmap\n- **Estimated Impact:** Cost, performance, and reliability improvements",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the AWS project/workload"
+      },
+      "aws_config": {
+        "type": "string",
+        "description": "AWS infrastructure configuration (CloudFormation, Terraform, or architecture description)"
+      },
+      "aws_services": {
+        "type": "string",
+        "description": "List of AWS services being used",
+        "default": "EC2, RDS, S3, Lambda"
+      },
+      "challenge": {
+        "type": "string",
+        "description": "Current challenge or optimization goal",
+        "default": "High costs and performance issues"
+      },
+      "monthly_spend": {
+        "type": "string",
+        "description": "Approximate monthly AWS spend",
+        "default": "Not specified"
+      }
+    },
+    "required": [
+      "project_name",
+      "aws_config"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "WebApplication",
+        "aws_config": "Resources:\n  WebServer:\n    Type: AWS::EC2::Instance\n    Properties:\n      InstanceType: t3.2xlarge\n      AvailabilityZone: us-east-1a\n  \n  Database:\n    Type: AWS::RDS::DBInstance\n    Properties:\n      Engine: postgres\n      DBInstanceClass: db.m5.4xlarge\n      AllocatedStorage: 1000\n      MultiAZ: false\n  \n  Storage:\n    Type: AWS::S3::Bucket\n    Properties:\n      VersioningConfiguration:\n        Status: Enabled",
+        "aws_services": "EC2, RDS, S3, ALB",
+        "challenge": "Monthly costs $8000, frequent downtime, slow performance",
+        "monthly_spend": "$8000"
+      },
+      "output_outline": "Major Issues: 1) EC2 t3.2xlarge oversized - CPU <20% utilization → downsize to t3.large (save $180/mo), 2) RDS db.m5.4xlarge oversized → right-size to db.m5.xlarge (save $450/mo), 3) No Multi-AZ for RDS → enable for HA (cost $450/mo but critical), 4) Single AZ EC2 → use Auto Scaling + Multi-AZ ALB, 5) No Reserved Instances → 1-year RI saves 40% (~$2400/yr), 6) S3 versioning enabled on all objects → add lifecycle policy to transition old versions to Glacier (save $200/mo), 7) No CloudFront → add CDN for static assets (improve performance, reduce data transfer), 8) No ElastiCache → add Redis for session/query caching (improve performance), 9) EBS gp2 volumes → migrate to gp3 (same performance, 20% cheaper). Cost Optimization: Potential savings ~$3500/mo (44% reduction). Performance: Add CloudFront (reduce latency 60%), ElastiCache (reduce DB load 70%), RDS read replica for reporting queries. High Availability: Multi-AZ RDS, Auto Scaling group across 3 AZs, ALB health checks. Security: Add WAF rules, enable GuardDuty, implement least-privilege IAM roles, enable CloudTrail. Monitoring: CloudWatch alarms for CPU/memory/disk, SNS notifications, Cost anomaly detection. Implementation priority: 1) Enable RDS Multi-AZ (critical), 2) Right-size instances (quick wins), 3) Add Auto Scaling + ALB, 4) Purchase RIs, 5) Add CloudFront + ElastiCache, 6) S3 lifecycle policies."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

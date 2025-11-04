@@ -1,0 +1,62 @@
+{
+  "id": "gcp-cloud-optimization",
+  "title": "GCP Cloud Architecture Optimization & Best Practices",
+  "description": "Analyzes Google Cloud Platform infrastructure for cost optimization, performance, security, reliability, and best practices compliance.",
+  "category": "cloud-gcp",
+  "tags": [
+    "gcp",
+    "google-cloud",
+    "cloud",
+    "infrastructure",
+    "cost-optimization",
+    "security"
+  ],
+  "template": "Analyze GCP cloud infrastructure for optimization opportunities across cost, performance, security, and reliability.\n\n**Infrastructure Context:**\n- Project: {{project_name}}\n- GCP Services Used: {{gcp_services}}\n- Current Challenge: {{challenge}}\n\n**Infrastructure Code/Configuration:**\n```yaml\n{{gcp_config}}\n```\n\n**Analysis Areas:**\n\n1. **Cost Optimization:**\n   - Compute Engine VM right-sizing\n   - Committed Use Discounts (CUD)\n   - Sustained Use Discounts (SUD)\n   - Preemptible/Spot VMs opportunities\n   - Cloud Storage class optimization\n   - Persistent disk optimization\n   - Cloud SQL instance sizing\n   - Cloud Functions memory allocation\n   - BigQuery query optimization\n   - Network egress costs\n   - Recommender service insights\n   - Unused resources detection\n\n2. **Compute Optimization:**\n   - VM machine types selection\n   - Custom machine types\n   - Managed Instance Groups (MIG)\n   - GKE cluster optimization\n   - Cloud Run vs Cloud Functions\n   - App Engine scaling\n   - Compute Engine autoscaling\n   - E2, N2, N2D, C2 series comparison\n   - Sole-tenant nodes usage\n\n3. **Storage Optimization:**\n   - Cloud Storage lifecycle policies\n   - Storage class selection (Standard, Nearline, Coldline, Archive)\n   - Object versioning strategies\n   - Transfer Service usage\n   - Persistent disk types (pd-standard, pd-ssd, pd-balanced)\n   - Filestore vs Persistent Disk\n   - Cloud CDN caching\n   - Snapshot scheduling\n\n4. **Database Optimization:**\n   - Cloud SQL instance sizing\n   - Cloud SQL read replicas\n   - Cloud Spanner regional vs multi-regional\n   - Firestore pricing optimization\n   - Bigtable cluster sizing\n   - Memorystore (Redis/Memcached)\n   - Database Migration Service\n   - Backup and recovery strategy\n\n5. **Networking:**\n   - VPC design patterns\n   - Shared VPC architecture\n   - Private Google Access\n   - Cloud NAT configuration\n   - Cloud Load Balancing types\n   - Cloud CDN setup\n   - Cloud Interconnect vs VPN\n   - Cloud DNS optimization\n   - Network Service Tiers\n\n6. **Security:**\n   - IAM roles and permissions\n   - Service accounts best practices\n   - VPC Service Controls\n   - Cloud KMS encryption\n   - Secret Manager usage\n   - Security Command Center\n   - Cloud Armor (WAF)\n   - Binary Authorization\n   - Organization policies\n   - VPC firewall rules\n\n7. **Monitoring & Logging:**\n   - Cloud Monitoring (formerly Stackdriver)\n   - Cloud Logging retention\n   - Log-based metrics\n   - Alerting policies\n   - Cloud Trace\n   - Cloud Profiler\n   - Error Reporting\n   - Uptime checks\n   - SLI/SLO monitoring\n\n8. **High Availability:**\n   - Multi-zone deployment\n   - Multi-region architecture\n   - Global Load Balancing\n   - Cloud SQL HA configuration\n   - GKE regional clusters\n   - Cloud Spanner replication\n   - Disaster recovery planning\n   - Failover strategies\n\n9. **Performance:**\n   - Cloud CDN edge caching\n   - Cloud Memorystore\n   - Premium vs Standard network tier\n   - SSD persistent disks\n   - Local SSDs for temporary storage\n   - Cloud Load Balancer optimization\n   - Packet mirroring analysis\n   - Network Intelligence Center\n\n10. **Serverless Patterns:**\n    - Cloud Functions optimization\n    - Cloud Run services\n    - Cloud Tasks queues\n    - Cloud Scheduler jobs\n    - Pub/Sub messaging\n    - Eventarc triggers\n    - Workflows orchestration\n    - Firebase integration\n\n11. **Container Orchestration:**\n    - GKE cluster configuration\n    - GKE Autopilot vs Standard\n    - Node pool optimization\n    - Horizontal Pod Autoscaling\n    - Cluster autoscaling\n    - Workload Identity\n    - GKE cost optimization\n    - Anthos service mesh\n\n12. **CI/CD:**\n    - Cloud Build optimization\n    - Artifact Registry\n    - Cloud Deploy\n    - Binary Authorization\n    - Container Analysis\n    - Build triggers\n    - Build caching\n    - Multi-stage builds\n\n13. **Infrastructure as Code:**\n    - Terraform Google provider\n    - Deployment Manager\n    - Config Connector\n    - Cloud Foundation Toolkit\n    - Resource hierarchy\n    - Organization policies as code\n    - State management\n\n14. **Data Analytics:**\n    - BigQuery optimization\n    - Partitioned tables\n    - Clustered tables\n    - BigQuery BI Engine\n    - Dataflow pipeline optimization\n    - Dataproc cluster sizing\n    - Data transfer costs\n    - Query caching\n\n15. **Compliance & Governance:**\n    - Organization structure\n    - Folder hierarchy\n    - Resource Manager\n    - Asset Inventory\n    - Policy Intelligence\n    - Access Transparency\n    - Compliance reports\n    - Data residency\n\n**Output Format:**\n- **Cost Savings Opportunities:** Specific recommendations with estimated savings\n- **Performance Bottlenecks:** Identified issues and solutions\n- **Security Risks:** High/medium/low priority findings\n- **Architecture Improvements:** Design patterns to adopt\n- **Right-sizing Recommendations:** Instance/resource sizing\n- **Configuration Changes:** Specific GCP service configurations\n- **Migration Paths:** From current to optimized state\n- **Action Plan:** Prioritized implementation roadmap\n- **Estimated Impact:** Cost, performance, and reliability improvements",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the GCP project/workload"
+      },
+      "gcp_config": {
+        "type": "string",
+        "description": "GCP infrastructure configuration (Terraform, Deployment Manager, or architecture description)"
+      },
+      "gcp_services": {
+        "type": "string",
+        "description": "List of GCP services being used",
+        "default": "Compute Engine, Cloud SQL, Cloud Storage, GKE"
+      },
+      "challenge": {
+        "type": "string",
+        "description": "Current challenge or optimization goal",
+        "default": "High costs and performance issues"
+      },
+      "monthly_spend": {
+        "type": "string",
+        "description": "Approximate monthly GCP spend",
+        "default": "Not specified"
+      }
+    },
+    "required": [
+      "project_name",
+      "gcp_config"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "DataPlatform",
+        "gcp_config": "resources:\n- name: app-vm\n  type: compute.v1.instance\n  properties:\n    zone: us-central1-a\n    machineType: zones/us-central1-a/machineTypes/n1-standard-16\n    disks:\n    - type: PERSISTENT\n      diskType: pd-standard\n      diskSizeGb: 500\n\n- name: database\n  type: sqladmin.v1beta4.instance\n  properties:\n    region: us-central1\n    tier: db-n1-highmem-32\n    settings:\n      availabilityType: ZONAL\n\n- name: storage-bucket\n  type: storage.v1.bucket\n  properties:\n    storageClass: STANDARD\n    location: us-central1",
+        "gcp_services": "Compute Engine, Cloud SQL, Cloud Storage, BigQuery",
+        "challenge": "Monthly costs $12000, query performance issues, single point of failure",
+        "monthly_spend": "$12000"
+      },
+      "output_outline": "Major Issues: 1) n1-standard-16 VM oversized - CPU <15% → downsize to n1-standard-4 or switch to e2-standard-4 (save $350/mo), 2) Cloud SQL db-n1-highmem-32 massively oversized → right-size to db-n1-highmem-4 (save $1800/mo), 3) ZONAL availability = no HA → switch to REGIONAL for HA (cost +30% but critical), 4) pd-standard disk → upgrade to pd-balanced for better IOPS at similar cost, 5) STANDARD storage class for archival data → move 80% to NEARLINE (save $600/mo), 6) No Committed Use Discounts → 1-year CUD saves 37% on compute (~$2500/yr), 7) Single zone VM → use MIG across multiple zones with Load Balancer, 8) No Cloud CDN → add for static assets (reduce egress costs $200/mo), 9) BigQuery queries scanning full tables → add partitioning and clustering (reduce query costs 70%), 10) N1 machine type → migrate to N2 or E2 for better price/performance. Cost Optimization: Potential savings ~$4500/mo (37% reduction). Performance: Add Cloud Memorystore for Redis (reduce DB queries 60%), Cloud SQL read replicas for reporting, partition BigQuery tables by date, cluster by user_id. High Availability: Cloud SQL REGIONAL config, MIG with 3 zones, Cloud Load Balancer with health checks, Cloud Armor for DDoS protection. Security: Enable VPC Service Controls, use Workload Identity for GKE, Cloud KMS for encryption, Secret Manager for credentials. Monitoring: Cloud Monitoring dashboards, log-based metrics for errors, alerting policies for CPU/memory/disk, Uptime checks for endpoints. Implementation priority: 1) Enable Cloud SQL REGIONAL (critical HA), 2) Right-size VM and SQL instances (immediate savings), 3) Add CUD for compute (long-term savings), 4) Implement MIG + LB (HA), 5) Optimize BigQuery (performance + cost), 6) Storage lifecycle policies (cost), 7) Add Cloud CDN and Memorystore (performance)."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}

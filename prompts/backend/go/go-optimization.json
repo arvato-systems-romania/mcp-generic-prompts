@@ -1,0 +1,74 @@
+{
+  "id": "go-performance-optimization",
+  "title": "Go Performance Optimization & Best Practices",
+  "description": "Analyzes Go applications for performance bottlenecks, concurrency patterns, memory optimization, and production-ready practices.",
+  "category": "backend-go",
+  "tags": [
+    "go",
+    "golang",
+    "performance",
+    "concurrency",
+    "goroutines",
+    "optimization"
+  ],
+  "template": "Analyze Go application for performance optimization and best practices.\n\n**Application Context:**\n- Project: {{project_name}}\n- Go Version: {{go_version}}\n- Current Performance Issue: {{performance_issue}}\n\n**Code to Analyze:**\n```go\n{{go_code}}\n```\n\n**Performance Analysis Areas:**\n\n1. **Concurrency Patterns:**\n   - Goroutine leaks detection\n   - Channel usage (buffered vs unbuffered)\n   - Worker pool patterns\n   - Fan-out/fan-in patterns\n   - Context propagation\n   - sync.WaitGroup usage\n   - Mutex vs RWMutex\n   - sync.Once for initialization\n   - select statement optimization\n   - Goroutine pool management\n\n2. **Memory Management:**\n   - Memory allocations (heap vs stack)\n   - Pointer vs value receivers\n   - Slice capacity pre-allocation\n   - Map initialization with size hint\n   - String concatenation (strings.Builder)\n   - sync.Pool for object reuse\n   - Memory profiling with pprof\n   - Escape analysis\n   - Interface conversions\n\n3. **HTTP Server Optimization:**\n   - Handler performance\n   - Middleware efficiency\n   - Connection pooling\n   - Request timeout configuration\n   - Response buffering\n   - Keep-alive settings\n   - TLS configuration\n   - Graceful shutdown\n   - HTTP/2 optimization\n\n4. **Database Operations:**\n   - Connection pool configuration\n   - Prepared statements\n   - Batch operations\n   - Context cancellation\n   - Transaction management\n   - ORM vs raw SQL (GORM, sqlx)\n   - Query result scanning\n   - Connection lifetime\n\n5. **Error Handling:**\n   - Error wrapping (fmt.Errorf with %w)\n   - errors.Is and errors.As\n   - Custom error types\n   - Error propagation\n   - Panic recovery\n   - Structured error logging\n   - Error aggregation\n\n6. **JSON Processing:**\n   - encoding/json optimization\n   - json.Encoder/Decoder vs Marshal/Unmarshal\n   - JSON streaming\n   - Custom MarshalJSON/UnmarshalJSON\n   - Alternative libraries (jsoniter, easyjson)\n   - Struct tag optimization\n\n7. **I/O Operations:**\n   - buffered I/O (bufio package)\n   - io.Reader/Writer interfaces\n   - File operations optimization\n   - Network I/O buffering\n   - io.Copy vs manual copying\n   - Defer statement placement\n\n8. **Testing & Benchmarking:**\n   - Benchmark tests\n   - Table-driven tests\n   - Test coverage\n   - Parallel tests (t.Parallel())\n   - Test fixtures\n   - Mocking strategies (gomock, testify)\n   - Profiling tests\n\n9. **Code Organization:**\n   - Package structure\n   - Interface design\n   - Dependency injection\n   - Clean architecture\n   - Project layout (standard Go project layout)\n   - Internal packages\n   - Vendor management\n\n10. **Compiler Optimizations:**\n    - Inlining opportunities\n    - Dead code elimination\n    - Build tags usage\n    - CGO considerations\n    - Binary size optimization\n    - Link-time optimization\n\n11. **Third-Party Libraries:**\n    - HTTP router (gorilla/mux, chi, gin, fiber)\n    - Logging (zap, zerolog, logrus)\n    - Configuration (viper, envconfig)\n    - Validation (validator)\n    - Rate limiting\n    - Circuit breaker (gobreaker)\n\n12. **Profiling & Monitoring:**\n    - pprof integration\n    - CPU profiling\n    - Memory profiling\n    - Goroutine profiling\n    - Trace analysis\n    - Metrics collection (Prometheus)\n    - Distributed tracing (OpenTelemetry)\n\n13. **API Design:**\n    - RESTful patterns\n    - gRPC implementation\n    - Protocol Buffers\n    - API versioning\n    - Request validation\n    - Response formatting\n    - Middleware chains\n\n**Output Format:**\n- **Performance Bottlenecks:** Identified issues with measurements\n- **Concurrency Issues:** Goroutine leaks, race conditions, deadlocks\n- **Memory Optimization:** Allocation reduction strategies\n- **Code Refactoring:** Before/after examples with benchmarks\n- **Best Practices Violations:** Go idioms and conventions\n- **Profiling Results:** CPU, memory, goroutine analysis\n- **Configuration Tuning:** Production settings\n- **Production Checklist:** Pre-deployment items",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "Name of the Go project"
+      },
+      "go_code": {
+        "type": "string",
+        "description": "Go application code to analyze"
+      },
+      "go_version": {
+        "type": "string",
+        "enum": [
+          "1.20",
+          "1.21",
+          "1.22",
+          "1.23"
+        ],
+        "default": "1.22",
+        "description": "Go version"
+      },
+      "performance_issue": {
+        "type": "string",
+        "description": "Specific performance concern",
+        "default": "High latency and memory usage"
+      },
+      "architecture": {
+        "type": "string",
+        "enum": [
+          "rest-api",
+          "grpc-service",
+          "microservice",
+          "cli-tool",
+          "worker"
+        ],
+        "default": "rest-api"
+      }
+    },
+    "required": [
+      "project_name",
+      "go_code"
+    ]
+  },
+  "examples": [
+    {
+      "input": {
+        "project_name": "UserAPI",
+        "go_code": "func (h *Handler) GetUsers(w http.ResponseWriter, r *http.Request) {\n    users := []User{}\n    \n    rows, err := h.db.Query(\"SELECT id, name, email FROM users\")\n    if err != nil {\n        http.Error(w, err.Error(), 500)\n        return\n    }\n    defer rows.Close()\n    \n    for rows.Next() {\n        var user User\n        rows.Scan(&user.ID, &user.Name, &user.Email)\n        users = append(users, user)\n    }\n    \n    json, _ := json.Marshal(users)\n    w.Write(json)\n}",
+        "go_version": "1.22",
+        "performance_issue": "High memory usage with 10000+ users, slow response times",
+        "architecture": "rest-api"
+      },
+      "output_outline": "Issues: 1) Slice grows dynamically causing multiple allocations (use make([]User, 0, expectedSize)), 2) No error checking on rows.Scan(), 3) No context for query cancellation, 4) json.Marshal allocates new buffer (use json.Encoder), 5) Missing Content-Type header, 6) No pagination, 7) Database connection not from pool with context, 8) Missing error handling on json.Marshal. Solutions: Pre-allocate slice with capacity, add context.Context parameter, use prepared statement, implement pagination (LIMIT/OFFSET), use json.NewEncoder(w).Encode(), add proper error handling, set response headers, add request timeout. Refactored code: ctx := r.Context(), prepared statement with context, make([]User, 0, 100), json.NewEncoder(w).Encode(users), proper error handling, pagination query params. Add benchmarks showing 60% memory reduction, 40% faster response. Include pprof analysis showing allocation hotspots. Configure connection pool: db.SetMaxOpenConns(25), db.SetMaxIdleConns(5), db.SetConnMaxLifetime(5*time.Minute)."
+    }
+  ],
+  "version": "1.0.0",
+  "created_utc": "2025-01-15T10:00:00Z",
+  "last_modified_utc": "2025-01-15T10:00:00Z"
+}
