@@ -1,0 +1,229 @@
+[
+  {
+    "id": "e2e-testing-strategy",
+    "title": "End-to-End Testing Strategy & Architecture",
+    "description": "Designs comprehensive end-to-end testing architecture including tool selection, test structure, CI/CD integration, and maintenance strategies for sustainable E2E testing.",
+    "category": "testing",
+    "tags": [
+      "testing",
+      "e2e",
+      "quality-assurance",
+      "automation",
+      "qa"
+    ],
+    "template": "Design E2E testing strategy for {{application_name}}.\n\n1. Current State Assessment:\n   - Existing E2E tests (if any)\n   - Test coverage and gaps\n   - Manual testing burden\n   - Critical user journeys\n   - Platform coverage (web, mobile, API)\n\n2. Tool Selection & Justification:\n   - Compare {{primary_tool}} vs alternatives\n   - Language compatibility\n   - Community and maintenance\n   - Integration capabilities\n   - Cost and licensing\n\n3. Test Architecture:\n   - Page Object Model vs other patterns\n   - Test data management strategy\n   - Environment configuration\n   - Test isolation and flakiness prevention\n   - Parallel execution strategy\n\n4. Critical User Journey Mapping:\n   - Identify 5-10 critical paths\n   - Priority-based execution\n   - Cross-browser/platform coverage\n   - Load and performance scenarios\n\n5. CI/CD Integration:\n   - Test execution triggers\n   - Timing and resource constraints\n   - Failure handling and reporting\n   - Artifact collection and logging\n   - Rollback procedures\n\n6. Maintenance & Scalability:\n   - Test review cycles\n   - Flaky test management\n   - Technology debt prevention\n   - Team training plan\n   - Cost projections\n\n7. Implementation Roadmap:\n   - Phase 1: Core critical paths\n   - Phase 2: Extended coverage\n   - Phase 3: Advanced scenarios\n\nApplication Type: {{app_type}}\nPrimary Tool: {{primary_tool}}\nTest Execution Environment: {{environment}}\n\nOutput: E2E Test Strategy | Architecture Diagram | Tool Comparison | Implementation Roadmap | Cost-Benefit Analysis",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "app_type": {
+          "type": "string",
+          "enum": [
+            "web-app",
+            "spa",
+            "mobile-web",
+            "native-mobile",
+            "hybrid",
+            "multi-platform"
+          ],
+          "description": "Type of application"
+        },
+        "primary_tool": {
+          "type": "string",
+          "enum": [
+            "cypress",
+            "playwright",
+            "selenium",
+            "webdriver-io",
+            "testcafe",
+            "protractor"
+          ],
+          "description": "Primary E2E testing tool to evaluate"
+        },
+        "environment": {
+          "type": "string",
+          "enum": [
+            "local",
+            "staging",
+            "production",
+            "multi-environment"
+          ],
+          "default": "staging"
+        },
+        "team_size": {
+          "type": "string",
+          "description": "QA team size (e.g., '3 QA engineers, 1 SDET')"
+        }
+      },
+      "required": [
+        "application_name",
+        "app_type",
+        "primary_tool"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "fintech-dashboard",
+          "app_type": "spa",
+          "primary_tool": "cypress",
+          "environment": "staging",
+          "team_size": "2 QA, 1 SDET"
+        },
+        "output_outline": "Strategy: Cypress with Page Object Model, 8 critical user journeys (login, fund transfer, bill payment, account view, settings, report generation, notification prefs, logout), cross-browser (Chrome, Firefox, Safari), environment-based config, CI runs on each PR (parallel on 4 workers), staging environment only, Phase 1 (8 weeks): core 5 journeys, Phase 2: extended flows, Phase 3: edge cases and error scenarios. Tool selection: Cypress chosen for reliability, TypeScript support, excellent debugging. Cost: 1 FTE, ~500 test cases, ~45min full suite execution. ROI: reduce manual testing 80%, catch regressions pre-prod."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "performance-testing-plan",
+    "title": "Performance Testing & Load Analysis Plan",
+    "description": "Designs comprehensive performance testing strategy including load profiles, bottleneck identification, capacity planning, and optimization roadmap.",
+    "category": "testing",
+    "tags": [
+      "performance",
+      "testing",
+      "load-testing",
+      "optimization",
+      "capacity-planning"
+    ],
+    "template": "Create performance testing plan for {{application_name}}.\n\n1. Define Performance Objectives:\n   - Response time targets (p50, p95, p99)\n   - Throughput goals (requests/second)\n   - Concurrent user capacity\n   - Resource utilization limits (CPU, memory, network)\n   - Error rate tolerance\n\n2. Load Profile Definition:\n   - Normal operating load\n   - Peak load scenarios\n   - Stress test limits\n   - Ramp-up and ramp-down strategies\n   - Sustained vs spike patterns\n\n3. Test Environment Preparation:\n   - Production-like infrastructure\n   - Data volume and complexity\n   - External service mocking\n   - Network condition simulation (latency, packet loss)\n   - Monitoring and observability setup\n\n4. Identify Test Scenarios:\n   - Happy path: normal user workflow\n   - Peak hour simulation\n   - Gradual load increase (ramp test)\n   - Sustained load stress test\n   - Spike test (sudden traffic increase)\n   - Endurance test (24-48 hour run)\n   - Negative scenarios (timeouts, connection failures)\n\n5. Tooling & Technology:\n   - Load generation tools: {{load_tool}}\n   - Metrics collection and analysis\n   - Visualization dashboards\n   - Baseline establishment\n   - Historical comparison\n\n6. Bottleneck Analysis Approach:\n   - Database query profiling\n   - Application profiling\n   - Infrastructure monitoring\n   - Network analysis\n   - Third-party service latency\n\n7. Optimization Roadmap:\n   - Quick wins (cache, indexes)\n   - Architecture improvements (scaling, queuing)\n   - Technology changes (language, framework)\n   - Cost vs benefit analysis\n\n8. Reporting & Success Criteria:\n   - Baseline establishment\n   - Pass/fail criteria per scenario\n   - Capacity planning recommendations\n   - Risk assessment\n\nApplication Stack: {{stack}}\nLoad Tool: {{load_tool}}\nTarget Capacity: {{target_capacity}}\n\nOutput: Performance Test Plan | Load Profile Scenarios | Monitoring Dashboard | Optimization Recommendations | Capacity Plan",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "stack": {
+          "type": "string",
+          "description": "Technology stack (e.g., 'Node.js + Express + PostgreSQL')"
+        },
+        "load_tool": {
+          "type": "string",
+          "enum": [
+            "jmeter",
+            "gatling",
+            "locust",
+            "k6",
+            "apache-ab",
+            "wrk"
+          ],
+          "description": "Load testing tool"
+        },
+        "target_capacity": {
+          "type": "string",
+          "description": "Target capacity (e.g., '10,000 concurrent users', '50K requests/sec')"
+        },
+        "current_metrics": {
+          "type": "string",
+          "description": "Current performance metrics if known"
+        }
+      },
+      "required": [
+        "application_name",
+        "stack",
+        "load_tool",
+        "target_capacity"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "ecommerce-api",
+          "stack": "Python FastAPI + PostgreSQL + Redis",
+          "load_tool": "locust",
+          "target_capacity": "5000 concurrent users, 25K req/sec",
+          "current_metrics": "Current: p95 200ms at 1000 users"
+        },
+        "output_outline": "Objectives: p95 <300ms, p99 <800ms, error rate <0.1%, 25K req/sec sustained. Load profiles: normal (2K concurrent), peak (5K concurrent), stress test (10K concurrent). Scenarios: product search (40%), checkout (30%), inventory update (20%), reports (10%). Tools: Locust with Python scripts, Prometheus for metrics, Grafana dashboards. Bottlenecks identified via baseline: database connection pooling (increase from 20→50), Redis query latency, API response serialization. Optimization: implement response caching (2min TTL), add read replicas, optimize search queries with indexes. Timeline: Phase 1 (quick wins, 1 week), Phase 2 (architecture changes, 3 weeks). Expected: achieve targets within 4 weeks."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "chaos-engineering-resilience",
+    "title": "Chaos Engineering & Resilience Testing",
+    "description": "Designs chaos engineering program to validate system resilience through controlled failure injection, recovery testing, and observability improvements.",
+    "category": "testing",
+    "tags": [
+      "chaos-engineering",
+      "resilience",
+      "reliability",
+      "testing",
+      "sre"
+    ],
+    "template": "Design chaos engineering program for {{system_name}}.\n\n1. System Baseline Establishment:\n   - Define healthy state metrics\n   - Identify critical services and dependencies\n   - Document recovery procedures\n   - Map failure domains\n   - Establish SLOs/SLIs\n\n2. Failure Scenarios to Test:\n   - Service failures (crashes, hangs)\n   - Latency injection (slow responses)\n   - Network partitions (loss of connectivity)\n   - Resource exhaustion (CPU, memory, disk)\n   - Database failures (replica lag, connection pool exhaustion)\n   - DNS failures and external service unavailability\n   - Load balancer/gateway failures\n\n3. Hypothesis-Driven Experimentation:\n   - State expected system behavior\n   - Inject controlled failure\n   - Measure system response\n   - Verify recovery occurs\n   - Document findings\n   - Remediate if needed\n\n4. Blast Radius Control:\n   - Start with non-production environments\n   - Begin with single-component failures\n   - Expand to multi-component scenarios\n   - Use feature flags to limit impact\n   - Schedule experiments during low-traffic periods\n\n5. Observability Requirements:\n   - Comprehensive logging\n   - Distributed tracing\n   - Metrics collection\n   - Alert testing\n   - On-call notification validation\n\n6. Tools & Platform:\n   - Chaos platform: {{chaos_tool}}\n   - Failure injection mechanisms\n   - Metrics collection setup\n   - Automated reporting\n   - Runbook integration\n\n7. Resilience Improvements Roadmap:\n   - Identified weaknesses from experiments\n   - Prioritized improvements\n   - Circuit breaker implementation\n   - Retry strategies\n   - Graceful degradation patterns\n   - Timeout configurations\n\n8. Operational Integration:\n   - Regular chaos testing cadence (weekly/monthly)\n   - Team training and certification\n   - Automated chaos in CI/CD\n   - Incident response drill integration\n   - Knowledge base of learnings\n\nPlatform: {{platform}}\nChaos Tool: {{chaos_tool}}\nServices: {{service_count}}\n\nOutput: Resilience Test Plan | Failure Scenarios | Observability Checklist | Improvement Roadmap | Training Plan",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "system_name": {
+          "type": "string",
+          "description": "Name of the system"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "kubernetes",
+            "vm-based",
+            "serverless",
+            "hybrid"
+          ],
+          "description": "Deployment platform"
+        },
+        "chaos_tool": {
+          "type": "string",
+          "enum": [
+            "chaos-mesh",
+            "litmus",
+            "gremlin",
+            "locust",
+            "toxiproxy"
+          ],
+          "description": "Chaos engineering tool"
+        },
+        "service_count": {
+          "type": "string",
+          "description": "Number of microservices (e.g., '15 services')"
+        },
+        "maturity_level": {
+          "type": "string",
+          "enum": [
+            "beginner",
+            "intermediate",
+            "advanced"
+          ],
+          "default": "beginner"
+        }
+      },
+      "required": [
+        "system_name",
+        "platform",
+        "chaos_tool",
+        "service_count"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "system_name": "payment-platform",
+          "platform": "kubernetes",
+          "chaos_tool": "chaos-mesh",
+          "service_count": "8 services",
+          "maturity_level": "intermediate"
+        },
+        "output_outline": "Baseline: all services have 99.9% availability SLO, p95 latency <100ms, error rate <0.01%. Scenarios: (1) Kill payment-processor pod → expect failover within 30s, validate queue draining; (2) Inject 500ms latency in auth-service → verify timeout handling, graceful degradation; (3) Saturate database connection pool → test overflow behavior, queue backpressure; (4) Partition API gateway from backend → test circuit breaker activation, customer notification. Tools: Chaos-Mesh for injection, Prometheus metrics, alerts to Slack. Improvements needed: implement circuit breaker in auth calls (currently missing), add retry backoff logic, improve timeouts (currently 30s, should be 5s). Testing cadence: weekly in staging, monthly in prod (during maintenance window). Training: 2-hour workshop on chaos principles, shadowing session with SRE team."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  }
+]

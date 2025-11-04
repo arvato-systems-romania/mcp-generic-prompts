@@ -1,0 +1,213 @@
+[
+  {
+    "id": "technical-debt-assessment",
+    "title": "Technical Debt Assessment & Prioritization Framework",
+    "description": "Systematically identifies, quantifies, and prioritizes technical debt across the codebase with ROI analysis and strategic remediation roadmap.",
+    "category": "leadership",
+    "tags": [
+      "technical-debt",
+      "architecture",
+      "strategy",
+      "refactoring",
+      "roi"
+    ],
+    "template": "Assess technical debt for {{project_name}}.\n\n1. Technical Debt Identification:\n   - Code quality issues (using static analysis tools)\n   - Outdated dependencies (version, maintenance status)\n   - Lack of test coverage (untested code paths)\n   - Missing documentation (architecture, APIs)\n   - Performance bottlenecks and scalability limits\n   - Security vulnerabilities and weaknesses\n   - Design inconsistencies and anti-patterns\n   - Monolithic vs modular structure issues\n   - Build and deployment complexity\n\n2. Quantification & Measurement:\n   - Code complexity metrics (cyclomatic complexity)\n   - Test coverage gaps (%)\n   - Dependency outdatedness (versions behind latest)\n   - Security vulnerability count/severity\n   - Performance degradation (vs baseline)\n   - Team velocity impact (estimate)\n   - Mean time to fix (MTTR) impact\n\n3. Business Impact Analysis:\n   - Customer-facing impact (severity)\n   - Developer productivity impact\n   - Release velocity reduction\n   - Incident frequency correlation\n   - Cost of workarounds or manual processes\n   - Risk exposure (security, reliability)\n\n4. Prioritization Framework:\n   - Impact score (business, technical, velocity)\n   - Effort estimation (story points)\n   - ROI calculation (impact/effort)\n   - Risk score (likelihood × consequence)\n   - Dependencies and blockers\n   - Strategic alignment\n\n5. Categorization:\n   - Quick wins (high ROI, low effort) - IMMEDIATE\n   - Strategic (high impact, medium effort) - PLANNED\n   - Foundational (enables future work) - SEQUENCED\n   - Hygiene (ongoing maintenance) - CONTINUOUS\n\n6. Strategic Roadmap:\n   - Phase 1 (0-1 month): Quick wins\n   - Phase 2 (1-3 months): High ROI items\n   - Phase 3 (3-6 months): Strategic initiatives\n   - Phase 4 (6+ months): Long-term improvements\n   - Ongoing: Hygiene and prevention\n\n7. Prevention Strategy:\n   - Code review standards\n   - Testing requirements\n   - Dependency update policy\n   - Documentation culture\n   - Technical design reviews\n   - Architecture guidelines\n\n8. Metrics & Tracking:\n   - Technical debt ratio (SonarQube, CodeClimate)\n   - Trend analysis over time\n   - Quarterly review cycles\n   - Team communication (visibility)\n\nProject Type: {{project_type}}\nTeam Size: {{team_size}}\nCurrent Velocity: {{current_velocity}}\n\nOutput: Debt Inventory | Impact Analysis | Prioritization Matrix | Strategic Roadmap | Prevention Framework | Metrics Dashboard",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "project_type": {
+          "type": "string",
+          "enum": [
+            "web-app",
+            "api",
+            "mobile",
+            "embedded",
+            "data-pipeline",
+            "monolith",
+            "microservices"
+          ],
+          "description": "Type of project"
+        },
+        "team_size": {
+          "type": "string",
+          "description": "Team size (e.g., '5 engineers, 2 leads')"
+        },
+        "current_velocity": {
+          "type": "string",
+          "description": "Team velocity (e.g., '15 story points/sprint', '8 features/month')"
+        },
+        "main_concerns": {
+          "type": "string",
+          "description": "Main technical concerns (e.g., 'slow tests, old dependencies, no monitoring')"
+        }
+      },
+      "required": [
+        "project_name",
+        "project_type",
+        "team_size",
+        "current_velocity"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "legacy-crm",
+          "project_type": "monolith",
+          "team_size": "8 engineers",
+          "current_velocity": "12 story points/sprint",
+          "main_concerns": "slow test suite, outdated dependencies, no monitoring, inconsistent code style"
+        },
+        "output_outline": "Inventory: 47 medium-to-high debt items, test coverage 32% (target 80%), 23 dependencies >2 years old, 5 MEDIUM security vulns, code quality grade D, 85% of velocity spent on bug fixes. Impact analysis: test suite 45min (blocks deployment), outdated deps cause 3 incidents/quarter, monitoring gaps result in 4-hour MTTR. Prioritization: Quick wins (2 weeks): update critical dependencies, add basic monitoring; High ROI (8 weeks): increase test coverage to 60%, implement CI/CD checks; Strategic (3 months): modularize codebase, improve code quality. ROI calculation: invest 100 points → recover 3 points/sprint velocity (~25% improvement). Prevention: enforce test coverage >80%, quarterly dependency audits, code review checklist. Expected: velocity increase 12→15 points/sprint within 6 months, incident reduction 60%, deployment confidence improved."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "feature-flag-architecture",
+    "title": "Feature Flag Architecture & Management System",
+    "description": "Designs comprehensive feature flag infrastructure for safe deployments, A/B testing, gradual rollouts, and decoupling deployment from release.",
+    "category": "leadership",
+    "tags": [
+      "feature-flags",
+      "deployment",
+      "devops",
+      "testing",
+      "experimentation"
+    ],
+    "template": "Design feature flag system for {{project_name}}.\n\n1. Use Cases & Requirements:\n   - Gradual rollout (canary releases)\n   - A/B testing and experiments\n   - Dark launches\n   - Circuit breaker patterns\n   - Kill switches for failing features\n   - Environment-specific flags\n   - Targeting rules (user, geographic, etc.)\n\n2. Feature Flag Types:\n   - Release flags: control feature availability\n   - Experiment flags: A/B testing variants\n   - Permission flags: access control\n   - Operational flags: behavior tuning\n   - Technical flags: infrastructure changes\n\n3. Targeting & Rules Engine:\n   - User/account-level targeting\n   - Geographic targeting\n   - Device/browser targeting\n   - Time-based rollout (% increase over time)\n   - Custom rule evaluation\n   - Cohort/segment targeting\n\n4. Platform & Architecture:\n   - Feature flag service ({{flag_platform}})\n   - SDK/client libraries\n   - Configuration management\n   - Performance and latency\n   - Caching strategy\n   - Failover and resilience\n\n5. Data Collection & Analytics:\n   - Exposure tracking\n   - Metrics collection\n   - Error tracking per variant\n   - Statistical analysis for A/B tests\n   - Logging and audit trails\n\n6. Developer Workflow:\n   - Local development defaults\n   - CI/CD integration\n   - Flag lifecycle (creation → deployment → cleanup)\n   - Documentation standards\n   - Naming conventions\n\n7. Operational Practices:\n   - Flag cleanup and sunset process\n   - Emergency flag toggles\n   - Monitoring and alerting\n   - Rollback procedures\n   - Team training and onboarding\n\n8. Safety & Governance:\n   - Access control (who can change flags)\n   - Approval workflows\n   - Audit logging\n   - Flag stale-ness detection\n   - Experiment conflicts detection\n\nTech Stack: {{tech_stack}}\nFlag Platform: {{flag_platform}}\nTeam Maturity: {{maturity}}\n\nOutput: Feature Flag Architecture | Implementation Guide | Operational Runbook | Best Practices | Training Material",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "tech_stack": {
+          "type": "string",
+          "description": "Technology stack (e.g., 'React + Node.js')"
+        },
+        "flag_platform": {
+          "type": "string",
+          "enum": [
+            "launchdarkly",
+            "split",
+            "unleash",
+            "custom",
+            "aws-appconfig"
+          ],
+          "description": "Feature flag platform"
+        },
+        "team_size": {
+          "type": "string",
+          "description": "Team size"
+        },
+        "maturity": {
+          "type": "string",
+          "enum": [
+            "beginner",
+            "intermediate",
+            "advanced"
+          ],
+          "default": "intermediate"
+        }
+      },
+      "required": [
+        "project_name",
+        "tech_stack",
+        "flag_platform"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "ecommerce-platform",
+          "tech_stack": "React + Node.js + PostgreSQL",
+          "flag_platform": "launchdarkly",
+          "team_size": "25 engineers",
+          "maturity": "intermediate"
+        },
+        "output_outline": "Use cases: (1) Checkout flow redesign → gradual rollout 0%→100% over 2 weeks; (2) Payment provider migration → A/B test success rates; (3) New search algorithm → canary to 5% of traffic first. Architecture: LaunchDarkly SDK in frontend + backend, Redis cache (5min TTL), circuit breaker on flag service failure. Targeting: user-based (% of user IDs), geographic (US/EU/APAC), device type (mobile/desktop), custom: VIP users → 100%, tier 1 users → 50%, others → 10%. Flag lifecycle: (1) Create in LaunchDarkly, (2) Deploy code with flag, (3) Enable for internal users, (4) Monitor for 24h, (5) Ramp to 100%, (6) Monitor 1 week, (7) Code cleanup. Metrics: conversion rate by variant, error rate, page load time. Governance: PMs can create, engineers implement, leads review, metrics reviewed weekly. Tools integration: Datadog for metrics, Slack notifications on flag changes. Expected: reduce deployment risk, faster experimentation cycle (1 week → 2 days for A/B test), safer infrastructure changes."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "api-versioning-strategy",
+    "title": "API Versioning & Backward Compatibility Strategy",
+    "description": "Designs comprehensive API versioning approach balancing stability, compatibility, and flexibility while minimizing client migration burden.",
+    "category": "leadership",
+    "tags": [
+      "api",
+      "versioning",
+      "backward-compatibility",
+      "product-strategy",
+      "evolution"
+    ],
+    "template": "Design API versioning strategy for {{api_name}}.\n\n1. Versioning Approach Options:\n   - URL path versioning: /api/v1/users vs /api/v2/users\n   - Header versioning: Accept: application/vnd.api+json;version=2\n   - Query parameter: /api/users?version=2\n   - Subdomain versioning: v1.api.example.com\n   - No versioning (expansion only, never breaking)\n\n2. Breaking vs Non-Breaking Changes:\n   - Non-breaking (additive only): new fields, new endpoints, new query params\n   - Breaking: removing fields, renaming fields, changing types, removing endpoints\n   - Deprecation strategy for breaking changes\n\n3. Deprecation Policy:\n   - Announcement period (e.g., 6 months notice)\n   - Deprecation headers (Deprecation, Sunset)\n   - Communication channels (blog, email, dashboard)\n   - Client migration incentives\n   - End-of-life date enforcement\n\n4. Client Communication:\n   - API changelog (detailed)\n   - Migration guides (per version)\n   - Client library updates\n   - Sandbox environment for testing\n   - Support and Q&A channels\n\n5. Version Lifecycle:\n   - Alpha/Beta: breaking changes allowed\n   - Stable: backward compatible only\n   - Deprecated: no changes, warning phase\n   - End-of-life: removed, rejected with error\n\n6. Implementation Strategy:\n   - Router/middleware for version dispatch\n   - Request transformation layer\n   - Response transformation layer\n   - Version-specific business logic\n   - Testing per version\n\n7. Client Support Matrix:\n   - Track which clients use which versions\n   - Metrics on version adoption\n   - Automated alerts for low-adoption versions\n   - Forced migration timeline for old versions\n\n8. Documentation & Discovery:\n   - OpenAPI/Swagger per version\n   - Interactive API explorer\n   - Code samples (multiple languages)\n   - SDKs and client libraries\n\nCurrent API Maturity: {{maturity}}\nClient Types: {{client_types}}\nBreaking Change Frequency: {{change_frequency}}\n\nOutput: Versioning Strategy | Implementation Guide | Deprecation Policy | Migration Playbook | Client Communication Plan",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "api_name": {
+          "type": "string",
+          "description": "Name of the API"
+        },
+        "maturity": {
+          "type": "string",
+          "enum": [
+            "new",
+            "growing",
+            "mature",
+            "legacy"
+          ],
+          "description": "API maturity level"
+        },
+        "client_types": {
+          "type": "string",
+          "description": "Types of clients (e.g., 'web, mobile, third-party')"
+        },
+        "change_frequency": {
+          "type": "string",
+          "enum": [
+            "frequent",
+            "occasional",
+            "rare"
+          ],
+          "description": "How often breaking changes are needed"
+        },
+        "current_clients": {
+          "type": "string",
+          "description": "Approximate number of clients/users"
+        }
+      },
+      "required": [
+        "api_name",
+        "maturity",
+        "client_types",
+        "change_frequency"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "api_name": "partner-api",
+          "maturity": "mature",
+          "client_types": "third-party integrations, 100+ partners",
+          "change_frequency": "occasional",
+          "current_clients": "150+ active integrations"
+        },
+        "output_outline": "Strategy: Header-based versioning (Accept header) for seamless support + URL versioning for major breaking changes only. Current: v1 (year-old API). Expansion-first approach: all non-breaking changes go to current version. Breaking changes: only if absolutely necessary, new major version with 12-month support window. Deprecation policy: announce 6 months before end-of-life, provide migration guides, offer technical support. Communication: (1) announcement on website + email to all integrations; (2) monthly progress updates; (3) dedicated support channel during migration; (4) incentives (credits, support hours). Version lifecycle: v1 (active until 2026-Q4, receive only security patches), v2 (new feature development here). Implementation: routing middleware checks Accept header, dispatches to v1 or v2 handlers. Response transforms ensure backward compatibility. Testing: all tests run against v1 and v2. Monitoring: track version usage, alert if v1 traffic >10% at 2026-Q3. Migration tracking: dashboard showing % partners migrated, per-partner contact list. Expected: smooth migration, minimal breakage, partner satisfaction >4.5/5."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  }
+]

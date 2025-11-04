@@ -1,0 +1,229 @@
+[
+  {
+    "id": "llm-integration-patterns",
+    "title": "LLM Integration & Generative AI Patterns",
+    "description": "Designs patterns and best practices for integrating Large Language Models into production applications with cost optimization, safety, and reliability.",
+    "category": "emerging-tech",
+    "tags": [
+      "llm",
+      "generative-ai",
+      "ai-integration",
+      "prompt-engineering",
+      "vector-search"
+    ],
+    "template": "Design LLM integration for {{application_name}}.\n\n1. Use Case Definition:\n   - LLM tasks (summarization, classification, generation, Q&A)\n   - Inputs and expected outputs\n   - Quality and consistency requirements\n   - Latency and throughput constraints\n   - Cost budget per request\n\n2. Model Selection:\n   - Model comparison: {{primary_model}} vs alternatives\n   - Open-source vs API-based (OpenAI, Anthropic, etc.)\n   - Local vs cloud deployment\n   - Fine-tuning vs few-shot vs zero-shot\n   - Model versioning strategy\n\n3. Prompt Engineering:\n   - System prompts and instructions\n   - Few-shot examples\n   - Chain-of-thought prompting\n   - Prompt versioning and A/B testing\n   - Prompt templates for parameterization\n\n4. RAG (Retrieval-Augmented Generation):\n   - Knowledge base / document indexing\n   - Vector embeddings and similarity search\n   - Retrieval strategy (semantic, keyword)\n   - Context window management\n   - Source attribution and citations\n\n5. Cost Optimization:\n   - Token counting and optimization\n   - Request batching\n   - Caching strategy (prompt caching)\n   - Model-specific optimizations\n   - Budget monitoring and alerts\n\n6. Safety & Governance:\n   - Input validation and sanitization\n   - Output filtering (profanity, harmful content)\n   - PII and sensitive data handling\n   - Rate limiting and abuse prevention\n   - Audit logging and compliance\n\n7. Reliability & Failover:\n   - API rate limiting and retries\n   - Fallback models or strategies\n   - Error handling and recovery\n   - Graceful degradation\n   - Monitoring and alerting\n\n8. Evaluation & Monitoring:\n   - Quality metrics (accuracy, relevance, tone)\n   - User feedback loops\n   - Drift detection\n   - Cost tracking per feature\n   - Latency monitoring\n   - Model versioning and rollback\n\n9. User Experience:\n   - Streaming responses for long-form content\n   - Progressive disclosure\n   - Confidence scores and uncertainty\n   - User feedback mechanisms\n   - Regeneration and refinement options\n\nApplication: {{application_name}}\nPrimary Model: {{primary_model}}\nUpdate Frequency: {{update_frequency}}\n\nOutput: Integration Architecture | Prompt Library | Cost Model | Safety Framework | Monitoring Dashboard | Implementation Roadmap",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "primary_model": {
+          "type": "string",
+          "enum": [
+            "gpt-4",
+            "gpt-3.5-turbo",
+            "claude-opus",
+            "claude-sonnet",
+            "llama-2",
+            "mistral",
+            "custom-fine-tuned"
+          ],
+          "description": "Primary LLM model"
+        },
+        "use_cases": {
+          "type": "string",
+          "description": "Primary use cases (e.g., 'customer support, content generation')"
+        },
+        "latency_budget": {
+          "type": "string",
+          "description": "Acceptable latency (e.g., '<2 seconds', '<100ms')"
+        },
+        "monthly_budget": {
+          "type": "string",
+          "description": "Monthly LLM API budget (e.g., '$1000', '$10000')"
+        },
+        "update_frequency": {
+          "type": "string",
+          "enum": [
+            "real-time",
+            "daily",
+            "weekly",
+            "monthly",
+            "static"
+          ],
+          "description": "How often knowledge base updates"
+        }
+      },
+      "required": [
+        "application_name",
+        "primary_model",
+        "use_cases"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "customer-support-copilot",
+          "primary_model": "gpt-4",
+          "use_cases": "generate support responses, classify tickets, summarize conversations",
+          "latency_budget": "<2 seconds",
+          "monthly_budget": "$5000",
+          "update_frequency": "weekly"
+        },
+        "output_outline": "Architecture: gpt-4 for main responses, gpt-3.5-turbo for classification (cost reduction), RAG with vector DB (Pinecone) for support KB (500 docs). Prompts: system prompt emphasizes empathy + conciseness, few-shot examples for ticket classification, chain-of-thought for root cause analysis. RAG: embed support docs weekly, rerank top-3 results, cite sources in response. Costs: ~$2K/month at current volume (40 tickets/day), optimizations: batch similar requests, cache common questions, use turbo for 80% of cases. Safety: input validation (strip PII), output filter (check for guarantees/commitments), rate limit 100 req/user/day. Reliability: fallback to previous template response if API fails, retry with exponential backoff, circuit breaker after 5 failures. Monitoring: track cost per ticket, response quality feedback (user ratings), latency distribution, model accuracy on classification (vs human labeling). Expected: support team productivity +40%, customer satisfaction +15%, response time <90 seconds (vs 5min manual)."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "multi-tenant-architecture",
+    "title": "Multi-Tenant Architecture & Isolation Strategy",
+    "description": "Designs secure and scalable multi-tenant architectures with data isolation, performance guarantees, and compliance considerations.",
+    "category": "architecture",
+    "tags": [
+      "multi-tenant",
+      "saas",
+      "architecture",
+      "security",
+      "scalability"
+    ],
+    "template": "Design multi-tenant architecture for {{application_name}}.\n\n1. Tenancy Model Selection:\n   - Shared database, shared schema (pool model): COST-EFFICIENT but risky\n   - Shared database, separate schema: BALANCED approach\n   - Separate database per tenant: ISOLATION-OPTIMIZED but expensive\n   - Row-level security (RLS) approach\n   - Hybrid approach (selection matrix)\n\n2. Data Isolation Strategy:\n   - Logical isolation via tenant_id in all rows\n   - Physical isolation (separate databases/schemas)\n   - Encryption key per tenant\n   - Row-level security policies\n   - Query filtering by tenant\n   - Backup and recovery per tenant\n\n3. Performance Isolation:\n   - Resource quotas per tenant (CPU, RAM, DB connections)\n   - Rate limiting per tenant\n   - Query timeout configurations\n   - Connection pooling strategy\n   - Noisy neighbor detection and mitigation\n\n4. Scalability Strategy:\n   - Database sharding by tenant_id\n   - Service deployment per tenant (or shared)\n   - Cache isolation (Redis namespace per tenant)\n   - Static asset segregation\n   - CDN strategy for multi-tenant content\n\n5. Compliance & Security:\n   - Data residency requirements\n   - GDPR right to deletion (per tenant)\n   - Data sovereignty (geographic isolation)\n   - Audit logging per tenant\n   - Cross-tenant access prevention\n   - Encryption standards\n\n6. Operational Complexity:\n   - Deployment strategy per tenant\n   - Configuration management\n   - Monitoring and alerting per tenant\n   - Backup and disaster recovery\n   - Migration to more isolation (as tenant grows)\n\n7. Cost Model:\n   - Shared resources cost allocation\n   - Tenant-specific costs (dedicated resources)\n   - Economies of scale\n   - Growth trajectory and scaling\n   - Profitability per tenant tier\n\n8. Migration Path:\n   - Start with single tenancy for simplicity\n   - Graduate to multi-tenant via proxy layer\n   - Schema consolidation via reverse migration\n   - Zero-downtime migration strategies\n\nModel Type: {{tenancy_model}}\nTenant Count: {{tenant_count}}\nData Sensitivity: {{sensitivity_level}}\nCompliance: {{compliance_reqs}}\n\nOutput: Architecture Diagram | Isolation Strategy | Security Model | Scaling Plan | Operational Runbook | Cost Analysis",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "tenancy_model": {
+          "type": "string",
+          "enum": [
+            "shared-db-shared-schema",
+            "shared-db-separate-schema",
+            "separate-db-per-tenant",
+            "hybrid",
+            "undecided"
+          ],
+          "description": "Tenancy model"
+        },
+        "tenant_count": {
+          "type": "string",
+          "description": "Current/projected tenant count (e.g., '10 tenants', '1000+ expected')"
+        },
+        "sensitivity_level": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "description": "Data sensitivity level"
+        },
+        "compliance_reqs": {
+          "type": "string",
+          "description": "Compliance requirements (e.g., 'GDPR, HIPAA, SOC2')"
+        }
+      },
+      "required": [
+        "application_name",
+        "tenancy_model",
+        "tenant_count",
+        "sensitivity_level"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "project-management-saas",
+          "tenancy_model": "hybrid",
+          "tenant_count": "currently 50, projected 1000+",
+          "sensitivity_level": "medium",
+          "compliance_reqs": "GDPR, SOC2"
+        },
+        "output_outline": "Architecture: Shared database, separate schema approach initially (50 tenants). Each tenant has own schema (projects, tasks, users) with RLS policies in PostgreSQL. Logical isolation: all queries filtered by tenant_id at application layer + database layer (defense in depth). Performance: connection pooling (pgBouncer) per tenant connection limit, read replicas for reporting queries, Redis cache per-tenant namespace (tenant:123:cache). Scaling plan: at 200 tenants, migrate hot tenants to dedicated databases; at 500 tenants, shard by tenant_id ranges. Compliance: GDPR deletion via cascade triggers per schema, encrypted at-rest with per-tenant keys in AWS KMS, audit logging in separate immutable schema. Cost: ~$2K/month for 50 tenants on single m5.xlarge RDS, scales to ~$8K/month at 500 tenants (3 shards). Operational: Terraform for schema provisioning, monitoring per-schema metrics in Datadog, daily backups per schema, runbook for emergency schema isolation. Security: no cross-tenant query possible (enforced at DB user level), connection pooling prevents session leaks, schema separation enables tenant-specific audit policies. Expected: support 1000+ tenants within 18 months, maintain <100ms p95 latency, 100% GDPR compliance."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "event-driven-architecture",
+    "title": "Event-Driven Architecture & CQRS Implementation",
+    "description": "Designs event-driven systems using CQRS (Command Query Responsibility Segregation) and event sourcing for scalability, auditability, and system decoupling.",
+    "category": "architecture",
+    "tags": [
+      "event-driven",
+      "cqrs",
+      "event-sourcing",
+      "architecture",
+      "microservices"
+    ],
+    "template": "Design event-driven architecture for {{system_name}}.\n\n1. Event Modeling:\n   - Identify business events\n   - Event schema (versioning strategy)\n   - Event naming conventions\n   - Causality and ordering requirements\n   - Aggregates and domain boundaries\n\n2. Command vs Query Segregation:\n   - Command side: write model (normalized, ACID)\n   - Query side: read model (denormalized, optimized)\n   - Synchronization strategy (eventual consistency window)\n   - Handling read-after-write consistency\n\n3. Event Sourcing:\n   - Event store ({{event_store_tech}})\n   - Event serialization (JSON, Avro, Protobuf)\n   - Snapshot strategy (performance optimization)\n   - Event versioning and upcasting\n   - Audit trail and compliance\n\n4. Command Handling:\n   - Command validation\n   - Transaction management\n   - Idempotency guarantees\n   - Error handling and compensation\n   - Saga pattern for distributed transactions\n\n5. Event Publishing & Distribution:\n   - Message broker ({{message_broker}})\n   - Event topics and subscriptions\n   - Dead letter queues\n   - Ordering guarantees (per aggregate, global)\n   - At-least-once delivery semantics\n\n6. Read Model Projections:\n   - Real-time projections\n   - Materialized views\n   - Cache invalidation\n   - Multiple read models per event stream\n   - Projection versioning\n\n7. Eventual Consistency Handling:\n   - Tolerance for stale reads\n   - User experience during consistency window\n   - Conflict resolution\n   - Consensus protocols (if needed)\n\n8. Operational Considerations:\n   - Event replay for recovery\n   - Debugging and troubleshooting\n   - Performance monitoring\n   - Scaling read vs write models\n   - Storage optimization (event pruning)\n\nSystem: {{system_name}}\nEvent Store: {{event_store_tech}}\nMessage Broker: {{message_broker}}\nExpected Volume: {{event_volume}}\n\nOutput: Event Model | CQRS Architecture | Implementation Guide | Operational Runbook | Performance Analysis",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "system_name": {
+          "type": "string",
+          "description": "Name of the system"
+        },
+        "event_store_tech": {
+          "type": "string",
+          "enum": [
+            "eventstore-db",
+            "postgresql-custom",
+            "dynamodb",
+            "mongodb",
+            "custom"
+          ],
+          "description": "Event store technology"
+        },
+        "message_broker": {
+          "type": "string",
+          "enum": [
+            "kafka",
+            "rabbitmq",
+            "aws-eventbridge",
+            "google-pubsub",
+            "nats"
+          ],
+          "description": "Message broker"
+        },
+        "event_volume": {
+          "type": "string",
+          "description": "Expected event volume (e.g., '10K events/sec', '1M events/day')"
+        },
+        "domains": {
+          "type": "string",
+          "description": "Business domains (e.g., 'orders, payments, inventory')"
+        }
+      },
+      "required": [
+        "system_name",
+        "event_store_tech",
+        "message_broker",
+        "event_volume"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "system_name": "order-management",
+          "event_store_tech": "eventstore-db",
+          "message_broker": "kafka",
+          "event_volume": "5K orders/sec",
+          "domains": "orders, payments, inventory, shipping"
+        },
+        "output_outline": "Events: OrderCreated, PaymentRequested, PaymentProcessed, InventoryAllocated, ShipmentScheduled, OrderDelivered. Commands: CreateOrder (validates inputs, emits OrderCreated), ProcessPayment (idempotent, Saga coordinates with payment-service). Write model: Order aggregate (PostgreSQL, normalized), command handlers validate against rules, emit events atomically. Read models: (1) OrderView (denormalized, all order data), (2) InventoryView (by SKU), (3) RevenueAnalytics (aggregations). Event store: EventStore DB on PostgreSQL, 100M+ events stored, snapshots every 100 events. Projections: Kafka topics consume OrderCreated, PaymentProcessed, etc., update read models via eventual consistency (50ms typical, max 1s SLA). Saga pattern: OrderCreated starts choreography (Kafka topics), payment-service consumes and publishes PaymentProcessed, inventory-service consumes and publishes InventoryAllocated. Compensation: if payment fails, PaymentFailed event rolls back inventory reservation. Replay: system can recover from any point by replaying events. Monitoring: Kafka lag alerts, projection latency tracking, event tracing via correlation IDs. Cost: EventStore DB (managed, $500/month), Kafka cluster ($3K/month), compute for projections ($2K/month). Throughput: sustained 5K orders/sec, spike to 20K events/sec during promotions. Expected: complete audit trail, easy temporal queries, system resilience via event replay."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  }
+]

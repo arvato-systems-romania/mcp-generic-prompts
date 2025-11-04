@@ -1,0 +1,214 @@
+[
+  {
+    "id": "database-migration-strategy",
+    "title": "Database Migration Strategy & Zero-Downtime Planning",
+    "description": "Plans and executes database migrations with zero or minimal downtime using blue-green deployments, dual-write patterns, and careful verification strategies.",
+    "category": "database",
+    "tags": [
+      "database",
+      "migration",
+      "zero-downtime",
+      "schema-evolution",
+      "data-migration"
+    ],
+    "template": "Design database migration strategy for {{application_name}}.\n\n1. Migration Assessment:\n   - Schema changes required\n   - Data volume and complexity\n   - Current downtime tolerance\n   - Business criticality\n   - Rollback requirements\n\n2. Migration Categories:\n   - Additive changes (new columns, tables, indexes) - LOW RISK\n   - Destructive changes (column removal, constraint changes) - HIGH RISK\n   - Structural changes (table reorganization, sharding) - CRITICAL\n   - Data transformations (type conversions, recalculations)\n\n3. Zero-Downtime Strategies:\n   - Expand/Contract Pattern:\n     * Phase 1: Add new structure\n     * Phase 2: Dual-write to old and new\n     * Phase 3: Migrate data\n     * Phase 4: Verify and switch reads\n     * Phase 5: Cleanup\n   - Blue-Green Database Deployment\n   - Parallel run validation\n   - Feature flag-based cutover\n\n4. Detailed Implementation Plan:\n   - Pre-migration verification\n   - Backup and point-in-time recovery setup\n   - Test migration on replica\n   - Communication plan and windows\n   - Application version requirements\n   - Monitoring and alerting setup\n\n5. Data Migration:\n   - Data extraction strategy\n   - Transformation rules\n   - Validation checksums\n   - Batch vs streaming approach\n   - Incremental vs full migration\n   - Verification queries\n\n6. Validation & Testing:\n   - Staging environment dry-run\n   - Data integrity checks\n   - Query plan analysis\n   - Performance regression testing\n   - Rollback testing\n\n7. Monitoring During Migration:\n   - Transaction logs and WAL analysis\n   - Lock contention monitoring\n   - Query performance tracking\n   - Application error rates\n   - Replication lag (if applicable)\n\n8. Rollback Plan:\n   - Quick rollback procedures\n   - Time-based rollback triggers\n   - Data consistency validation during rollback\n   - Communication protocols\n\nDatabase: {{database_type}}\nData Volume: {{data_volume}}\nAcceptable Downtime: {{downtime_tolerance}}\n\nOutput: Migration Plan | Implementation Runbook | Risk Assessment | Validation Checklist | Rollback Procedures",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "database_type": {
+          "type": "string",
+          "enum": [
+            "postgresql",
+            "mysql",
+            "mongodb",
+            "oracle",
+            "mssql",
+            "dynamodb"
+          ],
+          "description": "Database system"
+        },
+        "data_volume": {
+          "type": "string",
+          "description": "Approximate data volume (e.g., '500GB', '2TB', '10M records')"
+        },
+        "downtime_tolerance": {
+          "type": "string",
+          "enum": [
+            "zero-downtime",
+            "5-minutes",
+            "30-minutes",
+            "1-hour",
+            "scheduled-maintenance"
+          ],
+          "default": "zero-downtime"
+        },
+        "migration_type": {
+          "type": "string",
+          "description": "Type of migration (e.g., 'schema change', 'version upgrade', 'major restructure')"
+        }
+      },
+      "required": [
+        "application_name",
+        "database_type",
+        "data_volume",
+        "migration_type"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "analytics-platform",
+          "database_type": "postgresql",
+          "data_volume": "800GB, 500M rows",
+          "downtime_tolerance": "zero-downtime",
+          "migration_type": "add partitioning to events table"
+        },
+        "output_outline": "Strategy: Expand/Contract pattern with dual-write. Phase 1 (Day 1): Create new partitioned table structure in parallel, 2 hours. Phase 2 (Days 2-3): Enable dual-write to old and new tables via application trigger logic, test for 48 hours. Phase 3 (Days 4-5): Bulk copy historical data (400GB) in batches of 1GB, overnight runs to minimize lock time, ~20 hours total. Phase 4 (Day 6): Verify row counts match (checksums), query performance comparison. Phase 5 (Day 7): Switch reads to new table via feature flag, monitor for 24 hours. Phase 6 (Day 8): Remove old table. Tools: pg_partman for partition management, logical replication for dual-write, custom Python migration script for batching. Rollback: Keep old table for 1 week, can switch back via feature flag in <5 minutes. Estimated runtime: 8 days total, zero production downtime, <1% query latency impact during migration."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "nosql-optimization",
+    "title": "NoSQL Database Optimization & Performance Tuning",
+    "description": "Optimizes NoSQL database performance through schema design, indexing strategies, query optimization, and scaling patterns specific to the database type.",
+    "category": "database",
+    "tags": [
+      "database",
+      "nosql",
+      "optimization",
+      "mongodb",
+      "dynamodb",
+      "performance"
+    ],
+    "template": "Optimize {{database_name}} performance for {{application_name}}.\n\n1. Document Access Patterns:\n   - Query patterns by frequency\n   - Filter and sort requirements\n   - Read/write ratio\n   - Batch vs individual operations\n   - Aggregation pipeline usage\n\n2. Schema Design Review:\n   - Document structure and nesting\n   - Array handling and growth\n   - Denormalization opportunities\n   - Update amplification\n   - Storage efficiency\n   - MongoDB-specific: BSON size analysis\n   - DynamoDB-specific: item size optimization, attribute mapping\n\n3. Indexing Strategy:\n   - Identify indexed fields\n   - Index selectivity analysis\n   - Multi-field index ordering\n   - Sparse and partial indexes\n   - Index size and memory impact\n   - Query execution plan analysis\n\n4. Query Optimization:\n   - Aggregation pipeline optimization\n   - Filter pushdown opportunities\n   - Stage reordering\n   - Unnecessary projections\n   - Batch operation consolidation\n   - Connection pooling configuration\n\n5. Database-Specific Tuning:\n   - MongoDB: WiredTiger settings, cache sizing, write concern levels\n   - DynamoDB: throughput provisioning vs on-demand, GSI design\n   - Cassandra: consistency levels, replication factor, bloom filters\n   - Redis: eviction policies, memory optimization, persistence settings\n\n6. Scaling Strategies:\n   - Vertical scaling (hardware upgrades)\n   - Horizontal scaling (sharding/partitioning)\n   - Read replicas and replication lag\n   - Caching layers (Redis, Memcached)\n   - Distributed transactions (if applicable)\n\n7. Monitoring & Observability:\n   - Slow query logging\n   - Index usage metrics\n   - Connection pool saturation\n   - CPU and disk I/O monitoring\n   - Replication lag tracking\n\n8. Performance Benchmarking:\n   - Baseline metrics\n   - Before/after comparison\n   - Load testing results\n   - Resource utilization graphs\n\nDatabase: {{database_name}}\nData Model: {{data_model}}\nCurrent Performance: {{current_perf}}\n\nOutput: Performance Analysis | Optimization Recommendations | Schema Improvements | Implementation Guide | Benchmarking Results",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "database_name": {
+          "type": "string",
+          "enum": [
+            "mongodb",
+            "dynamodb",
+            "cassandra",
+            "redis",
+            "elasticsearch",
+            "firestore"
+          ],
+          "description": "NoSQL database type"
+        },
+        "data_model": {
+          "type": "string",
+          "description": "Brief description of data model (e.g., 'user profiles with 50MB docs')"
+        },
+        "current_perf": {
+          "type": "string",
+          "description": "Current performance metrics (e.g., 'p95 query: 800ms', 'index size: 45GB')"
+        },
+        "scale": {
+          "type": "string",
+          "description": "Scale of data (e.g., '2TB', '500M documents', '10K queries/sec')"
+        }
+      },
+      "required": [
+        "application_name",
+        "database_name",
+        "data_model",
+        "scale"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "social-network",
+          "database_name": "mongodb",
+          "data_model": "user posts with nested comments, tags, reactions",
+          "current_perf": "p95 query: 1200ms, p99: 3500ms, 15% cache misses",
+          "scale": "800M posts, 4TB data, 50K queries/sec"
+        },
+        "output_outline": "Issues: missing index on (user_id, created_at), deeply nested comments causing BSON size limits (docs ~12MB), no query optimization in aggregation pipelines. Recommendations: 1) Add compound index (user_id:1, created_at:-1) - estimated 60% query improvement; 2) Denormalize comment count at post level, refresh async; 3) Cap nested arrays (comments to last 100); 4) Optimize aggregation stages: move $match before $lookup, remove unnecessary $projects; 5) Increase WiredTiger cache to 32GB (from 16GB); 6) Implement read preference to secondaries for non-critical queries. Schema changes: split comments to separate collection with relationship via post_id, add indexes on comment_id, created_at. Expected improvements: p95 query 1200ms → 200ms (83% improvement), cache hit rate 85%, reduce memory pressure 40%. Timeline: schema changes (1 week), index deployment (1 day), monitoring (ongoing)."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "data-sharding-strategy",
+    "title": "Data Sharding & Horizontal Scaling Strategy",
+    "description": "Designs horizontal data partitioning (sharding) strategy for massive datasets, including shard key selection, resharding procedures, and consistency guarantees.",
+    "category": "database",
+    "tags": [
+      "database",
+      "sharding",
+      "scaling",
+      "partitioning",
+      "distributed-systems"
+    ],
+    "template": "Design sharding strategy for {{application_name}}.\n\n1. Current State & Scaling Limits:\n   - Current database size\n   - Growth rate projection\n   - Single node capacity limits\n   - Current bottlenecks (CPU, disk, memory)\n   - Replication lag issues\n\n2. Shard Key Selection:\n   - Candidate keys analysis\n   - Cardinality assessment\n   - Query patterns alignment\n   - Hotspot risk identification\n   - Shard key immutability concerns\n   - Range vs hash vs geo-based sharding\n\n3. Hotspot Analysis & Prevention:\n   - Identify potential hot shards\n   - Load distribution simulation\n   - Time-based hotspot patterns\n   - Counter-measures:\n     * Shard key refinement\n     * Sub-sharding strategies\n     * Cache layer optimization\n\n4. Resharding Strategy:\n   - Resharding triggers and thresholds\n   - Zero-downtime resharding procedures\n   - Data movement coordination\n   - Consistency during resharding\n   - Rollback procedures\n\n5. Cross-Shard Operations:\n   - Query routing layer architecture\n   - Multi-shard joins and aggregations\n   - Distributed transactions (Saga pattern)\n   - Consistency guarantees\n   - Error handling\n\n6. Replication & Durability:\n   - Replication factor per shard\n   - Primary-backup failover\n   - Read replica placement\n   - Geographic distribution\n\n7. Implementation & Tooling:\n   - Custom sharding logic\n   - Framework support (MongoDB sharding, Vitess, etc.)\n   - Consistent hashing implementation\n   - Shard discovery mechanism\n   - Monitoring and alerting\n\n8. Operational Considerations:\n   - Backup and recovery per shard\n   - Incremental shard additions\n   - Decommissioning shards\n   - Capacity planning per shard\n   - Cost analysis\n\nDatabase: {{database_type}}\nData Growth: {{growth_rate}}\nTarget Throughput: {{target_throughput}}\n\nOutput: Sharding Strategy | Shard Key Analysis | Implementation Plan | Monitoring Framework | Cost Projections",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "database_type": {
+          "type": "string",
+          "enum": [
+            "mongodb",
+            "postgresql",
+            "mysql",
+            "cassandra",
+            "dynamodb"
+          ],
+          "description": "Database type to shard"
+        },
+        "current_size": {
+          "type": "string",
+          "description": "Current data size (e.g., '2TB', '500M records')"
+        },
+        "growth_rate": {
+          "type": "string",
+          "description": "Projected growth (e.g., '10GB/month', '50% YoY')"
+        },
+        "target_throughput": {
+          "type": "string",
+          "description": "Target throughput (e.g., '100K queries/sec', '50K writes/sec')"
+        }
+      },
+      "required": [
+        "application_name",
+        "database_type",
+        "current_size",
+        "growth_rate",
+        "target_throughput"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "messaging-platform",
+          "database_type": "mongodb",
+          "current_size": "5TB, 500M messages",
+          "growth_rate": "50GB/month",
+          "target_throughput": "200K inserts/sec"
+        },
+        "output_outline": "Shard key selection: hash(user_id) chosen for even distribution, alternative (timestamp) rejected due to hotspot at recent data. Expected distribution: 256 shards (2^8), ~20GB per shard. Cardinality: 50M users → 195K messages/user average, good for distribution. Hotspot analysis: major users (top 0.1%) analyzed separately, sub-sharding not needed with hash function. Resharding: trigger at 25GB per shard, fully automated with Mongo balancer. Cross-shard ops: most queries are single-user (routable), rare multi-user aggregations via scatter-gather. Replication: 3-way replication per shard, RPO 0s, RTO <30s. Implementation: native MongoDB sharding, managed cloud service (Atlas), automatic balancing enabled. Monitoring: shard imbalance alerts, chunk migration tracking, per-shard query latency. Cost: 256 shards × $500/month = $128K/month, alternative (vertical scaling) would hit single-node limits in 18 months. Timeline: sharding implementation 4 weeks, gradual shard addition (8 shards/month), full 256-shard target in 32 months."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  }
+]

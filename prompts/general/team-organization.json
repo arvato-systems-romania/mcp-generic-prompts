@@ -1,0 +1,215 @@
+[
+  {
+    "id": "distributed-team-practices",
+    "title": "Distributed Engineering Team Best Practices",
+    "description": "Establishes effective workflows and practices for geographically distributed engineering teams including async communication, collaboration patterns, and cultural guidelines.",
+    "category": "team",
+    "tags": [
+      "distributed-teams",
+      "remote-work",
+      "collaboration",
+      "organization",
+      "culture"
+    ],
+    "template": "Design distributed team practices for {{organization}}.\n\n1. Time Zone Challenges:\n   - Document all team member time zones\n   - Define \"overlap hours\" for synchronous collaboration\n   - Establish async-first communication defaults\n   - Schedule recurring meetings during optimal overlap\n   - Rotate meeting times for fairness\n\n2. Synchronous Communication Guidelines:\n   - Meeting purposes and decision-making authority\n   - Recording and note-taking for async catchup\n   - Decision log for transparency\n   - RFCs (Request for Comments) for major decisions\n   - Status meetings vs working sessions\n\n3. Asynchronous Communication Norms:\n   - Documentation as source of truth\n   - Ticket/issue tracking for decisions\n   - Thread-based discussions (Slack, forums)\n   - Response time expectations by priority\n   - Context provision (background, links, rationale)\n\n4. Knowledge Management:\n   - Centralized wiki (Confluence, Notion, GitHub wiki)\n   - Decision records (ADRs - Architecture Decision Records)\n   - Runbooks and operational guides\n   - Regular documentation audits\n   - Video tutorials for complex topics\n   - Onboarding playbook\n\n5. Collaboration Patterns:\n   - Code review process (asynchronous)\n   - Pull request guidelines and SLA\n   - Pair programming (scheduled or ad-hoc)\n   - Office hours for questions\n   - \"Quick sync\" slots for urgent issues\n   - Shared calendars for availability\n\n6. Tools & Infrastructure:\n   - Communication: {{communication_tool}}\n   - Documentation: {{docs_tool}}\n   - Code collaboration: GitHub with defined workflows\n   - Video: async recording + live calls\n   - Project management: {{project_tool}}\n   - Time zone tools (timezone.io, Every.time.zone)\n\n7. Culture & Connection:\n   - Virtual social events (optional, respect time zones)\n   - Celebration of wins (async-friendly)\n   - One-on-ones (scheduled across time zones)\n   - Team building activities\n   - Psychological safety and trust building\n   - Avoiding \"always on\" culture\n\n8. Hiring & Onboarding:\n   - Clear time zone policy (flexible, specific, or required)\n   - Onboarding buddy system\n   - Async-friendly first week\n   - 30-60-90 day plans\n   - Manager check-ins (async + sync)\n\n9. Metrics & Health:\n   - Team satisfaction survey (async participation)\n   - Collaboration effectiveness metrics\n   - Meeting load tracking\n   - Documentation freshness\n   - Async response time SLA tracking\n\nTeam Size: {{team_size}}\nTime Zone Spread: {{tz_spread}}\nCurrent Tools: {{current_tools}}\n\nOutput: Communication Norms | Collaboration Playbook | Tools & Setup | Onboarding Guide | Team Health Dashboard",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "organization": {
+          "type": "string",
+          "description": "Organization name"
+        },
+        "team_size": {
+          "type": "string",
+          "description": "Team size (e.g., '12 engineers')"
+        },
+        "tz_spread": {
+          "type": "string",
+          "description": "Time zone spread (e.g., 'UTC-8 to UTC+8 (16 hours)', 'UTC-5 to UTC (5 hours)')"
+        },
+        "communication_tool": {
+          "type": "string",
+          "enum": [
+            "slack",
+            "microsoft-teams",
+            "discord",
+            "custom"
+          ],
+          "description": "Primary communication tool"
+        },
+        "docs_tool": {
+          "type": "string",
+          "enum": [
+            "confluence",
+            "notion",
+            "github-wiki",
+            "gitbook"
+          ],
+          "description": "Documentation platform"
+        },
+        "project_tool": {
+          "type": "string",
+          "enum": [
+            "jira",
+            "linear",
+            "asana",
+            "github-projects"
+          ],
+          "description": "Project management tool"
+        }
+      },
+      "required": [
+        "organization",
+        "team_size",
+        "tz_spread",
+        "communication_tool"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "organization": "tech-startup",
+          "team_size": "18 engineers (US West, EU, Asia-Pacific)",
+          "tz_spread": "UTC-8 to UTC+8 (16 hours)",
+          "communication_tool": "slack",
+          "docs_tool": "notion",
+          "project_tool": "linear"
+        },
+        "output_outline": "Communication norms: Slack is default, no Slack notifications after 6pm local time, async-first mindset. Overlap hours: 9am PT to 12pm PT is \"core hours\" for synchronous work (covers US West, EU early morning). Meetings: all-hands weekly (rotates 2 time slots for fairness), sprint planning async (48hr discussion window), retros in person when possible (quarterly off-sites). Decision-making: major decisions via RFC in Slack (#rfc channel), minimum 48hr response window, recorded in Linear tickets with rationale. Documentation: Notion for team processes (playbooks, onboarding, best practices), GitHub wiki for technical decisions (ADRs), READMEs in code repos. Async communication: Slack threads mandatory, PR reviews SLA 24hr for changes outside review, 48hr for cross-team changes. Code review: GitHub PRs reviewed async, pair programming scheduled explicitly. Collaboration: daily async standup via Linear (not Slack), weekly 30min all-hands sync, office hours 2x/week (EU-friendly, US-friendly). Tools setup: shared calendar with time zones, /remind for async updates, integration with Linear for notifications. Onboarding: buddy assigned, async docs-first introduction, manager 1:1s (async Slack, weekly video call). Expected: high engagement, low burnout, 90% async-capable workflow, team cohesion maintained across 16 hour TZ spread."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "code-ownership-model",
+    "title": "Code Ownership & RACI Responsibility Matrix",
+    "description": "Establishes clear code ownership, responsibility, and decision-making authority through RACI matrices, avoiding ambiguity and bottlenecks.",
+    "category": "team",
+    "tags": [
+      "code-ownership",
+      "responsibility",
+      "raci",
+      "team-structure",
+      "governance"
+    ],
+    "template": "Design code ownership model for {{organization}}.\n\n1. Current State Assessment:\n   - Identify code areas with unclear ownership\n   - Current bottlenecks and pain points\n   - Expertise distribution\n   - Team structure and boundaries\n   - High-risk or critical systems\n\n2. Ownership Models Comparison:\n   - Team-based ownership (team owns service/module)\n   - Individual owners with backups\n   - Domain-based (feature/business domain)\n   - Hierarchical (ownership chain)\n   - Guild model (expertise communities)\n\n3. Define Code Owners:\n   - Primary owner (day-to-day responsibility)\n   - Backup owner (cover absences)\n   - Stewards (expertise/architectural)\n   - Contributors (can merge to this area)\n   - Reviewers (must review changes)\n\n4. RACI Matrix Components:\n   - Responsible: Does the work\n   - Accountable: Decision authority\n   - Consulted: Provides input\n   - Informed: Kept in the loop\n\n5. RACI by Activity Type:\n   - Feature development\n   - Bug fixes\n   - Architecture changes\n   - Dependency upgrades\n   - Performance optimizations\n   - Security patches\n   - Production incidents\n\n6. Implementation Mechanisms:\n   - CODEOWNERS file in repository\n   - GitHub branch protection rules\n   - Slack notifications to owners\n   - Code review process\n   - Escalation procedures\n\n7. Dispute Resolution:\n   - Escalation path (to tech lead, architect)\n   - Decision-making framework\n   - Time-bounded decisions\n   - Override procedures\n\n8. Balancing Act:\n   - Avoid single points of failure\n   - Spread knowledge across teams\n   - Clear accountability\n   - Preventing bottlenecks\n   - Enabling autonomy\n\nOrganization: {{organization}}\nTeam Structure: {{team_structure}}\nCritical Systems: {{critical_systems}}\n\nOutput: CODEOWNERS Files | RACI Matrices | Ownership Guidelines | Escalation Procedures | Knowledge Transfer Plan",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "organization": {
+          "type": "string",
+          "description": "Organization name"
+        },
+        "team_structure": {
+          "type": "string",
+          "description": "Current team structure (e.g., '3 backend teams, 2 frontend teams')"
+        },
+        "critical_systems": {
+          "type": "string",
+          "description": "Critical systems (e.g., 'payment service, auth, user database')"
+        },
+        "current_issues": {
+          "type": "string",
+          "description": "Current ownership pain points"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "small",
+            "medium",
+            "large",
+            "very-large"
+          ],
+          "description": "Org size"
+        }
+      },
+      "required": [
+        "organization",
+        "team_structure",
+        "critical_systems"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "organization": "saas-company",
+          "team_structure": "4 backend teams (payments, orders, search, analytics), 2 frontend teams (web, mobile)",
+          "critical_systems": "payment service, user auth, database",
+          "current_issues": "payment service changes slow (single owner), unclear who owns shared utilities",
+          "size": "medium"
+        },
+        "output_outline": "Model: Domain-based ownership with team accountability. CODEOWNERS: (1) payments/ → team-payments (@team-payments), backup @payment-lead, critical reviewer @security-team; (2) auth/ → team-auth (same pattern); (3) shared/utils/ → @platform-team (owned by platform team, all teams can contribute with code review). RACI: Feature development (Responsible: team, Accountable: tech lead, Consulted: security/ops, Informed: PM). Dependency upgrades (Responsible: team, Accountable: tech lead, Consulted: platform-team, Informed: all). Security patches (Responsible: security-team, Accountable: security-lead, Consulted: affected-teams, Informed: all). Production incidents (Responsible: on-call, Accountable: team-lead, Consulted: owner, Informed: all). Escalation: team-lead → tech-lead → CTO (3-day decision max). GitHub: branch protection requires code-owner approval, status checks for tests. Shared utilities: 2 approvals required (1 platform-team, 1 any-team). Knowledge transfer: 20% time for expertise documentation, quarterly architecture reviews. Expected: payment service changes now parallelizable (multiple owners), shared code easier to maintain, clearer accountability, <5% escalations."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "developer-experience-audit",
+    "title": "Developer Experience (DX) Audit & Improvement Plan",
+    "description": "Audits developer experience including tooling, workflows, onboarding, and productivity, providing data-driven improvement roadmap.",
+    "category": "team",
+    "tags": [
+      "developer-experience",
+      "productivity",
+      "tooling",
+      "workflow",
+      "metrics"
+    ],
+    "template": "Conduct DX audit for {{organization}}.\n\n1. Current State Assessment:\n   - Developer satisfaction survey\n   - Time-motion study (daily activities)\n   - Tooling inventory (current stack)\n   - Workflow pain points (interviews)\n   - Onboarding experience (new hire feedback)\n\n2. Key DX Metrics:\n   - Onboarding time (new dev → first commit)\n   - Build time (local, CI/CD)\n   - Time to first deployment\n   - Development environment setup time\n   - Test execution time (local, CI)\n   - Code review cycle time\n   - Release time (from merge to production)\n   - Context-switching overhead\n\n3. Workflow Analysis:\n   - Local development setup\n   - IDE/editor experience\n   - Build and compilation\n   - Testing (unit, integration, E2E)\n   - Code review and CI/CD\n   - Debugging experience\n   - Documentation access\n\n4. Tooling Assessment:\n   - Language and framework choices\n   - Build tools (Maven, Gradle, npm, cargo)\n   - Container/virtualization (Docker, Vagrant)\n   - Testing frameworks and CI/CD tools\n   - Monitoring and logging\n   - Documentation tools\n\n5. Pain Points & Bottlenecks:\n   - Slow builds/tests (>5 min)\n   - Environment inconsistencies\n   - Complex onboarding (>1 week)\n   - Unclear documentation\n   - Slow code review feedback\n   - Difficult debugging\n   - Too many context switches\n\n6. Quick Wins (0-2 weeks):\n   - Cache optimization for builds\n   - Parallel test execution\n   - Better documentation with examples\n   - Faster feedback loops\n\n7. Medium-term Improvements (1-3 months):\n   - Automated setup scripts\n   - Local environment improvements\n   - Better monitoring dashboards\n   - Code generation and scaffolding\n\n8. Strategic Investments (3+ months):\n   - Monorepo migration\n   - Microservice infrastructure\n   - Advanced debugging tools\n   - Internal platform improvements\n\nOrganization: {{organization}}\nTeam Size: {{team_size}}\nCurrent Tools: {{current_tools}}\nPain Points: {{pain_points}}\n\nOutput: DX Audit Report | Metrics Baseline | Pain Point Analysis | Quick Wins | Improvement Roadmap | ROI Analysis",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "organization": {
+          "type": "string",
+          "description": "Organization name"
+        },
+        "team_size": {
+          "type": "string",
+          "description": "Team size (e.g., '25 engineers')"
+        },
+        "current_tools": {
+          "type": "string",
+          "description": "Current tech stack/tools (e.g., 'Java/Maven/Jenkins/Docker')"
+        },
+        "pain_points": {
+          "type": "string",
+          "description": "Known pain points (e.g., 'slow builds, complex onboarding')"
+        },
+        "satisfaction": {
+          "type": "string",
+          "enum": [
+            "very-low",
+            "low",
+            "medium",
+            "high"
+          ],
+          "description": "Current developer satisfaction level"
+        }
+      },
+      "required": [
+        "organization",
+        "team_size",
+        "current_tools"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "organization": "fintech-corp",
+          "team_size": "40 engineers (Java backend, React frontend)",
+          "current_tools": "Java 11/Maven/Jenkins/Docker/Kubernetes",
+          "pain_points": "slow Maven builds (12min), complex local setup (2 days), long CI/CD (30min), test coverage low",
+          "satisfaction": "low"
+        },
+        "output_outline": "Audit findings: Onboarding 48 hours (vs goal <4 hours), build time 12min local (vs target 2min), full CI/CD 30min (vs target <10min), test coverage 35% (vs target >80%), developer satisfaction 3.2/5. Root causes: Maven dependency downloading, slow unit tests (no parallelism), complex Docker setup, incomplete documentation. Quick wins: (1) Maven cache optimization (-4min); (2) Parallel test execution (-3min); (3) Improve README with screenshots (save 1hr onboarding); (4) Pre-built Docker images. Medium-term: local Kubernetes alternative (Skaffold/Tilt), Gradle instead of Maven (-30%), better IDE integration. Strategic: monorepo with gradle multi-project, internal developer platform. Metrics baseline: build 12min → target 2min (6 week effort), onboarding 48hr → 4hr (2 week effort), CI/CD 30min → 8min (4 week effort). ROI: 25 engineers × 0.5 hrs/day faster = 125 hours/week = 6500 hrs/year savings = $650K/year (at $100/hr eng cost). Investment: 200 hours = $20K one-time. Payback: 1 week. Satisfaction expectation: 3.2 → 4.5/5 within 3 months."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  }
+]

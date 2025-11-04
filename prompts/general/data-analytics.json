@@ -1,0 +1,241 @@
+[
+  {
+    "id": "data-pipeline-architecture",
+    "title": "Data Pipeline Architecture & ETL/ELT Design",
+    "description": "Designs end-to-end data pipeline architectures including ingestion, transformation, storage, and orchestration for batch and real-time processing.",
+    "category": "data",
+    "tags": [
+      "data-engineering",
+      "etl",
+      "pipeline",
+      "orchestration",
+      "analytics"
+    ],
+    "template": "Design data pipeline for {{project_name}}.\n\n1. Data Sources & Ingestion:\n   - Source systems (databases, APIs, logs, events)\n   - Data volume and velocity\n   - Batch vs real-time ingestion\n   - Data freshness requirements\n   - Protocol and format (JSON, Parquet, Avro)\n   - Change Data Capture (CDC) for incremental loads\n\n2. Ingestion Layer Architecture:\n   - Connectors or custom extractors\n   - Ingestion framework (Kafka, AWS Glue, Airflow)\n   - Retry and error handling\n   - Monitoring and alerting\n   - Scalability and throughput\n\n3. Data Storage Strategy:\n   - Raw/Bronze layer (immutable)\n   - Curated/Silver layer (cleaned, deduplicated)\n   - Analytics/Gold layer (business-ready)\n   - Data lake vs data warehouse\n   - Format optimization (Parquet for columnar)\n\n4. Transformation Logic:\n   - Data cleaning (nulls, duplicates, outliers)\n   - Type conversions and validation\n   - Business logic implementation\n   - Joins and enrichment\n   - Aggregations and rollups\n   - Slowly changing dimensions (SCD)\n\n5. Transformation Technology:\n   - SQL-based (dbt, Spark SQL)\n   - Python/Scala (Spark, Pandas)\n   - Streaming (Flink, Spark Streaming, Kafka Streams)\n   - Orchestration tool ({{orchestrator}})\n\n6. Orchestration & Scheduling:\n   - DAG definition and dependencies\n   - Cron-based scheduling or event-driven\n   - Execution monitoring\n   - SLA tracking\n   - Error recovery and retries\n   - Resource provisioning (auto-scaling)\n\n7. Data Quality & Validation:\n   - Schema validation\n   - Completeness checks\n   - Freshness monitoring\n   - Statistical validation\n   - Data lineage tracking\n\n8. Performance & Cost Optimization:\n   - Query performance tuning\n   - Materialized views and caching\n   - Partitioning strategy\n   - Cost tracking by pipeline\n   - Resource optimization\n\nData Sources: {{sources}}\nOrchestrator: {{orchestrator}}\nData Volume: {{volume}}\nFreshness Requirement: {{freshness}}\n\nOutput: Pipeline Architecture Diagram | Implementation Roadmap | Technology Recommendations | Cost Estimates | Monitoring Strategy",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "description": "Name of the project/analytics platform"
+        },
+        "sources": {
+          "type": "string",
+          "description": "Data sources (e.g., 'PostgreSQL, Kafka, S3, APIs')"
+        },
+        "orchestrator": {
+          "type": "string",
+          "enum": [
+            "airflow",
+            "dbt-cloud",
+            "prefect",
+            "dagster",
+            "kube-flow"
+          ],
+          "description": "Orchestration tool"
+        },
+        "volume": {
+          "type": "string",
+          "description": "Data volume (e.g., '500GB/day', '1TB total')"
+        },
+        "freshness": {
+          "type": "string",
+          "enum": [
+            "real-time",
+            "near-real-time",
+            "hourly",
+            "daily",
+            "weekly"
+          ],
+          "description": "Data freshness requirement"
+        }
+      },
+      "required": [
+        "project_name",
+        "sources",
+        "orchestrator",
+        "volume",
+        "freshness"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "project_name": "user-analytics",
+          "sources": "PostgreSQL (user events), Kafka (clickstream), S3 (historical)",
+          "orchestrator": "airflow",
+          "volume": "200GB/day",
+          "freshness": "hourly"
+        },
+        "output_outline": "Architecture: 3-layer medallion (raw/silver/gold). Ingestion: Kafka Connect for clickstream (real-time), PostgreSQL CDC via Debezium (hourly), S3 incremental imports (daily). Storage: raw data in S3/Parquet (partitioned by date), silver layer with deduplication and joins (Spark SQL), gold layer with business metrics (hourly snapshots). Transformation: dbt for SQL transformations, Spark for large joins, Python for ML features. Orchestration: Airflow DAGs - clickstream ingestion (every 5min), hourly aggregations (top of hour), daily rollups (2am UTC). Data quality: Great Expectations for validation, PagerDuty alerts on failures. Cost: ~$8K/month (EC2 clusters, storage). Monitoring: Datadog dashboards, SLA tracking (99% freshness within 5min). Timeline: MVP 6 weeks, production 10 weeks. Expected: 1 hour end-to-end latency, 95% test coverage for transformations."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "streaming-architecture",
+    "title": "Real-Time Streaming Data Architecture",
+    "description": "Designs scalable real-time data streaming systems for event processing, analytics, and operational insights with correctness guarantees.",
+    "category": "data",
+    "tags": [
+      "streaming",
+      "real-time",
+      "event-driven",
+      "data-engineering",
+      "kafka"
+    ],
+    "template": "Design streaming architecture for {{application_name}}.\n\n1. Event Definition & Schema:\n   - Event types and frequency\n   - Event schema and versioning\n   - Event ordering requirements\n   - Deduplication strategy\n   - Timestamp vs arrival time\n\n2. Event Ingestion:\n   - Producer: application events, sensors, logs\n   - Protocol: HTTP, gRPC, message queue\n   - Message broker: {{message_broker}}\n   - Partitioning strategy (for parallelism)\n   - Retention policy\n\n3. Stream Processing:\n   - Processing framework: {{stream_framework}}\n   - Stateless transformations (filtering, mapping, enrichment)\n   - Stateful processing (windowing, joins, aggregations)\n   - Late arriving data handling\n   - Session windows vs tumbling windows\n\n4. Event Time vs Processing Time:\n   - Watermarking strategy\n   - Allowed lateness configuration\n   - Out-of-order event handling\n   - Clock synchronization\n\n5. State Management:\n   - State backend (in-memory, RocksDB)\n   - State versioning and upgrades\n   - Exactly-once semantics\n   - Checkpoint and savepoint strategies\n\n6. Sinks & Output:\n   - Real-time outputs (dashboards, alerts)\n   - Database sinks (updates, inserts)\n   - Data lake/warehouse sinks\n   - Multiple output topics for fan-out\n\n7. Scalability & Resilience:\n   - Horizontal scaling via partitions\n   - Failure recovery and failover\n   - Backpressure handling\n   - Resource provisioning\n\n8. Monitoring & Observability:\n   - Lag monitoring (consumer lag)\n   - End-to-end latency tracking\n   - Processing rate metrics\n   - Alert thresholds\n   - Debugging tools\n\nMessage Broker: {{message_broker}}\nStream Framework: {{stream_framework}}\nEvent Volume: {{event_volume}}\nLatency Requirement: {{latency_requirement}}\n\nOutput: Streaming Architecture | Event Schema | Processing Topology | Scalability Plan | Operational Runbook",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application_name": {
+          "type": "string",
+          "description": "Name of the application"
+        },
+        "message_broker": {
+          "type": "string",
+          "enum": [
+            "kafka",
+            "rabbitmq",
+            "kinesis",
+            "pubsub",
+            "nats"
+          ],
+          "description": "Message broker platform"
+        },
+        "stream_framework": {
+          "type": "string",
+          "enum": [
+            "kafka-streams",
+            "flink",
+            "spark-streaming",
+            "beam",
+            "kinesis-analytics"
+          ],
+          "description": "Stream processing framework"
+        },
+        "event_volume": {
+          "type": "string",
+          "description": "Event volume (e.g., '100K events/sec', '10M events/day')"
+        },
+        "latency_requirement": {
+          "type": "string",
+          "enum": [
+            "millisecond",
+            "sub-second",
+            "seconds",
+            "minutes"
+          ],
+          "description": "End-to-end latency requirement"
+        }
+      },
+      "required": [
+        "application_name",
+        "message_broker",
+        "stream_framework",
+        "event_volume",
+        "latency_requirement"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "application_name": "fraud-detection",
+          "message_broker": "kafka",
+          "stream_framework": "flink",
+          "event_volume": "50K transactions/sec",
+          "latency_requirement": "millisecond"
+        },
+        "output_outline": "Architecture: Kafka topics (transactions, fraud-alerts), Flink job for real-time fraud scoring. Event schema: TransactionEvent (user_id, amount, merchant, timestamp), versioned with Avro. Processing: stateful enrichment (user history from state store), fraud scoring model (ML model served), windowed aggregations (user spend last hour). Exactly-once semantics via Kafka transactions and Flink checkpoints (every 10sec). Watermarking: 30sec allowed lateness for late transactions. State: RocksDB for 24-hour user activity windows. Output: fraud alerts to separate Kafka topic (<100ms latency), dashboard updates (Kafka → Elasticsearch → Kibana). Scalability: Kafka 8 partitions (1 per 6.25K TPS), Flink 16 parallelism tasks. Resilience: auto-rebalancing on node failure, 30sec failover time. Monitoring: Flink metrics (lag <5sec), custom alerts on false positive rate >5%. Cost: $12K/month (Kafka cluster + Flink resources). SLA: 99.99% uptime, <100ms fraud decision."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  },
+  {
+    "id": "data-governance-framework",
+    "title": "Data Governance & Quality Framework",
+    "description": "Establishes comprehensive data governance including ownership, quality standards, lineage tracking, compliance, and best practices for data management.",
+    "category": "data",
+    "tags": [
+      "data-governance",
+      "data-quality",
+      "metadata",
+      "compliance",
+      "data-ops"
+    ],
+    "template": "Design data governance framework for {{organization}}.\n\n1. Data Inventory & Classification:\n   - Catalog all data assets\n   - Classify by sensitivity (public, internal, restricted)\n   - Identify personally identifiable information (PII)\n   - Tag by business domain\n   - Document data lineage\n\n2. Data Ownership Model:\n   - Assign data owners (business accountability)\n   - Assign data stewards (day-to-day management)\n   - RACI matrix for data decisions\n   - Escalation procedures\n\n3. Data Quality Standards:\n   - Completeness: all required fields populated\n   - Accuracy: data matches source of truth\n   - Consistency: uniform format and values\n   - Timeliness: data freshness requirements\n   - Uniqueness: no duplicates\n\n4. Data Quality Monitoring:\n   - Automated validation rules (Great Expectations, dbt tests)\n   - Anomaly detection\n   - Alert thresholds per metric\n   - SLA tracking\n   - Incident management\n\n5. Access Control & Security:\n   - Role-based access control (RBAC)\n   - Data encryption (at rest, in transit)\n   - Audit logging and tracking\n   - Data masking for sensitive fields\n   - Compliance controls (GDPR, HIPAA, PCI-DSS)\n\n6. Data Lineage & Metadata:\n   - Track data flow (source → transformation → sink)\n   - Column-level lineage\n   - Metadata management system\n   - Automated documentation\n   - Impact analysis tools\n\n7. Governance Policies:\n   - Data retention policies\n   - Data deletion procedures\n   - Use policies and restrictions\n   - Change management process\n   - Compliance requirements\n\n8. Tools & Technology:\n   - Data catalog: {{data_catalog}}\n   - Data quality: {{quality_tool}}\n   - Metadata management: {{metadata_tool}}\n   - Access control: {{access_tool}}\n   - Monitoring: {{monitoring_tool}}\n\nOrganization Size: {{org_size}}\nData Maturity: {{maturity}}\nCompliance Requirements: {{compliance}}\n\nOutput: Governance Framework | Ownership Model | Quality Standards | Policy Documents | Implementation Roadmap | Tool Recommendations",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "organization": {
+          "type": "string",
+          "description": "Organization name"
+        },
+        "data_catalog": {
+          "type": "string",
+          "enum": [
+            "collibra",
+            "alation",
+            "data-governance-cloud",
+            "custom"
+          ],
+          "description": "Data catalog tool"
+        },
+        "quality_tool": {
+          "type": "string",
+          "enum": [
+            "great-expectations",
+            "dbt-tests",
+            "custom",
+            "soda"
+          ],
+          "description": "Data quality tool"
+        },
+        "org_size": {
+          "type": "string",
+          "description": "Organization size (e.g., '500 employees, 200 data users')"
+        },
+        "maturity": {
+          "type": "string",
+          "enum": [
+            "beginner",
+            "intermediate",
+            "advanced"
+          ],
+          "default": "intermediate"
+        },
+        "compliance": {
+          "type": "string",
+          "description": "Compliance requirements (e.g., 'GDPR, HIPAA, PCI-DSS')"
+        }
+      },
+      "required": [
+        "organization",
+        "data_catalog",
+        "quality_tool",
+        "org_size",
+        "compliance"
+      ]
+    },
+    "examples": [
+      {
+        "input": {
+          "organization": "fintech-startup",
+          "data_catalog": "alation",
+          "quality_tool": "great-expectations",
+          "org_size": "150 employees, 40 data users",
+          "maturity": "intermediate",
+          "compliance": "GDPR, PCI-DSS, SOC2"
+        },
+        "output_outline": "Inventory: 120 data assets (45 tables, 30 APIs, 25 files, 20 topics), classified: 5% public, 70% internal, 25% restricted. Ownership: CFO → finance data owner, VP Eng → product data owner, Privacy officer → PII steward. Quality: 4 dimensions (completeness >99%, accuracy validated via daily tests, consistency via referential integrity, timeliness within SLA). Monitoring: Great Expectations runs post-load, Slack alerts on failures, 99.5% quality SLA. Access: RBAC (analyst, engineer, data-scientist, admin roles), restricted data encrypted, audit logs in CloudTrail. Lineage: 80+ transformation pipelines tracked, Alation catalog shows downstream consumers, impact analysis for schema changes. Policies: 7-year retention for transactions, PII masked in non-prod, quarterly compliance audit. Tools: Alation ($50K/year), Great Expectations (open source + cloud), AWS KMS for encryption, Okta for auth. Implementation: Phase 1 (Week 1-2): catalog current assets, Phase 2 (Week 3-4): establish ownership, Phase 3 (Week 5-8): deploy quality monitoring, Phase 4 (Week 9-12): governance workflows and policies."
+      }
+    ],
+    "version": "1.0.0",
+    "created_utc": "2025-11-04T08:37:00Z",
+    "last_modified_utc": "2025-11-04T08:37:00Z"
+  }
+]
