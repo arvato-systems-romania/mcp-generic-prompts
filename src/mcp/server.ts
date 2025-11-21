@@ -150,6 +150,26 @@ export async function createMcpServer(): Promise<Server> {
       if (name === 'searchPrompts') {
         const { query } = validateSearchArgs(args);
         const prompts = await loadPrompts();
+
+        // If query is empty, return summary instead of full details
+        if (query.trim() === '') {
+          const summary = {
+            totalPrompts: prompts.length,
+            message: 'Please provide a search query to find specific prompts',
+            categories: Array.from(new Set(prompts.map((p) => p.id.split('/')[0]))).sort(),
+            hint: 'Try searching by category (e.g., "react", "api", "security") or description keywords',
+          };
+          logger.debug(`Empty query - returning summary of ${prompts.length} prompts`);
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(summary, null, 2),
+              },
+            ],
+          };
+        }
+
         const results = prompts.filter(
           (p) =>
             p.name?.toLowerCase().includes(query.toLowerCase()) ||
