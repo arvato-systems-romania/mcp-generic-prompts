@@ -1,1 +1,0 @@
-{"mcpServers":{"mcp-generic-prompt":{"command":"node","args":["dist/mcp-entry.cjs"],"disabled":false,"alwaysAllow":["searchPrompts"]}}}
