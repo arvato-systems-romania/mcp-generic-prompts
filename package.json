@@ -7,6 +7,26 @@
   "private": true,
   "license": "UNLICENSED",
   "description": "MCP server for managing and rendering generic prompt templates",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "llm",
+    "prompts",
+    "templates"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/mcp-generic-prompt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/mcp-generic-prompt/issues"
+  },
+  "homepage": "https://github.com/yourusername/mcp-generic-prompt#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "dev": "tsx watch src/mcp-entry.ts",
     "build": "vite build",

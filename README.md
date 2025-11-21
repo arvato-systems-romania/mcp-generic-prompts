@@ -5,7 +5,7 @@ A comprehensive Model Context Protocol (MCP) server that provides a curated libr
 ## 🎯 Overview
 
 This MCP server provides:
-- **multiple Professional Prompts** across multiple categories and technologies
+- **Professional Prompts** across multiple categories and technologies
 - **Hierarchical Organization** by framework (React, Angular, Vue, Python, Java, Node.js)
 - **Mustache Templating** for flexible variable substitution
 - **Search Capabilities** to discover relevant prompts
@@ -18,7 +18,7 @@ npm install
 npm run build
 ```
 
-The built server will be available at [`dist/mcp-entry.js`](dist/mcp-entry.js).
+The built server will be available at [`dist/mcp-entry.cjs`](dist/mcp-entry.cjs).
 
 ## 🚀 Quick Start
 
@@ -33,7 +33,7 @@ Add to your Claude Desktop config:
   "mcpServers": {
     "generic-prompts": {
       "command": "node",
-      "args": ["/absolute/path/to/mcp-generic-prompt/dist/mcp-entry.js"]
+      "args": ["/absolute/path/to/mcp-generic-prompt/dist/mcp-entry.cjs"]
     }
   }
 }
