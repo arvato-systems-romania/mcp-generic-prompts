@@ -24,16 +24,19 @@ Claude Desktop is the official desktop application from Anthropic with native MC
 ### Configuration
 
 **macOS:**
+
 ```bash
 # Location: ~/Library/Application Support/Claude/claude_desktop_config.json
 ```
 
 **Windows:**
+
 ```bash
 # Location: %APPDATA%\Claude\claude_desktop_config.json
 ```
 
 **Linux:**
+
 ```bash
 # Location: ~/.config/Claude/claude_desktop_config.json
 ```
@@ -109,6 +112,7 @@ You can also configure MCP servers in the workspace-specific `.roo/mcp.json` fil
 ### Advanced Features
 
 Roo Code provides enhanced MCP integration:
+
 - **Contextual prompt suggestions** based on current file/selection
 - **Automatic variable population** from workspace context
 - **Multi-file analysis** with prompt templates
@@ -197,6 +201,7 @@ Roo Code provides enhanced MCP integration:
 **Note:** GitHub Copilot Chat's MCP support is currently in preview. Configuration may vary based on your version.
 
 **Option 1: VSCode Settings**
+
 ```json
 {
   "github.copilot.chat.mcpServers": {
@@ -211,6 +216,7 @@ Roo Code provides enhanced MCP integration:
 **Option 2: Workspace Configuration**
 
 Create `.vscode/mcp-servers.json` in your workspace:
+
 ```json
 {
   "generic-prompts": {
@@ -262,52 +268,55 @@ Copilot: Here are the optimization recommendations...
 ### TypeScript/Node.js Client
 
 ```typescript
-import { Client } from "@modelcontextprotocol/sdk/client/index.js";
-import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 
 // Create MCP client
 const transport = new StdioClientTransport({
-  command: "node",
-  args: ["/path/to/mcp-generic-prompt/dist/mcp-entry.js"]
+  command: 'node',
+  args: ['/path/to/mcp-generic-prompt/dist/mcp-entry.js'],
 });
 
-const client = new Client({
-  name: "my-app",
-  version: "1.0.0"
-}, {
-  capabilities: {}
-});
+const client = new Client(
+  {
+    name: 'my-app',
+    version: '1.0.0',
+  },
+  {
+    capabilities: {},
+  }
+);
 
 await client.connect(transport);
 
 // Call renderPrompt tool
 const result = await client.callTool({
-  name: "renderPrompt",
+  name: 'renderPrompt',
   arguments: {
-    id: "react-hooks-optimization",
+    id: 'react-hooks-optimization',
     variables: {
-      component_name: "UserDashboard",
-      react_code: "const [users, setUsers] = useState([])...",
-      framework_version: "18.2.0"
-    }
-  }
+      component_name: 'UserDashboard',
+      react_code: 'const [users, setUsers] = useState([])...',
+      framework_version: '18.2.0',
+    },
+  },
 });
 
 console.log(result.content[0].text);
 
 // Search prompts
 const searchResult = await client.callTool({
-  name: "searchPrompts",
+  name: 'searchPrompts',
   arguments: {
-    query: "security vulnerability"
-  }
+    query: 'security vulnerability',
+  },
 });
 
 console.log(searchResult.content[0].text);
 
 // Access resources
 const resource = await client.readResource({
-  uri: "prompt://react-hooks-optimization"
+  uri: 'prompt://react-hooks-optimization',
 });
 
 console.log(JSON.parse(resource.contents[0].text));
@@ -332,7 +341,7 @@ async def use_prompts():
         async with ClientSession(read, write) as session:
             # Initialize connection
             await session.initialize()
-            
+
             # Render a prompt
             result = await session.call_tool(
                 "renderPrompt",
@@ -346,14 +355,14 @@ async def use_prompts():
                 }
             )
             print(result.content[0].text)
-            
+
             # Search prompts
             search = await session.call_tool(
                 "searchPrompts",
                 arguments={"query": "python async"}
             )
             print(search.content[0].text)
-            
+
             # Read resource
             resource = await session.read_resource(
                 "prompt://fastapi-best-practices"
@@ -403,7 +412,7 @@ async def render_prompt(request: PromptRequest):
     async with await get_mcp_session() as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            
+
             result = await session.call_tool(
                 "renderPrompt",
                 arguments={
@@ -411,7 +420,7 @@ async def render_prompt(request: PromptRequest):
                     "variables": request.variables
                 }
             )
-            
+
             return {
                 "prompt": result.content[0].text,
                 "id": request.prompt_id
@@ -423,12 +432,12 @@ async def search_prompts(request: SearchRequest):
     async with await get_mcp_session() as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            
+
             result = await session.call_tool(
                 "searchPrompts",
                 arguments={"query": request.query}
             )
-            
+
             return {"results": result.content[0].text}
 
 @app.get("/api/prompts/{prompt_id}")
@@ -437,11 +446,11 @@ async def get_prompt(prompt_id: str):
     async with await get_mcp_session() as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            
+
             resource = await session.read_resource(
                 f"prompt://{prompt_id}"
             )
-            
+
             import json
             return json.loads(resource.contents[0].text)
 ```
@@ -463,40 +472,37 @@ app.use(express.json());
 // Create reusable MCP client
 class PromptService {
   private client: Client;
-  
+
   async initialize() {
     const transport = new StdioClientTransport({
       command: 'node',
-      args: ['/path/to/mcp-generic-prompt/dist/mcp-entry.js']
+      args: ['/path/to/mcp-generic-prompt/dist/mcp-entry.js'],
     });
-    
-    this.client = new Client(
-      { name: 'express-api', version: '1.0.0' },
-      { capabilities: {} }
-    );
-    
+
+    this.client = new Client({ name: 'express-api', version: '1.0.0' }, { capabilities: {} });
+
     await this.client.connect(transport);
   }
-  
+
   async renderPrompt(id: string, variables: Record<string, any>) {
     const result = await this.client.callTool({
       name: 'renderPrompt',
-      arguments: { id, variables }
+      arguments: { id, variables },
     });
     return result.content[0].text;
   }
-  
+
   async searchPrompts(query: string) {
     const result = await this.client.callTool({
       name: 'searchPrompts',
-      arguments: { query }
+      arguments: { query },
     });
     return result.content[0].text;
   }
-  
+
   async getPrompt(id: string) {
     const resource = await this.client.readResource({
-      uri: `prompt://${id}`
+      uri: `prompt://${id}`,
     });
     return JSON.parse(resource.contents[0].text);
   }
@@ -563,7 +569,7 @@ interface Prompt {
 export function usePrompts() {
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [loading, setLoading] = useState(false);
-  
+
   const searchPrompts = async (query: string) => {
     setLoading(true);
     try {
@@ -578,7 +584,7 @@ export function usePrompts() {
       setLoading(false);
     }
   };
-  
+
   const renderPrompt = async (id: string, variables: Record<string, any>) => {
     const response = await fetch('/api/render-prompt', {
       method: 'POST',
@@ -588,7 +594,7 @@ export function usePrompts() {
     const data = await response.json();
     return data.prompt;
   };
-  
+
   return { prompts, loading, searchPrompts, renderPrompt };
 }
 
@@ -597,26 +603,26 @@ export function PromptBrowser() {
   const { prompts, loading, searchPrompts, renderPrompt } = usePrompts();
   const [query, setQuery] = useState('');
   const [rendered, setRendered] = useState('');
-  
+
   const handleSearch = () => {
     searchPrompts(query);
   };
-  
+
   const handleRender = async (promptId: string) => {
     const variables = { /* collect from form */ };
     const result = await renderPrompt(promptId, variables);
     setRendered(result);
   };
-  
+
   return (
     <div>
-      <input 
+      <input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search prompts..."
       />
       <button onClick={handleSearch}>Search</button>
-      
+
       {loading ? <div>Loading...</div> : (
         <div>
           {prompts.map(prompt => (
@@ -630,7 +636,7 @@ export function PromptBrowser() {
           ))}
         </div>
       )}
-      
+
       {rendered && (
         <pre>{rendered}</pre>
       )}
@@ -654,21 +660,21 @@ PROMPT_SERVER="/path/to/mcp-generic-prompt/dist/mcp-entry.js"
 render_prompt() {
   local prompt_id="$1"
   local variables="$2"
-  
+
   # Create temporary Node.js script
   node -e "
     const { Client } = require('@modelcontextprotocol/sdk/client/index.js');
     const { StdioClientTransport } = require('@modelcontextprotocol/sdk/client/stdio.js');
-    
+
     (async () => {
       const transport = new StdioClientTransport({
         command: 'node',
         args: ['${PROMPT_SERVER}']
       });
-      
+
       const client = new Client({ name: 'cli', version: '1.0.0' }, { capabilities: {} });
       await client.connect(transport);
-      
+
       const result = await client.callTool({
         name: 'renderPrompt',
         arguments: {
@@ -676,7 +682,7 @@ render_prompt() {
           variables: ${variables}
         }
       });
-      
+
       console.log(result.content[0].text);
       await client.close();
     })();
@@ -685,25 +691,25 @@ render_prompt() {
 
 search_prompts() {
   local query="$1"
-  
+
   node -e "
     const { Client } = require('@modelcontextprotocol/sdk/client/index.js');
     const { StdioClientTransport } = require('@modelcontextprotocol/sdk/client/stdio.js');
-    
+
     (async () => {
       const transport = new StdioClientTransport({
         command: 'node',
         args: ['${PROMPT_SERVER}']
       });
-      
+
       const client = new Client({ name: 'cli', version: '1.0.0' }, { capabilities: {} });
       await client.connect(transport);
-      
+
       const result = await client.callTool({
         name: 'searchPrompts',
         arguments: { query: '${query}' }
       });
-      
+
       console.log(result.content[0].text);
       await client.close();
     })();
@@ -744,11 +750,11 @@ async def render_prompt(prompt_id: str, variables: dict):
         command="node",
         args=[SERVER_PATH]
     )
-    
+
     async with stdio_client(server_params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            
+
             result = await session.call_tool(
                 "renderPrompt",
                 arguments={
@@ -763,16 +769,16 @@ async def search_prompts(query: str):
         command="node",
         args=[SERVER_PATH]
     )
-    
+
     async with stdio_client(server_params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            
+
             result = await session.call_tool(
                 "searchPrompts",
                 arguments={"query": query}
             )
-            
+
             prompts = json.loads(result.content[0].text)
             for prompt in prompts:
                 print(f"\n{prompt['id']}")
@@ -784,26 +790,26 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: prompt_cli.py {render|search} <args>")
         sys.exit(1)
-    
+
     command = sys.argv[1]
-    
+
     if command == "render":
         if len(sys.argv) < 3:
             print("Usage: prompt_cli.py render <prompt_id> [variables_json]")
             sys.exit(1)
-        
+
         prompt_id = sys.argv[2]
         variables = json.loads(sys.argv[3]) if len(sys.argv) > 3 else {}
         asyncio.run(render_prompt(prompt_id, variables))
-    
+
     elif command == "search":
         if len(sys.argv) < 3:
             print("Usage: prompt_cli.py search <query>")
             sys.exit(1)
-        
+
         query = sys.argv[2]
         asyncio.run(search_prompts(query))
-    
+
     else:
         print(f"Unknown command: {command}")
         sys.exit(1)
@@ -840,6 +846,7 @@ export MCP_PROMPT_SERVER="/path/to/mcp-generic-prompt/dist/mcp-entry.js"
    - Verify the project is built (`npm run build`)
 
 2. **Permission denied**
+
    ```bash
    chmod +x /path/to/mcp-generic-prompt/dist/mcp-entry.js
    ```

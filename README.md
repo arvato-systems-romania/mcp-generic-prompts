@@ -5,6 +5,7 @@ A comprehensive Model Context Protocol (MCP) server that provides a curated libr
 ## 🎯 Overview
 
 This MCP server provides:
+
 - **Professional Prompts** across multiple categories and technologies
 - **Hierarchical Organization** by framework (React, Angular, Vue, Python, Java, Node.js)
 - **Mustache Templating** for flexible variable substitution
@@ -60,15 +61,15 @@ This server works with many MCP-compatible tools:
 ```typescript
 // Render a prompt with variables
 await client.callTool({
-  name: "renderPrompt",
+  name: 'renderPrompt',
   arguments: {
-    id: "react-hooks-optimization",
+    id: 'react-hooks-optimization',
     variables: {
-      component_name: "UserDashboard",
-      react_code: "const [data, setData] = useState(null)...",
-      framework_version: "18.2.0"
-    }
-  }
+      component_name: 'UserDashboard',
+      react_code: 'const [data, setData] = useState(null)...',
+      framework_version: '18.2.0',
+    },
+  },
 });
 ```
 
@@ -87,6 +88,7 @@ await client.callTool({
 ### Featured Prompts
 
 #### React Hooks Optimization
+
 ```typescript
 {
   id: "react-hooks-optimization",
@@ -97,6 +99,7 @@ await client.callTool({
 ```
 
 #### FastAPI Best Practices
+
 ```typescript
 {
   id: "fastapi-best-practices",
@@ -107,6 +110,7 @@ await client.callTool({
 ```
 
 #### SQL Query Optimization
+
 ```typescript
 {
   id: "sql-query-optimization",
@@ -125,10 +129,12 @@ See [`prompts/PROMPT_INDEX.md`](prompts/PROMPT_INDEX.md) for the complete catalo
 Renders a prompt template with variable substitution.
 
 **Parameters:**
+
 - `id` (string, required): Prompt identifier
 - `variables` (object, optional): Key-value pairs for variable substitution
 
 **Example:**
+
 ```json
 {
   "id": "spring-boot-performance-optimization",
@@ -147,9 +153,11 @@ Renders a prompt template with variable substitution.
 Search prompts by name, description, or tags.
 
 **Parameters:**
+
 - `query` (string, required): Search query
 
 **Example:**
+
 ```json
 {
   "query": "security"
@@ -216,10 +224,12 @@ Each prompt follows a comprehensive JSON schema:
     },
     "required": ["param_name"]
   },
-  "examples": [{
-    "input": { "param_name": "value" },
-    "output_outline": "Expected output description"
-  }],
+  "examples": [
+    {
+      "input": { "param_name": "value" },
+      "output_outline": "Expected output description"
+    }
+  ],
   "version": "1.0.0",
   "created_utc": "2025-01-15T10:00:00Z",
   "last_modified_utc": "2025-01-15T10:00:00Z"
@@ -236,20 +246,26 @@ Each prompt follows a comprehensive JSON schema:
 ## 🎨 Key Features
 
 ### Hierarchical Organization
+
 Prompts are organized by technology and framework:
+
 - Framework-specific prompts (React hooks, Vue composables, Angular RxJS)
 - Technology-specific optimizations (Java build tools, Python async patterns)
 - Domain-specific audits (security, performance, testing)
 
 ### Comprehensive Prompts
+
 Each prompt includes:
+
 - Detailed templates with multiple analysis sections
 - JSON Schema for input validation
 - Realistic examples with expected outputs
 - Version tracking and authorship
 
 ### Smart Search
+
 Search across:
+
 - Prompt titles and descriptions
 - Category and tag metadata
 - Technology-specific keywords
@@ -282,9 +298,11 @@ npm run build
 # Run tests (if available)
 npm test
 ```
+
 ## 🔐 Security
 
 This server:
+
 - Reads prompt templates from the filesystem (read-only)
 - Does not execute code or make external network calls
 - Validates input against JSON Schema

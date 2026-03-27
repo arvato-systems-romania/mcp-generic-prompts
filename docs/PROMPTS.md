@@ -76,6 +76,7 @@ Current version: {{framework_version}}
 ```
 
 **Variables:**
+
 ```json
 {
   "component_name": "UserDashboard",
@@ -84,6 +85,7 @@ Current version: {{framework_version}}
 ```
 
 **Output:**
+
 ```
 Analyze the UserDashboard component for performance issues.
 Current version: 18.2.0
@@ -115,11 +117,13 @@ Review the following files:
 - `{{{variable}}}`: Raw, unescaped (use for code blocks)
 
 **Example:**
-```mustache
+
+````mustache
 ```{{language}}
 {{{code}}}
-```
-```
+````
+
+````
 
 ---
 
@@ -170,13 +174,13 @@ Review the following files:
   "created_utc": "2025-01-15T10:00:00Z",
   "last_modified_utc": "2025-01-15T10:00:00Z"
 }
-```
+````
 
 ### SQL Query Optimization
 
 **File:** `prompts/database/sql-optimization.json`
 
-```json
+````json
 {
   "id": "sql-query-optimization",
   "title": "SQL Query Optimization & Performance Tuning",
@@ -214,11 +218,11 @@ Review the following files:
     }
   ],
   "version": "1.0.0",
-  
+
   "created_utc": "2025-01-15T10:00:00Z",
   "last_modified_utc": "2025-01-15T10:00:00Z"
 }
-```
+````
 
 ---
 
@@ -229,15 +233,15 @@ Review the following files:
 ```typescript
 // Example: Render a React optimization prompt
 const result = await client.callTool({
-  name: "renderPrompt",
+  name: 'renderPrompt',
   arguments: {
-    id: "react-hooks-optimization",
+    id: 'react-hooks-optimization',
     variables: {
-      component_name: "UserDashboard",
-      react_code: "const [data, setData] = useState(null);\nuseEffect(() => { fetchData(); });",
-      framework_version: "18.2.0"
-    }
-  }
+      component_name: 'UserDashboard',
+      react_code: 'const [data, setData] = useState(null);\nuseEffect(() => { fetchData(); });',
+      framework_version: '18.2.0',
+    },
+  },
 });
 
 console.log(result.content[0].text); // Rendered prompt
@@ -248,7 +252,7 @@ console.log(result.content[0].text); // Rendered prompt
 ```typescript
 // Access the raw prompt definition
 const resource = await client.readResource({
-  uri: "prompt:///react-hooks-optimization"
+  uri: 'prompt:///react-hooks-optimization',
 });
 
 console.log(JSON.parse(resource.contents[0].text));
@@ -259,10 +263,10 @@ console.log(JSON.parse(resource.contents[0].text));
 ```typescript
 // Search for relevant prompts
 const matches = await client.callTool({
-  name: "searchPrompts",
+  name: 'searchPrompts',
   arguments: {
-    query: "performance optimization"
-  }
+    query: 'performance optimization',
+  },
 });
 
 // Returns array of matching prompts with id, title, description
@@ -298,6 +302,7 @@ const matches = await client.callTool({
 4. **Define Success**: Specify what a good output looks like
 
 **Example Structure:**
+
 ```mustache
 Analyze {{thing}} for {{purpose}}.
 
@@ -399,6 +404,7 @@ prompts/
 ### File Organization
 
 **Single Prompt per File:**
+
 ```json
 // prompts/frontend/react/hooks-optimization.json
 {
@@ -408,6 +414,7 @@ prompts/
 ```
 
 **Multiple Related Prompts:**
+
 ```json
 // prompts/general/testing.json
 [
@@ -429,22 +436,24 @@ prompts/
 ### Step-by-Step Guide
 
 1. **Choose Directory**
+
    ```bash
    # Framework-specific
    prompts/{frontend|backend}/{framework}/your-prompt.json
-   
+
    # General category
    prompts/general/your-prompt.json
-   
+
    # Technology category
    prompts/{devops|security|database}/your-prompt.json
    ```
 
 2. **Create JSON File**
+
    ```bash
    # Single prompt
    touch prompts/backend/nodejs/express-performance.json
-   
+
    # Multiple prompts
    touch prompts/general/monitoring.json
    ```
@@ -452,12 +461,14 @@ prompts/
 3. **Follow Schema** (use examples above as templates)
 
 4. **Test Locally**
+
    ```bash
    npm run build
    # Test with MCP client or via searchPrompts
    ```
 
 5. **Update Documentation**
+
    ```bash
    # Add entry to prompts/PROMPT_INDEX.md
    ```

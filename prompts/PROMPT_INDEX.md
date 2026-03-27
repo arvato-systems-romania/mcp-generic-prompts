@@ -21,11 +21,13 @@ This document provides a comprehensive index of all available prompts organized 
 ### Core Utilities
 
 #### Code Review
+
 **File:** [`general/code_review.json`](general/code_review.json)  
 **ID:** `code_review`  
 Reviews code snippets for issues, improvements, and best practices.
 
 #### Documentation Writer
+
 **File:** [`general/doc_writer.json`](general/doc_writer.json)  
 **ID:** `doc_writer`  
 Generates developer documentation for functions or modules.
@@ -34,6 +36,7 @@ Generates developer documentation for functions or modules.
 
 **File:** [`general/poc-starters.json`](general/poc-starters.json) (9 prompts)  
 Traditional POC templates for various architectures:
+
 - `poc-fullstack-webapp` - Modern full-stack web application
 - `poc-rest-api` - RESTful API with authentication
 - `poc-graphql-api` - GraphQL API server
@@ -47,30 +50,36 @@ Traditional POC templates for various architectures:
 ### Dependencies & Build
 
 #### Multi-Language Dependencies
-**File:** [`general/dependencies.json`](general/dependencies.json) (1 prompt)  
+
+**File:** [`general/dependencies.json`](general/dependencies.json) (1 prompt)
+
 - `dependency-update-analysis` - Analyzes dependencies across npm, Maven, Gradle, pip with security risk assessment
 
 ### Compliance
 
-**File:** [`general/compliance.json`](general/compliance.json) (2 prompts)  
+**File:** [`general/compliance.json`](general/compliance.json) (2 prompts)
+
 - `sbom-generation` - Generates Software Bill of Materials in CycloneDX/SPDX format
 - `license-compliance-check` - Audits open source licenses for compliance issues
 
 ### Performance
 
-**File:** [`general/performance.json`](general/performance.json) (2 prompts)  
+**File:** [`general/performance.json`](general/performance.json) (2 prompts)
+
 - `performance-profiling-plan` - Designs comprehensive performance profiling strategy
 - `memory-leak-triage` - Systematically identifies and triages memory leaks
 
 ### Testing
 
-**File:** [`general/testing.json`](general/testing.json) (2 prompts)  
+**File:** [`general/testing.json`](general/testing.json) (2 prompts)
+
 - `flaky-test-diagnosis` - Analyzes flaky tests for root causes (timing, state, dependencies)
 - `unit-test-gap-analysis` - Identifies untested code paths and prioritizes coverage improvements
 
 ### Refactoring
 
 **File:** [`general/refactoring.json`](general/refactoring.json) (4 prompts)
+
 - `modular-architecture-refactor` - Transforms monolithic code into modular components
 - `api-deprecation-remediation` - Migrates deprecated APIs to modern alternatives
 - `logging-standardization` - Standardizes logging practices across application
@@ -79,11 +88,13 @@ Traditional POC templates for various architectures:
 ### Documentation
 
 **File:** [`general/documentation.json`](general/documentation.json) (1 prompt)
+
 - `documentation-completeness` - Audits documentation for gaps and outdated content
 
 ### Advanced Testing
 
 **File:** [`general/testing-advanced.json`](general/testing-advanced.json) (3 prompts)
+
 - `e2e-testing-strategy` - End-to-end testing architecture with tool selection and CI/CD integration
 - `performance-testing-plan` - Performance and load testing strategy with bottleneck analysis
 - `chaos-engineering-resilience` - Chaos engineering program for resilience validation
@@ -91,6 +102,7 @@ Traditional POC templates for various architectures:
 ### Data & Analytics
 
 **File:** [`general/data-analytics.json`](general/data-analytics.json) (multiple prompts)
+
 - `data-pipeline-architecture` - Data pipeline design with ETL/ELT, orchestration, and optimization
 
 ### Modernization & Compliance
@@ -123,6 +135,7 @@ Emerging technology evaluation and adoption prompts.
 ### Framework-Agnostic
 
 **File:** [`frontend/frontend-prompts.json`](frontend/frontend-prompts.json) (6 prompts)
+
 - `frontend-bundle-optimization` - Bundle size and webpack/Vite optimization
 - `frontend-accessibility-audit` - WCAG compliance and a11y improvements
 - `frontend-performance-metrics` - Core Web Vitals optimization
@@ -145,21 +158,25 @@ Comprehensive mobile app accessibility audit for WCAG and platform-specific guid
 **Directory:** `prompts/frontend/react/`
 
 #### Hooks Optimization
+
 **File:** [`frontend/react/hooks-optimization.json`](frontend/react/hooks-optimization.json)  
 **ID:** `react-hooks-optimization`  
 Analyzes React hooks usage for performance issues, missing dependencies, and optimization opportunities.
 
 #### Component Patterns
+
 **File:** [`frontend/react/component-patterns.json`](frontend/react/component-patterns.json)
 **ID:** `react-component-patterns`
 Reviews React architecture for compound components, render props, HOCs, and custom hooks.
 
 #### React Architecture
+
 **File:** [`frontend/react/react-architecture.json`](frontend/react/react-architecture.json)
 **ID:** `react-architecture-patterns`
 Comprehensive React architecture analysis including component design, code organization, and scalability.
 
 #### React State Management
+
 **File:** [`frontend/react/react-state-management.json`](frontend/react/react-state-management.json)
 **ID:** `react-state-management-patterns`
 In-depth state management patterns covering Context API, Redux, Zustand, React Query, and decision frameworks.
@@ -169,16 +186,19 @@ In-depth state management patterns covering Context API, Redux, Zustand, React Q
 **Directory:** `prompts/frontend/angular/`
 
 #### RxJS Patterns
+
 **File:** [`frontend/angular/rxjs-patterns.json`](frontend/angular/rxjs-patterns.json)
 **ID:** `angular-rxjs-patterns`
 Analyzes RxJS usage for proper observable patterns and subscription management.
 
 #### Angular Architecture
+
 **File:** [`frontend/angular/angular-architecture.json`](frontend/angular/angular-architecture.json)
 **ID:** `angular-architecture-patterns`
 Comprehensive Angular architecture including modules, dependency injection, lazy loading, and enterprise patterns.
 
 #### Angular Testing
+
 **File:** [`frontend/angular/angular-testing.json`](frontend/angular/angular-testing.json)
 **ID:** `angular-testing-strategy`
 Complete testing strategy for Angular with Jasmine, Karma, component testing, and E2E patterns.
@@ -188,6 +208,7 @@ Complete testing strategy for Angular with Jasmine, Karma, component testing, an
 **Directory:** `prompts/frontend/vue/`
 
 #### Composition API Patterns
+
 **File:** [`frontend/vue/composition-api-patterns.json`](frontend/vue/composition-api-patterns.json)
 **ID:** `vue-composition-api-patterns`
 Reviews Vue 3 Composition API for proper composable design and reactivity patterns.
@@ -197,6 +218,7 @@ Reviews Vue 3 Composition API for proper composable design and reactivity patter
 **Directory:** `prompts/frontend/svelte/`
 
 #### Svelte Optimization
+
 **File:** [`frontend/svelte/svelte-optimization.json`](frontend/svelte/svelte-optimization.json)
 **ID:** `svelte-performance-optimization`
 Analyzes Svelte applications for reactivity patterns, store management, and performance optimization.
@@ -206,6 +228,7 @@ Analyzes Svelte applications for reactivity patterns, store management, and perf
 **Directory:** `prompts/frontend/nextjs/`
 
 #### Next.js Optimization
+
 **File:** [`frontend/nextjs/nextjs-optimization.json`](frontend/nextjs/nextjs-optimization.json)
 **ID:** `nextjs-performance-optimization`
 Analyzes Next.js applications for App Router/Pages Router optimization, SSR, caching, and performance.
@@ -215,6 +238,7 @@ Analyzes Next.js applications for App Router/Pages Router optimization, SSR, cac
 **Directory:** `prompts/frontend/javascript/`
 
 #### Modern JavaScript Patterns
+
 **File:** [`frontend/javascript/modern-javascript-patterns.json`](frontend/javascript/modern-javascript-patterns.json)
 **ID:** `modern-javascript-patterns`
 Analyzes JavaScript for modern ES6+ patterns, async/await, functional programming, and TypeScript adoption.
@@ -227,7 +251,8 @@ Analyzes JavaScript for modern ES6+ patterns, async/await, functional programmin
 
 ### Framework-Agnostic
 
-**File:** [`backend/backend-prompts.json`](backend/backend-prompts.json) (6 prompts)  
+**File:** [`backend/backend-prompts.json`](backend/backend-prompts.json) (6 prompts)
+
 - `backend-api-design` - REST/GraphQL API design best practices
 - `backend-microservices-patterns` - Microservices architecture patterns
 - `backend-database-optimization` - Query optimization and indexing
@@ -240,11 +265,13 @@ Analyzes JavaScript for modern ES6+ patterns, async/await, functional programmin
 **Directory:** `prompts/backend/python/`
 
 #### Async Optimization
+
 **File:** [`backend/python/async-optimization.json`](backend/python/async-optimization.json)  
 **ID:** `python-async-optimization`  
 Optimizes Python async/await code with asyncio patterns and concurrency.
 
 #### FastAPI Patterns
+
 **File:** [`backend/python/fastapi-patterns.json`](backend/python/fastapi-patterns.json)  
 **ID:** `fastapi-best-practices`  
 Analyzes FastAPI applications for dependency injection and production practices.
@@ -254,11 +281,13 @@ Analyzes FastAPI applications for dependency injection and production practices.
 **Directory:** `prompts/backend/nodejs/`
 
 #### Express Security
+
 **File:** [`backend/nodejs/express-security.json`](backend/nodejs/express-security.json)  
 **ID:** `express-security-hardening`  
 Comprehensive security audit covering OWASP Top 10 and authentication.
 
 #### Async Patterns
+
 **File:** [`backend/nodejs/async-patterns.json`](backend/nodejs/async-patterns.json)  
 **ID:** `nodejs-async-best-practices`  
 Analyzes Node.js async code for Promise usage and callback hell prevention.
@@ -268,29 +297,37 @@ Analyzes Node.js async code for Promise usage and callback hell prevention.
 **Directory:** `prompts/backend/java/`
 
 #### Spring Boot Optimization
+
 **File:** [`backend/java/spring-boot-optimization.json`](backend/java/spring-boot-optimization.json)  
 **ID:** `spring-boot-performance-optimization`  
 Analyzes Spring Boot for JPA optimization and caching strategies.
 
 #### Java Version Migration
+
 **File:** [`backend/java/version-migration.json`](backend/java/version-migration.json)  
 **ID:** `java-version-migration`  
 Creates detailed migration plan for Java version upgrades (8→11→17→21).
 
 #### Build Optimization
-**File:** [`backend/java/build-optimization.json`](backend/java/build-optimization.json) (1 prompt)  
+
+**File:** [`backend/java/build-optimization.json`](backend/java/build-optimization.json) (1 prompt)
+
 - `gradle-build-optimization` - Gradle build performance optimization and caching
 
 #### Maven Convergence
+
 **File:** [`backend/java/maven-convergence.json`](backend/java/maven-convergence.json) (1 prompt)
+
 - `maven-dependency-convergence` - Maven dependency conflict resolution
 
 #### Java Concurrency
+
 **File:** [`backend/java/java-concurrency.json`](backend/java/java-concurrency.json)
 **ID:** `java-concurrency-patterns`
 Analyzes Java concurrency patterns, thread safety, parallel processing, and modern concurrent utilities.
 
 #### Java Microservices
+
 **File:** [`backend/java/java-microservices.json`](backend/java/java-microservices.json)
 **ID:** `java-microservices-architecture`
 Comprehensive microservices architecture with Spring Boot/Cloud, resilience patterns, and distributed systems.
@@ -300,11 +337,13 @@ Comprehensive microservices architecture with Spring Boot/Cloud, resilience patt
 **Directory:** `prompts/backend/dotnet/`
 
 #### ASP.NET Core Optimization
+
 **File:** [`backend/dotnet/aspnet-core-optimization.json`](backend/dotnet/aspnet-core-optimization.json)
 **ID:** `aspnet-core-performance-optimization`
 Analyzes ASP.NET Core for Entity Framework optimization, caching, and performance best practices.
 
 #### .NET Architecture Patterns
+
 **File:** [`backend/dotnet/dotnet-architecture-patterns.json`](backend/dotnet/dotnet-architecture-patterns.json)
 **ID:** `dotnet-architecture-patterns`
 Reviews .NET applications for Clean Architecture, CQRS, DDD, and design patterns.
@@ -314,6 +353,7 @@ Reviews .NET applications for Clean Architecture, CQRS, DDD, and design patterns
 **Directory:** `prompts/backend/ruby/`
 
 #### Rails Optimization
+
 **File:** [`backend/ruby/rails-optimization.json`](backend/ruby/rails-optimization.json)
 **ID:** `rails-performance-optimization`
 Analyzes Ruby on Rails for N+1 queries, ActiveRecord optimization, and caching strategies.
@@ -323,6 +363,7 @@ Analyzes Ruby on Rails for N+1 queries, ActiveRecord optimization, and caching s
 **Directory:** `prompts/backend/go/`
 
 #### Go Optimization
+
 **File:** [`backend/go/go-optimization.json`](backend/go/go-optimization.json)
 **ID:** `go-performance-optimization`
 Analyzes Go applications for concurrency patterns, memory optimization, and performance best practices.
@@ -334,6 +375,7 @@ Analyzes Go applications for concurrency patterns, memory optimization, and perf
 **Directory:** `prompts/database/`
 
 ### SQL Optimization
+
 **File:** [`database/sql-optimization.json`](database/sql-optimization.json)
 **ID:** `sql-query-optimization`
 Analyzes SQL queries for performance, indexing, and query plan optimization (PostgreSQL, MySQL).
@@ -351,6 +393,7 @@ Analyzes MongoDB for indexing strategies, aggregation pipeline optimization, and
 **Directory:** `prompts/api/`
 
 ### GraphQL Optimization
+
 **File:** [`api/graphql-optimization.json`](api/graphql-optimization.json)
 **ID:** `graphql-api-optimization`
 Analyzes GraphQL APIs for N+1 queries, DataLoader implementation, schema design, and performance.
@@ -363,7 +406,8 @@ Analyzes GraphQL APIs for N+1 queries, DataLoader implementation, schema design,
 
 ### Infrastructure Prompts
 
-**File:** [`devops/devops-prompts.json`](devops/devops-prompts.json) (6 prompts)  
+**File:** [`devops/devops-prompts.json`](devops/devops-prompts.json) (6 prompts)
+
 - `devops-ci-cd-optimization` - CI/CD pipeline improvements
 - `devops-docker-optimization` - Container image optimization
 - `devops-kubernetes-patterns` - K8s deployment and scaling
@@ -373,7 +417,8 @@ Analyzes GraphQL APIs for N+1 queries, DataLoader implementation, schema design,
 
 ### CI/CD Optimization
 
-**File:** [`devops/ci-optimization.json`](devops/ci-optimization.json) (1 prompt)  
+**File:** [`devops/ci-optimization.json`](devops/ci-optimization.json) (1 prompt)
+
 - `ci-pipeline-optimization` - Analyzes CI/CD pipeline for bottlenecks and optimization opportunities
 
 ---
@@ -382,7 +427,8 @@ Analyzes GraphQL APIs for N+1 queries, DataLoader implementation, schema design,
 
 **Directory:** `prompts/security/`
 
-**File:** [`security/security-prompts.json`](security/security-prompts.json) (7 prompts)  
+**File:** [`security/security-prompts.json`](security/security-prompts.json) (7 prompts)
+
 - `security-vulnerability-scan` - OWASP Top 10 vulnerability audit
 - `security-dependency-audit` - npm/pip/maven dependency scanning
 - `security-secrets-management` - Secrets and credential management
@@ -398,7 +444,9 @@ Analyzes GraphQL APIs for N+1 queries, DataLoader implementation, schema design,
 **Directory:** `prompts/ai-ml/`
 
 ### AI/ML POCs
-**File:** [`ai-ml/ai-ml-pocs.json`](ai-ml/ai-ml-pocs.json) (5 prompts)  
+
+**File:** [`ai-ml/ai-ml-pocs.json`](ai-ml/ai-ml-pocs.json) (5 prompts)
+
 - `poc-mcp-server` - MCP server with tools and resources
 - `poc-ollama-integration` - Local LLM integration with Ollama
 - `poc-rag-system` - RAG system with vector database
@@ -412,16 +460,19 @@ Analyzes GraphQL APIs for N+1 queries, DataLoader implementation, schema design,
 **Directory:** `prompts/cloud/`
 
 ### AWS Optimization
+
 **File:** [`cloud/aws-optimization.json`](cloud/aws-optimization.json)
 **ID:** `aws-cloud-optimization`
 Analyzes AWS infrastructure for cost optimization, Well-Architected Framework compliance, and best practices.
 
 ### GCP Optimization
+
 **File:** [`cloud/gcp-optimization.json`](cloud/gcp-optimization.json)
 **ID:** `gcp-cloud-optimization`
 Analyzes Google Cloud Platform for cost optimization, performance, security, and reliability.
 
 ### Azure Optimization
+
 **File:** [`cloud/azure-optimization.json`](cloud/azure-optimization.json)
 **ID:** `azure-cloud-optimization`
 Analyzes Microsoft Azure for Well-Architected Framework compliance, cost optimization, and best practices.
@@ -519,6 +570,7 @@ The MCP server recursively scans all subdirectories to discover prompts.
 ## Contributing
 
 When adding new prompts:
+
 1. Place in appropriate technology/category directory
 2. Follow the JSON schema format with all required fields
 3. Include comprehensive examples with realistic input/output_outline
