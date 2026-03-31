@@ -17,59 +17,100 @@
     "properties": {
       "project_name": {
         "type": "string",
-        "description": "Name of the React project"
-      },
-      "react_code": {
-        "type": "string",
-        "description": "React application code to analyze"
+        "description": "Name of the React project",
+        "default": "React application"
       },
       "react_version": {
         "type": "string",
         "enum": [
-          "16.x",
           "17.x",
           "18.x",
-          "19.x"
+          "19.x",
+          "unknown"
         ],
-        "default": "18.x"
+        "default": "19.x",
+        "description": "React version in use"
+      },
+      "app_type": {
+        "type": "string",
+        "enum": [
+          "spa",
+          "dashboard",
+          "ecommerce",
+          "admin-panel",
+          "marketing-site",
+          "design-system",
+          "mobile-web",
+          "enterprise-app",
+          "mixed"
+        ],
+        "default": "spa",
+        "description": "Application type"
+      },
+      "app_size": {
+        "type": "string",
+        "enum": [
+          "small",
+          "medium",
+          "large",
+          "enterprise"
+        ],
+        "default": "medium",
+        "description": "Application size / complexity"
       },
       "state_management": {
         "type": "string",
-        "enum": [
-          "context-api",
-          "redux",
-          "redux-toolkit",
-          "zustand",
-          "jotai",
-          "recoil",
-          "none"
-        ],
-        "default": "context-api"
+        "description": "Current state management approach",
+        "default": "zustand + react-query"
+      },
+      "routing": {
+        "type": "string",
+        "description": "Routing approach or library",
+        "default": "react-router"
+      },
+      "data_fetching": {
+        "type": "string",
+        "description": "Data fetching approach or library",
+        "default": "zustand + react-query"
       },
       "challenge": {
         "type": "string",
-        "description": "Current challenge",
+        "description": "Primary architecture challenge",
         "default": "Complex state management and performance"
+      },
+      "goals": {
+        "type": "string",
+        "description": "Desired outcomes for the refactor",
+        "default": "Improve maintainability, scalability, and testability"
+      },
+      "react_code": {
+        "type": "string",
+        "description": "React code or architecture excerpt to analyze",
+        "default":"react"
       }
     },
     "required": [
-      "project_name",
       "react_code"
     ]
   },
   "examples": [
     {
       "input": {
-        "project_name": "Dashboard",
-        "react_code": "function Dashboard() {\n  const [users, setUsers] = useState([]);\n  const [loading, setLoading] = useState(false);\n  const [filter, setFilter] = useState('');\n  \n  useEffect(() => {\n    setLoading(true);\n    fetch('/api/users')\n      .then(res => res.json())\n      .then(data => {\n        setUsers(data);\n        setLoading(false);\n      });\n  }, []);\n  \n  const filteredUsers = users.filter(u => \n    u.name.toLowerCase().includes(filter.toLowerCase())\n  );\n  \n  return (\n    <div>\n      <input value={filter} onChange={e => setFilter(e.target.value)} />\n      {loading ? <div>Loading...</div> : (\n        <div>\n          {filteredUsers.map(user => (\n            <div key={user.id}>\n              <h3>{user.name}</h3>\n              <p>{user.email}</p>\n            </div>\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}",
+        "project_name": "Admin Console",
         "react_version": "18.x",
-        "state_management": "none",
-        "challenge": "Component too complex, no error handling, performance issues with large lists"
+        "app_type": "dashboard",
+        "app_size": "large",
+        "state_management": "zustand + react-query",
+        "routing": "react-router",
+        "data_fetching": "zustand + react-query",
+        "challenge": "Dashboard component handles fetching, filtering, selection, and rendering",
+        "goals": "Separate concerns and reduce unnecessary renders",
+        "react_code":"React code"
       },
-      "output_outline": "Issues: 1) Component does too much (fetch, filter, render) - violates SRP, 2) No error handling on fetch, 3) No loading error state, 4) Filter computation runs on every render (use useMemo), 5) No cleanup on unmount (AbortController), 6) Missing key optimization (React.memo), 7) Inline filter logic (extract to custom hook). Refactored architecture: Split into 3 components - DashboardContainer (data fetching), UserFilter (filter UI), UserList (presentation). Custom hook: useUsers() handles fetching with React Query or useSWR for caching/refetch/error handling. useMemo for filtered users. Implement error boundary for graceful errors. Add loading skeleton instead of text. Extract UserCard component with React.memo. File structure: features/dashboard/hooks/useUsers.ts, components/UserList/UserList.tsx, UserCard/UserCard.tsx. Performance: React Query eliminates redundant fetches, useMemo prevents filter recalculation, React.memo prevents UserCard re-renders, virtualization with react-window for 1000+ users. Testing: Test useUsers hook independently, test UserList with mock data, test filtering logic, E2E test for full flow. Expected improvements: 80% fewer re-renders, proper error handling, better code organization, easier testing."
+      "output_outline": "Architecture Assessment: UsersDashboard owns fetching, filtering, and selection, so it mixes server state, UI state, and presentation. Target Structure: split into a page container, a useUsersQuery data hook, a useUserFilters hook, and memoized presentational table/row components. State & Data Flow: remote users should move to React Query, search can stay local or move to URL state if it must persist, and selection should live as close to the table as possible unless shared elsewhere. Performance Risks: memoize expensive filtering, avoid inline row handlers, and add virtualization when row counts grow. Code Organization: keep feature-specific hooks, components, query keys, and tests under src/features/users/. Migration Path: extract the fetch into a query hook, isolate filters, split the table, then add loading/error/empty states and tests. Testing Strategy: unit test filter logic and hooks, integration test the feature container, and add E2E coverage for search, selection, and API failure states."
     }
   ],
-  "version": "1.0.0",
+  "version": "1.1.0",
   "created_utc": "2025-01-15T10:00:00Z",
-  "last_modified_utc": "2025-01-15T10:00:00Z"
+  "last_modified_utc": "2026-03-27T00:00:00Z"
 }

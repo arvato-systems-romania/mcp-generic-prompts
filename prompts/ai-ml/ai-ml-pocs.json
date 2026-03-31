@@ -11,7 +11,7 @@
       "tools",
       "resources"
     ],
-    "template": "Create a proof of concept MCP (Model Context Protocol) server for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Tools to implement: {{tools}}\n- Resources to expose: {{resources}}\n- Transport: {{transport}}\n\n**Technical Stack:**\n- TypeScript/Python for implementation\n- MCP SDK (@modelcontextprotocol/sdk)\n- {{transport}} transport (stdio or SSE)\n- Zod for schema validation\n- Testing framework\n\n**Generate:**\n1. MCP server project structure\n2. Tool implementations for {{tools}}:\n   - Input schema with validation\n   - Handler function with error handling\n   - Response formatting\n3. Resource implementations for {{resources}}:\n   - URI templates\n   - Content providers\n   - MIME types\n4. Server configuration:\n   - Transport setup\n   - Capability declarations\n   - Metadata\n5. Testing suite:\n   - Tool invocation tests\n   - Resource access tests\n   - Error handling tests\n6. Documentation:\n   - Tool descriptions and examples\n   - Resource URI patterns\n   - Integration guide\n7. Claude Desktop/MCP client config\n\n**MCP Server Features:**\n- Tool registration with JSON Schema\n- Resource discovery and access\n- Progress notifications\n- Error handling with proper codes\n- Logging and debugging\n\n**Deliverables:**\n- Complete MCP server codebase\n- Tool and resource catalog\n- Test suite\n- README with setup and usage\n- Example client integration\n\nOutput: Complete MCP Server | Tool/Resource Docs | Integration Guide | Test Coverage",
+    "template": "Create a proof of concept MCP (Model Context Protocol) server for {{project_name}}.\n\n**Requirements:**\n- Purpose: {{purpose}}\n- Technical Stack: {{technical_stack}}\n- Tools to implement: {{tools}}\n- Resources to expose: {{resources}}\n- Transport: {{transport}}\n\n**Technical Stack:**\n- {{technical_stack}}\n- {{transport}} transport (stdio or SSE)\n\n**Suggested Stack Components:**\n- MCP SDK (@modelcontextprotocol/sdk)\n- Schema validation library such as Zod\n- Testing framework\n\n**Generate:**\n1. MCP server project structure\n2. Tool implementations for {{tools}}:\n   - Input schema with validation\n   - Handler function with error handling\n   - Response formatting\n3. Resource implementations for {{resources}}:\n   - URI templates\n   - Content providers\n   - MIME types\n4. Server configuration:\n   - Transport setup\n   - Capability declarations\n   - Metadata\n5. Testing suite:\n   - Tool invocation tests\n   - Resource access tests\n   - Error handling tests\n6. Documentation:\n   - Tool descriptions and examples\n   - Resource URI patterns\n   - Integration guide\n7. Claude Desktop/MCP client config\n\n**MCP Server Features:**\n- Tool registration with JSON Schema\n- Resource discovery and access\n- Progress notifications\n- Error handling with proper codes\n- Logging and debugging\n\n**Deliverables:**\n- Complete MCP server codebase\n- Tool and resource catalog\n- Test suite\n- README with setup and usage\n- Example client integration\n\nOutput: Complete MCP Server | Tool/Resource Docs | Integration Guide | Test Coverage",
     "input_schema": {
       "type": "object",
       "properties": {
@@ -23,6 +23,10 @@
           "type": "string",
           "description": "What the MCP server provides"
         },
+        "technical_stack": {
+          "type": "string",
+          "description": "Comma-separated technical stack (e.g., 'TypeScript, Zod, Jest')"
+        },  
         "tools": {
           "type": "string",
           "description": "Comma-separated tools (e.g., 'search_docs, execute_query, generate_report')"
@@ -44,6 +48,7 @@
       "required": [
         "project_name",
         "purpose",
+        "technical_stack",
         "tools"
       ]
     },
@@ -52,6 +57,7 @@
         "input": {
           "project_name": "database-mcp-server",
           "purpose": "Database query and schema exploration",
+          "technical_stack": "TypeScript, Zod, Jest",
           "tools": "execute_query, explain_query, list_tables, get_schema",
           "resources": "table schemas, query history, database metadata",
           "transport": "stdio"

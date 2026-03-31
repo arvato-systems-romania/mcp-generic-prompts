@@ -27,7 +27,7 @@
       "typescript": {
         "type": "boolean",
         "description": "Whether to use TypeScript",
-        "default": false
+        "default": true
       },
       "target_pattern": {
         "type": "string",

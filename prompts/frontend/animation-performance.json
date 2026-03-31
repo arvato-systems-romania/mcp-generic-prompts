@@ -15,7 +15,7 @@
     "properties": {
       "code": {
         "type": "string",
-        "description": "The animation code to review"
+        "description": "The file or code snippet containing the animation implementation to review"
       },
       "language": {
         "type": "string",

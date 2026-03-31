@@ -23,17 +23,6 @@
         "type": "string",
         "description": "Specific performance issue observed (e.g., 'component re-renders too often')",
         "default": ""
-      },
-      "react_version": {
-        "type": "string",
-        "enum": [
-          "16.8+",
-          "17.x",
-          "18.x",
-          "19.x"
-        ],
-        "default": "18.x",
-        "description": "React version in use"
       }
     },
     "required": [
@@ -44,8 +33,7 @@
     {
       "input": {
         "component_code": "function UserList() {\n  const [users, setUsers] = useState([]);\n  const [filter, setFilter] = useState('');\n  \n  useEffect(() => {\n    fetchUsers().then(setUsers);\n  });\n  \n  const filteredUsers = users.filter(u => u.name.includes(filter));\n  \n  return <div>{filteredUsers.map(u => <User key={u.id} data={u} onClick={() => console.log(u)} />)}</div>;\n}",
-        "performance_concern": "Component re-renders constantly",
-        "react_version": "18.x"
+        "performance_concern": "Component re-renders constantly"
       },
       "output_outline": "Critical: useEffect missing dependency array causes infinite re-renders. Performance: filter operation not memoized (use useMemo), onClick creates new function every render (use useCallback). Refactoring: extract useFilteredUsers custom hook. Fixed code with useMemo for filtering, useCallback for onClick, proper useEffect dependencies, estimated 80% reduction in re-renders."
     }
